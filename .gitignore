@@ -1,0 +1,28 @@
+# Node modules (Yarn Berry는 node_modules을 사용하지 않음)
+node_modules/
+
+# Yarn Berry 관련 파일들
+.pnp.*
+.pnp.js
+.pnp.cjs
+.pnp.mjs
+
+# Yarn 커스텀 캐시
+.yarn/
+.yarn-cache/
+
+# 빌드 아티팩트
+dist/
+build/
+
+# 환경 파일 (예: .env)
+.env
+.env.local
+.env.*.local
+
+# IDE 설정 파일들
+.vscode/
+.idea/
+
+# 로그 파일
+*.log

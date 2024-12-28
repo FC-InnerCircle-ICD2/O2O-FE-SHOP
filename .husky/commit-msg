@@ -1,0 +1,41 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+COMMIT_MESSAGE_FILE=$1
+COMMIT_MESSAGE=$(cat "$COMMIT_MESSAGE_FILE")
+
+# PR Merge Commit 처리 함수
+process_pr_merge() {
+  PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oE "#[0-9]+")
+  PR_TITLE=$(echo "$COMMIT_MESSAGE" | sed -nE 's/^Merge pull request #[0-9]+ from [^:]+:?[[:space:]]*(.*)/\1/p')
+  echo "🔀 Merge $PR_NUMBER: $PR_TITLE"
+}
+
+# Gitmoji 매핑 처리 함수
+process_gitmoji() {
+  case "$1" in
+    Feat)    echo "✨ $COMMIT_MESSAGE" ;;
+    Design)  echo "🎨 $COMMIT_MESSAGE" ;;
+    Refactor) echo "♻️ $COMMIT_MESSAGE" ;;
+    Fix)     echo "🐛 $COMMIT_MESSAGE" ;;
+    *)       echo "❌ 커밋 메시지는 다음 형식을 따라야 합니다:" 
+             echo "   Feat: 기능"
+             echo "   Design: 디자인/문서 수정"
+             echo "   Refactor: 리팩토링"
+             echo "   Fix: 버그 수정"
+             exit 1 ;;
+  esac
+}
+
+# PR Merge Commit인 경우 처리
+if echo "$COMMIT_MESSAGE" | grep -qE "^Merge pull request"; then
+  NEW_MESSAGE=$(process_pr_merge)
+else
+  # Gitmoji 매핑 처리
+  COMMIT_TYPE=$(echo "$COMMIT_MESSAGE" | cut -d':' -f1)
+  NEW_MESSAGE=$(process_gitmoji "$COMMIT_TYPE")
+fi
+
+# 커밋 메시지 업데이트
+echo "$NEW_MESSAGE" > "$COMMIT_MESSAGE_FILE"
+echo "✅ 커밋 메시지가 수정되었습니다: $NEW_MESSAGE"
