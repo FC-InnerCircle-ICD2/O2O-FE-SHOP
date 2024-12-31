@@ -1,0 +1,16 @@
+name: Community
+on: [pull_request]
+
+jobs:
+
+  labeler:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check Labels
+        id: labeler
+        uses: jimschubert/labeler-action@v2
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
