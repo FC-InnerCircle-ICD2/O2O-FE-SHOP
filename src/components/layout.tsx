@@ -18,6 +18,7 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
@@ -25,6 +26,7 @@ import {
 } from "./ui/sidebar"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "./ui/sidebar"
 import { Outlet } from "react-router-dom"
+import { ROUTES } from "@/utils/routes"
 
 export function Layout() {
   return (
@@ -60,17 +62,18 @@ export function Layout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={``}>
+                      <a href={ROUTES.ACTIVE_ORDER}>
                         <File />
                         <span>신규,진행중</span>
                       </a>
                     </SidebarMenuButton>
+                    <SidebarMenuBadge>24</SidebarMenuBadge>
                   </SidebarMenuItem>
                 </SidebarMenu>
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={``}>
+                      <a href={ROUTES.COMPLETED_ORDER}>
                         <FileCheck />
                         <span>완료</span>
                       </a>
@@ -87,7 +90,7 @@ export function Layout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={``}>
+                      <a href={ROUTES.STORE_INFO}>
                         <Store />
                         <span>가게정보</span>
                       </a>
@@ -97,7 +100,7 @@ export function Layout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={``}>
+                      <a href={ROUTES.STORE_MENU}>
                         <BookText />
                         <span>메뉴</span>
                       </a>
@@ -107,7 +110,7 @@ export function Layout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={``}>
+                      <a href={ROUTES.STORE_REVIEW}>
                         <MessageSquareText />
                         <span>리뷰</span>
                       </a>

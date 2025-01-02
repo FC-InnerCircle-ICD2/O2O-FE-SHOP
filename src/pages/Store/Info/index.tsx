@@ -1,5 +1,5 @@
 const Page = () => {
-  return <>Active Orders</>
+  return <>Store info</>
 }
 
 export default Page
