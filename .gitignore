@@ -8,8 +8,14 @@ node_modules/
 .pnp.mjs
 
 # Yarn 커스텀 캐시
-.yarn/
-.yarn-cache/
+.yarn/*
+
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # 빌드 아티팩트
 dist/
