@@ -1,6 +1,6 @@
 import { BrowserRouter, RouteObject, useRoutes } from "react-router-dom"
 import { ROUTES } from "./utils/routes"
-import { Layout } from "@/components/ui/layout"
+import { Layout } from "@/components/layout"
 
 const routes: RouteObject[] = [
   {
