@@ -5,8 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
-import { SidebarHeader } from "../ui/sidebar"
+import { SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 export function Header() {
   return (
     <SidebarHeader>
