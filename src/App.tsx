@@ -1,5 +1,6 @@
 import { BrowserRouter, useRoutes } from "react-router-dom"
-import { routes } from "./utils/routes"
+import { routes } from "@utils/routes"
+import "@styles/fonts.css"
 
 function AppRoutes() {
   const element = useRoutes(routes)

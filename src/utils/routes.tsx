@@ -8,7 +8,8 @@ import StoreReviewPage from "@/pages/store/review/StoreReview"
 import { RouteObject } from "react-router-dom"
 
 export const ROUTES = {
-  LOGIN: "/",
+  LOGIN: "/login",
+  DASHBOARD: "/",
   COMPLETED_ORDER: "/orders/completed",
   ACTIVE_ORDER: "/orders/active",
   STORE_INFO: "/store/info",
@@ -24,6 +25,10 @@ export const routes: RouteObject[] = [
   {
     element: <Layout />,
     children: [
+      {
+        path: ROUTES.DASHBOARD,
+        element: <>dashboard</>,
+      },
       {
         path: ROUTES.COMPLETED_ORDER,
         element: <OrdersCompletedPage />,

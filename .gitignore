@@ -32,3 +32,5 @@ build/
 
 # 로그 파일
 *.log
+
+.cursor
