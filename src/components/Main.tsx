@@ -1,11 +1,10 @@
 import React from "react"
-import Header from "./Header"
 
 const Main = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex-1 bg-green-500">
-      <Header />
-      {children}
+    <div className="flex flex-col flex-1 bg-green-500">
+      {/* <Header /> */}
+      <main className="flex-1">{children}</main>
     </div>
   )
 }

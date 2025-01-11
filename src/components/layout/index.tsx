@@ -1,15 +1,19 @@
-import { SidebarProvider } from "../ui/sidebar"
-import { Sidebar } from "../ui/sidebar"
 import { Outlet } from "react-router-dom"
-import { Header } from "./header"
-import { Body } from "./body"
 import Main from "../Main"
+import { Sidebar, useSidebar } from "../ui/sidebar"
+import { Body } from "./body"
+import { Header } from "./header"
 
 export function Layout() {
+  const { state } = useSidebar()
+
+  console.log(state)
+
+  if (!state) return null
   return (
-    <SidebarProvider>
-      <Sidebar className="text-white">
-        <div className="flex-1 p-2">
+    <>
+      <Sidebar variant="sidebar">
+        <div className="flex flex-col flex-1 py-[30px] gap-10">
           <Header />
           <Body />
           {/* <Footer /> */}
@@ -18,6 +22,6 @@ export function Layout() {
       <Main>
         <Outlet />
       </Main>
-    </SidebarProvider>
+    </>
   )
 }

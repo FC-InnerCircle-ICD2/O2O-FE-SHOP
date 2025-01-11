@@ -1,5 +1,5 @@
-import { HTMLAttributes } from "react"
 import { icons } from "lucide-react"
+import { HTMLAttributes } from "react"
 export type IconName = keyof typeof icons // 아이콘 목록
 export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   name: IconName
@@ -7,6 +7,7 @@ export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   size?: string | number
   strokeWidth?: string | number
   absoluteStrokeWidth?: boolean
+  fill?: string
 }
 const Icon = ({
   name,
@@ -14,6 +15,7 @@ const Icon = ({
   color = "currentColor",
   strokeWidth = "1.75px",
   absoluteStrokeWidth = false,
+  fill = "none",
   className,
 }: IconProps) => {
   const LucideIcon = icons[name]
@@ -28,6 +30,7 @@ const Icon = ({
       color={color}
       absoluteStrokeWidth={absoluteStrokeWidth}
       style={{ width: size, height: size }} // !important 없이 인라인 스타일 사용
+      fill={fill}
       className={className}
     />
   )

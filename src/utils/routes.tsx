@@ -1,4 +1,6 @@
 import { Layout } from "@/components/layout"
+import { SidebarProvider } from "@/components/ui/sidebar"
+import DashboardPage from "@/pages/dashboard/Dashboard"
 import LoginPage from "@/pages/login/LoginPage"
 import OrdersActivePage from "@/pages/orders/active/OrdersActivePage"
 import OrdersCompletedPage from "@/pages/orders/completed/OrdersCompletedPage"
@@ -10,6 +12,7 @@ import { RouteObject } from "react-router-dom"
 export const ROUTES = {
   LOGIN: "/login",
   DASHBOARD: "/",
+  ORDER: "/orders",
   COMPLETED_ORDER: "/orders/completed",
   ACTIVE_ORDER: "/orders/active",
   STORE_INFO: "/store/info",
@@ -23,11 +26,21 @@ export const routes: RouteObject[] = [
     element: <LoginPage />,
   },
   {
-    element: <Layout />,
+    element: (
+      <SidebarProvider
+        style={{
+          "--sidebar-width": "20rem",
+          "--sidebar-width-mobile": "20rem",
+          "--sidebar-width-icon": "8rem",
+        }}
+      >
+        <Layout />
+      </SidebarProvider>
+    ),
     children: [
       {
         path: ROUTES.DASHBOARD,
-        element: <>dashboard</>,
+        element: <DashboardPage />,
       },
       {
         path: ROUTES.COMPLETED_ORDER,

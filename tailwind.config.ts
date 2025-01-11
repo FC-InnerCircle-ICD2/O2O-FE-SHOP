@@ -1,8 +1,8 @@
-import { type Config } from "tailwindcss"
+import type { Config } from "tailwindcss"
 
 const config: Config = {
-  darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       borderRadius: {
@@ -11,8 +11,10 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        background: "hsl(var(--background))",
+        background: "#1A202C",
         foreground: "hsl(var(--foreground))",
+        neutral: "#FFFFFF",
+        grey: "#364153",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -22,11 +24,11 @@ const config: Config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#605CFF",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "#FF69B4",
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
@@ -34,7 +36,7 @@ const config: Config = {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
+          DEFAULT: "#2FE5A7",
           foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
@@ -44,7 +46,7 @@ const config: Config = {
         purple: {
           DEFAULT: "hsl(var(--purple))",
         },
-        border: "hsl(var(--border))",
+        border: "#2C3240",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
@@ -67,20 +69,40 @@ const config: Config = {
         bodydark1: "#DEE4EE",
         bodydark2: "#8A99AF",
         graydark: "#333A48",
+        boxdark: "#242e3f",
       },
       height: {
-        header: "54px",
+        header: "80px",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
-        jua: ["BMJUA", "sans-serif"], // 이 줄을 추가
+        jua: ["BMJUA", "sans-serif"],
+      },
+      spacing: {
+        1: "0.4rem", // 4px
+        2: "0.8rem", // 8px
+        3: "1.2rem", // 12px
+        4: "1.6rem", // 16px
+        5: "2rem", // 20px
+        6: "2.4rem", // 24px
+        7: "2.8rem", // 28px
+        8: "3.2rem", // 32px
+        9: "3.6rem", // 36px
+        10: "4rem", // 40px
+        11: "4.4rem", // 44px
+        12: "4.8rem", // 48px
+        13: "5.2rem", // 52px
+        14: "5.6rem", // 56px
+        15: "6rem", // 60px
       },
       backgroundColor: {
         dark: "#1C2434",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  corePlugins: {
+    preflight: true,
+  },
 }
 
 export default config

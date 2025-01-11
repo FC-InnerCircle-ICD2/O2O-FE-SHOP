@@ -1,97 +1,170 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible"
-import Icon, { IconName } from "../Icon"
-import { SidebarGroupContent, SidebarGroupLabel } from "../ui/sidebar"
-import { SidebarContent, SidebarGroup } from "../ui/sidebar"
 import { ROUTES } from "@/utils/routes"
-
-interface SideMenuItem {
-  label: string
-  icon: IconName
-  items: {
-    label: string
-    route: string
-    badge?: number
-  }[]
-}
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible"
+import { useLocation, useNavigate } from "react-router-dom"
+import Icon, { IconName } from "../Icon"
+import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 
 export function Body() {
-  const MENU_ITEMS: SideMenuItem[] = [
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  console.log(pathname)
+
+  const menuItems: {
+    name: string
+    icon: IconName
+    path?: string
+    subMenu?: { name: string; path: string }[]
+  }[] = [
     {
-      label: "주문",
+      name: "대시보드",
+      icon: "LayoutDashboard",
+      path: ROUTES.DASHBOARD,
+    },
+    {
+      name: "주문",
       icon: "ClipboardPen",
-      items: [
+      subMenu: [
         {
-          label: "신규 • 진행중",
-          route: ROUTES.ACTIVE_ORDER,
-          badge: 24,
+          name: "신규 • 진행중",
+          path: ROUTES.ACTIVE_ORDER,
         },
         {
-          label: "완료",
-          route: ROUTES.COMPLETED_ORDER,
+          name: "완료",
+          path: ROUTES.COMPLETED_ORDER,
         },
       ],
     },
-    // {
-    //   label: "가게",
-    //   items: [
-    //     {
-    //       icon: Store,
-    //       label: "가게정보",
-    //       route: ROUTES.STORE_INFO,
-    //     },
-    //     {
-    //       icon: BookText,
-    //       label: "메뉴",
-    //       route: ROUTES.STORE_MENU,
-    //     },
-    //     {
-    //       icon: MessageSquareText,
-    //       label: "리뷰",
-    //       route: ROUTES.STORE_REVIEW,
-    //     },
-    //   ],
-    // },
   ]
 
   return (
-    <SidebarContent>
-      {MENU_ITEMS.map(({ label, icon, items }) => (
-        <Collapsible defaultOpen key={label} className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel
-              className="duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-              asChild
-            >
-              <CollapsibleTrigger>
-                <div className="flex flex-1 items-center justify-between font-medium text-bodydark1">
-                  <div className="flex items-center gap-2">
-                    <Icon name={icon} size={18} />
-                    <span className="text-base">{label}</span>
-                  </div>
-                  <Icon
-                    className="transition-transform group-data-[state=open]/collapsible:rotate-180"
-                    name="ChevronDown"
-                    size={20}
-                  />
-                </div>
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <ul className="m-4 flex flex-col gap-2.5 pl-6 text-bodydark2 font-medium">
-                  {items.map(({ label, route }) => (
-                    <li key={label} className="hover:text-white duration-300 ease-in-out">
-                      <a href={route}>
-                        <span className="text-sm">{label}</span>
+    <SidebarContent className="gap-3">
+      <SidebarMenu className="flex flex-col gap-3">
+        {menuItems.map((item) => (
+          <Collapsible defaultOpen className="group/collapsible">
+            <SidebarMenuItem className="flex justify-center">
+              <SidebarMenuButton
+                asChild
+                className="px-5 flex justify-between items-center text-neutral/80 active:text-neutral hover:text-neutral data-[state='open']:hover:text-neutral"
+              >
+                <CollapsibleTrigger>
+                  <a
+                    className="flex flex-1 items-center gap-3 h-fit"
+                    onClick={() => item.path && navigate(item.path)}
+                  >
+                    <div className="flex">
+                      <Icon name={item.icon} size={24} />
+                    </div>
+                    <span className="text-2xl font-bold">{item.name}</span>
+                  </a>
+                  {item.subMenu && (
+                    <Icon
+                      className="transition-transform duration-300 group-data-[state=open]/collapsible:rotate-180"
+                      name="ChevronDown"
+                      size={24}
+                      strokeWidth={2}
+                    />
+                  )}
+                </CollapsibleTrigger>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            {item.subMenu && (
+              <CollapsibleContent className="flex flex-col gap-1 py-2">
+                {item.subMenu.map((subItem) => (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      asChild
+                      className="pl-10 text-neutral/80 active:text-neutral hover:text-neutral cursor-pointer"
+                      onClick={() => navigate(subItem.path)}
+                    >
+                      <a>
+                        <span className="text-2xl">{subItem.name}</span>
                       </a>
-                    </li>
-                  ))}
-                </ul>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-      ))}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </CollapsibleContent>
+            )}
+          </Collapsible>
+        ))}
+      </SidebarMenu>
+
+      {/* <SidebarGroup className="p-0">
+        <SidebarGroupLabel
+          className="group/dashboard duration-300 ease-in-out cursor-pointer p-0 h-fit"
+          asChild
+          onClick={() => navigate(ROUTES.DASHBOARD)}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              data-icon
+              className="flex items-center justify-end group-hover/dashboard:bg-neutral/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
+            >
+              <Icon
+                name={"LayoutDashboard"}
+                size={24}
+                className={pathname === ROUTES.DASHBOARD ? "text-primary" : "text-neutral/50"}
+              />
+            </div>
+            <span
+              className={`text-[16px] font-bold ${
+                pathname === ROUTES.DASHBOARD ? "text-primary" : "text-neutral/50"
+              }`}
+            >
+              대시보드
+            </span>
+          </div>
+        </SidebarGroupLabel>
+      </SidebarGroup>
+
+      <SidebarGroup className="p-0">
+        <SidebarGroupLabel
+          className="group/order duration-300 ease-in-out cursor-pointer p-0 h-fit"
+          asChild
+        >
+          <div className="flex items-center gap-3">
+            <div
+              data-icon
+              className="flex items-center justify-end group-hover/order:bg-neutral/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
+            >
+              <Icon
+                name={"ClipboardPen"}
+                size={24}
+                className={pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-neutral/50"}
+              />
+            </div>
+            <span
+              className={`text-[16px] font-bold ${
+                pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-neutral/50"
+              }`}
+            >
+              주문
+            </span>
+          </div>
+        </SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenuItem>
+            <ul className="m-4 flex flex-col gap-2.5 pl-6 text-bodydark2 font-medium">
+            <li className="hover:text-white duration-300 ease-in-out">
+
+            </li>
+            <SidebarMenuButton asChild>
+            <a href={ROUTES.ACTIVE_ORDER}>
+              <span className="text-sm">신규 • 진행중</span>
+            </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <li className="hover:text-white duration-300 ease-in-out">
+            <SidebarMenuButton asChild>
+            <a href={ROUTES.COMPLETED_ORDER}>
+              <span className="text-sm">완료</span>
+            </a>
+            </SidebarMenuButton>
+            </li>
+          </SidebarMenuItem>
+          </ul>
+        </SidebarGroupContent>
+      </SidebarGroup> */}
     </SidebarContent>
   )
 }
