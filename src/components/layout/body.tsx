@@ -14,7 +14,7 @@ export function Body() {
         <SidebarMenuItem className="flex justify-center">
           <SidebarMenuButton
             asChild
-            className="px-5 flex items-center text-neutral/80 active:text-neutral hover:text-neutral data-[state='open']:hover:text-neutral cursor-pointer data-[active=true]:text-netural"
+            className="px-5 flex items-center text-netural/80 active:text-netural hover:text-netural data-[state='open']:hover:text-netural cursor-pointer data-[active=true]:text-netural"
             isActive={pathname === ROUTES.DASHBOARD}
           >
             <a
@@ -32,7 +32,7 @@ export function Body() {
           <SidebarMenuItem className="flex justify-center">
             <SidebarMenuButton
               asChild
-              className="px-5 flex justify-between items-center text-neutral/80 active:text-neutral hover:text-neutral data-[state=open]:hover:text-netural data-[state='open']:hover:text-neutral data-[active=true]:text-netural data-[active=true]:text-neutral"
+              className="px-5 flex justify-between items-center text-netural/80 active:text-netural hover:text-netural data-[state=open]:hover:text-netural data-[state='open']:hover:text-netural data-[active=true]:text-netural data-[active=true]:text-netural"
               isActive={pathname.startsWith(ROUTES.ORDER)}
             >
               <CollapsibleTrigger>
@@ -55,7 +55,7 @@ export function Body() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                className="pl-10 text-neutral/80 active:text-neutral hover:text-neutral cursor-pointer"
+                className="pl-10 text-netural/80 active:text-netural hover:text-netural cursor-pointer"
                 onClick={() => navigate(ROUTES.ACTIVE_ORDER)}
               >
                 <a>
@@ -66,7 +66,7 @@ export function Body() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                className="pl-10 text-neutral/80 active:text-neutral hover:text-neutral cursor-pointer"
+                className="pl-10 text-netural/80 active:text-netural hover:text-netural cursor-pointer"
                 onClick={() => navigate(ROUTES.COMPLETED_ORDER)}
               >
                 <a>
@@ -87,17 +87,17 @@ export function Body() {
           <div className="flex items-center gap-3">
             <div
               data-icon
-              className="flex items-center justify-end group-hover/dashboard:bg-neutral/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
+              className="flex items-center justify-end group-hover/dashboard:bg-netural/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
             >
               <Icon
                 name={"LayoutDashboard"}
                 size={24}
-                className={pathname === ROUTES.DASHBOARD ? "text-primary" : "text-neutral/50"}
+                className={pathname === ROUTES.DASHBOARD ? "text-primary" : "text-netural/50"}
               />
             </div>
             <span
               className={`text-[16px] font-bold ${
-                pathname === ROUTES.DASHBOARD ? "text-primary" : "text-neutral/50"
+                pathname === ROUTES.DASHBOARD ? "text-primary" : "text-netural/50"
               }`}
             >
               대시보드
@@ -114,17 +114,17 @@ export function Body() {
           <div className="flex items-center gap-3">
             <div
               data-icon
-              className="flex items-center justify-end group-hover/order:bg-neutral/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
+              className="flex items-center justify-end group-hover/order:bg-netural/20 rounded-r-[5px] p-2 w-[60px] h-[48px]"
             >
               <Icon
                 name={"ClipboardPen"}
                 size={24}
-                className={pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-neutral/50"}
+                className={pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-netural/50"}
               />
             </div>
             <span
               className={`text-[16px] font-bold ${
-                pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-neutral/50"
+                pathname.startsWith(ROUTES.ORDER) ? "text-primary" : "text-netural/50"
               }`}
             >
               주문
