@@ -1,11 +1,11 @@
-import useModal from "@/hooks/useModal"
+import { useToast } from "@/hooks/useToast"
 
 const DashboardPage = () => {
-  const { Modal } = useModal()
+  const { showNewOrderNotification } = useToast()
 
   return (
     <div>
-      <button onClick={() => Modal({ content: <div>modal</div> })}>modal</button>
+      <button onClick={showNewOrderNotification}>toast</button>
     </div>
   )
 }
