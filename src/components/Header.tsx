@@ -18,21 +18,21 @@ const Header = () => {
             className={`data-[state=checked]:bg-primary data-[state=unchecked]:bg-textLight h-7 w-12 [&>span]:h-6 [&>span]:w-6 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5 [&>span]:bg-background`}
           />
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="outline-none">
               <Avatar className="block rounded-full size-12 overflow-hidden">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="py-2 px-3 mt-[6px] bg-netural rounded-xl shadow-lg shadow-black/20">
-              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted">
+            <DropdownMenuContent className="py-2 px-3 mt-[10px] bg-netural rounded-xl shadow-lg shadow-black/20">
+              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="User" size={18} />
                   <span>Profile</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="h-[1px] bg-muted my-1" />
-              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted">
+              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="LogOut" size={18} />
                   <span>Logout</span>
