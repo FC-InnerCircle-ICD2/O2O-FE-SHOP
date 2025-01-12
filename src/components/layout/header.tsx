@@ -1,32 +1,22 @@
-import { ChevronDown } from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown"
+import { ROUTES } from "@/utils/routes"
+import { useNavigate } from "react-router-dom"
+import Icon from "../Icon"
 import { SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+
 export function Header() {
+  const navigate = useNavigate()
+
   return (
-    <SidebarHeader>
+    <SidebarHeader className="items-center justify-center h-fit p-0">
       <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton>
-                Select Workspace
-                <ChevronDown className="ml-auto" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-              <DropdownMenuItem>
-                <span>Acme Inc</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Acme Corp.</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <SidebarMenuItem className="flex items-center justify-center">
+          <SidebarMenuButton
+            className="flex flex-col h-fit gap-4 p-2 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:!size-fit hover:text-white active:text-netural hover:bg-sidebar active:bg-sidebar"
+            onClick={() => navigate(ROUTES.DASHBOARD)}
+          >
+            <Icon name="Store" size={40} />
+            <span className="font-jua text-5xl font-bold text-primary">개발의민족</span>
+          </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarHeader>
