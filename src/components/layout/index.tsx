@@ -13,7 +13,7 @@ export function Layout() {
   return (
     <>
       <Sidebar variant="sidebar">
-        <div className="flex flex-col flex-1 py-[30px] gap-10">
+        <div className="flex flex-col flex-1 py-[3rem] gap-40">
           <Header />
           <Body />
           {/* <Footer /> */}
