@@ -11,7 +11,7 @@ import Icon from "./Icon"
 
 const Header = () => {
   return (
-    <header className="sticky top-0 h-header w-full bg-netural">
+    <header className="sticky top-0 h-header w-full bg-sidebar">
       <div className="flex h-full items-center justify-end px-6">
         <div className="flex items-center gap-6">
           <Switch
