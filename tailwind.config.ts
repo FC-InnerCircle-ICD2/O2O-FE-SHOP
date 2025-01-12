@@ -11,10 +11,10 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        background: "#1A202C",
+        background: "#F1F4FA",
         foreground: "hsl(var(--foreground))",
-        neutral: "#FFFFFF",
-        grey: "#364153",
+        netural: "#FFFFFF",
+        grey: "#EFF4FB",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -46,7 +46,7 @@ const config: Config = {
         purple: {
           DEFAULT: "hsl(var(--purple))",
         },
-        border: "#2C3240",
+        border: "#DDDDE8",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
@@ -70,9 +70,10 @@ const config: Config = {
         bodydark2: "#8A99AF",
         graydark: "#333A48",
         boxdark: "#242e3f",
+        textLight: "#99B2C6",
       },
       height: {
-        header: "80px",
+        header: "70px",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],

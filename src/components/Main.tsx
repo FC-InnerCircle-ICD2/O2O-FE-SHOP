@@ -1,10 +1,13 @@
+import Header from "@components/Header"
 import React from "react"
 
 const Main = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col flex-1 bg-green-500">
-      {/* <Header /> */}
-      <main className="flex-1">{children}</main>
+      <Header />
+      <main className="flex-1 bg-background p-6">
+        <div className="w-full h-full bg-white rounded-xl p-6">{children}</div>
+      </main>
     </div>
   )
 }
