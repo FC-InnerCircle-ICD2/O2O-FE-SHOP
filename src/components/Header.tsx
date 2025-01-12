@@ -12,7 +12,7 @@ import Icon from "./Icon"
 const Header = () => {
   return (
     <header className="sticky top-0 h-header w-full bg-netural">
-      <div className="flex h-full items-center justify-end p-4">
+      <div className="flex h-full items-center justify-end px-6">
         <div className="flex items-center gap-6">
           <Switch
             className={`data-[state=checked]:bg-primary data-[state=unchecked]:bg-textLight h-7 w-12 [&>span]:h-6 [&>span]:w-6 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5 [&>span]:bg-background`}
