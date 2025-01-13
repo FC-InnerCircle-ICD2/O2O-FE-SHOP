@@ -8,18 +8,37 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu"
 import Icon from "./Icon"
+import { operationStore } from "@/store/operation"
+import { cn } from "@/components/ui/lib/utils"
 
 const Header = () => {
+  const { isOperational, setIsOperational } = operationStore()
+
   return (
-    <header className="sticky top-0 h-header w-full bg-sidebar">
-      <div className="flex h-full items-center justify-end px-6">
+    <header className="h-header w-full px-6 bg-sidebar">
+      <div className="flex h-full items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="size-[3.4rem] p-[1rem]">
+            <div
+              className={cn(
+                "size-full rounded-full",
+                isOperational ? "bg-operational" : "bg-closed",
+              )}
+            ></div>
+          </div>
+          <span className="text-[2rem] leading-[2rem] font-bold text-netural">
+            {isOperational ? "영업 중" : "영업 종료"}
+          </span>
+        </div>
         <div className="flex items-center gap-6">
           <Switch
             className={`data-[state=checked]:bg-primary data-[state=unchecked]:bg-textLight h-7 w-12 [&>span]:h-6 [&>span]:w-6 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5 [&>span]:bg-background`}
+            checked={isOperational}
+            onCheckedChange={setIsOperational}
           />
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
-              <Avatar className="block rounded-full size-12 overflow-hidden">
+              <Avatar className="block rounded-full size-10 overflow-hidden">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>

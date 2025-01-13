@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss"
 
 const config: Config = {
-  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -33,7 +32,7 @@ const config: Config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "#605CFF",
+          DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -70,19 +69,28 @@ const config: Config = {
           foreground: "hsl(var(--sidebar-foreground))",
           primary: "hsl(var(--sidebar-primary))",
           "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "#212428",
-          "accent-foreground": "#212428",
+          accent: "#000000",
+          "accent-foreground": "#FFFFFF",
           border: "#525C69",
           ring: "hsl(var(--sidebar-ring))",
+          textLight: "#A3A3A3",
         },
         bodydark1: "#DEE4EE",
         bodydark2: "#8A99AF",
         graydark: "#333A48",
         boxdark: "#242e3f",
         textLight: "#99B2C6",
+        operational: {
+          DEFAULT: "#14FFEB", // 밝은 초록색 (영업중)
+          foreground: "#FFFFFF",
+        },
+        closed: {
+          DEFAULT: "#FF4A4A", // 빨간색 (영업종료)
+          foreground: "#FFFFFF",
+        },
       },
       height: {
-        header: "60px",
+        header: "80px",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
