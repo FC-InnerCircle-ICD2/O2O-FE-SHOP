@@ -22,7 +22,7 @@ const config: Config = {
         background: "#F1F4FA",
         foreground: "hsl(var(--foreground))",
         netural: "#FFFFFF",
-        grey: "#EFF4FB",
+        gray: "#B5B5B5",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

@@ -3,10 +3,10 @@ import React from "react"
 
 const Main = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-col flex-1 bg-green-500">
+    <div className="flex flex-col flex-1 bg-gray">
       <Header />
-      <main className="flex-1 bg-white p-6">
-        <div className="w-full h-full bg-white rounded-xl p-6">{children}</div>
+      <main className="flex-1">
+        <div className="w-full h-full">{children}</div>
       </main>
     </div>
   )

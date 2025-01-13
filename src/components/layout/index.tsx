@@ -12,8 +12,8 @@ export function Layout() {
   if (!state) return null
   return (
     <>
-      <Sidebar variant="sidebar">
-        <div className="flex flex-col flex-1">
+      <Sidebar variant="sidebar" className="">
+        <div className="flex flex-col flex-1 border-r border-r-solid border-r-black">
           <Header />
           <Body />
           {/* <Footer /> */}
