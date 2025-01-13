@@ -10,37 +10,30 @@ export function Body() {
 
   return (
     <SidebarContent>
-      <SidebarMenu className="flex flex-col gap-0">
+      <SidebarMenu className="flex flex-col gap-0 [&_[data-sidebar='menu-button']]:h-[5.2rem]">
         <SidebarMenuItem className="flex justify-center gap-0">
           <SidebarMenuButton
             asChild
-            className="px-[3rem] py-[1.2rem] h-[4.8rem] flex items-center text-netural active:text-netural hover:text-netural data-[state='open']:hover:text-netural cursor-pointer data-[active=true]:text-netural"
+            className="px-[3rem] py-[1.2rem] flex items-center text-sidebar-textLight cursor-pointer"
             isActive={pathname === ROUTES.DASHBOARD}
           >
             <a
               className="flex flex-1 items-center gap-3 h-fit"
               onClick={() => navigate(ROUTES.DASHBOARD)}
             >
-              <div className="flex">
-                <Icon name="LayoutDashboard" size={22} />
-              </div>
-              <p className="block text-[1.6rem] leading-[2rem]  font-bold">대시보드</p>
+              <p className="text-[1.6rem] leading-[1.8rem] font-bold">대시보드</p>
             </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
-        <Collapsible defaultOpen className="group/collapsible">
+        <Collapsible defaultOpen={pathname.startsWith(ROUTES.ORDER)} className="group/collapsible">
           <SidebarMenuItem className="flex justify-center">
             <SidebarMenuButton
               asChild
-              className="px-[3rem] py-[1.2rem] h-[4.8rem] flex justify-between items-center text-netural active:text-netural hover:text-netural data-[state=open]:hover:text-netural data-[state='open']:hover:text-netural data-[active=true]:text-netural data-[active=true]:text-netural"
-              isActive={pathname.startsWith(ROUTES.ORDER)}
+              className="px-[3rem] py-[1.2rem] flex items-center text-sidebar-textLight"
             >
               <CollapsibleTrigger>
                 <a className="flex flex-1 items-center gap-3 h-fit">
-                  <div className="flex">
-                    <Icon name="ClipboardPen" size={22} />
-                  </div>
-                  <span className="text-2xl font-bold">주문</span>
+                  <p className="text-[1.6rem] leading-[1.8rem] font-bold">주문</p>
                 </a>
                 <Icon
                   className="transition-transform duration-300 group-data-[state=open]/collapsible:rotate-180"
@@ -55,22 +48,24 @@ export function Body() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                className="pl-[6.3rem] py-1 h-[3.2rem] text-netural active:text-netural hover:text-netural cursor-pointer"
+                className="h-[3.2rem] px-[3rem] text-sidebar-textLight cursor-pointer"
+                isActive={pathname === ROUTES.ACTIVE_ORDER}
                 onClick={() => navigate(ROUTES.ACTIVE_ORDER)}
               >
                 <a>
-                  <span className="text-2xl">신규 • 진행중</span>
+                  <span className="text-[1.4rem] leading-[1.6rem]">신규 • 진행중</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                className="pl-[6.3rem] py-1 h-[3.2rem] text-netural active:text-netural hover:text-netural cursor-pointer"
+                className="h-[3.2rem] px-[3rem] text-sidebar-textLight cursor-pointer"
+                isActive={pathname === ROUTES.COMPLETED_ORDER}
                 onClick={() => navigate(ROUTES.COMPLETED_ORDER)}
               >
                 <a>
-                  <span className="text-2xl">완료</span>
+                  <span className="text-[1.4rem] leading-[1.6rem]">완료</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
