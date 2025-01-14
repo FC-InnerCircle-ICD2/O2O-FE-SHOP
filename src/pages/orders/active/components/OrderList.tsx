@@ -1,17 +1,32 @@
 import { cn } from "@/components/ui/lib/utils"
-import { useState } from "react"
+import { useActiveOrder } from "../contexts/OrderActiveProvider"
 
 const OrderList = () => {
-  const [activeMenu, setActiveMenu] = useState<number>(0)
+  const { setCurrentOrder, newOrders, processingOrders, order } = useActiveOrder()
 
   return (
     <div className="flex flex-col w-[350px] bg-sidebar">
-      <OrderMenu name="신규" count={2} isActive={activeMenu === 0} onClick={() => setActiveMenu(0)}>
-        <OrderItem id={"A1B2"} desc="메뉴 2개, 총 2개  20,000원" />
-        <OrderItem id={"A1B2"} desc="메뉴 2개, 총 2개  20,000원" />
+      <OrderMenu name="신규" count={newOrders.length}>
+        {newOrders.map((item) => (
+          <OrderItem
+            key={item.id}
+            id={item.id}
+            desc={item.desc}
+            onClick={() => setCurrentOrder(item)}
+            isActive={order?.id === item.id}
+          />
+        ))}
       </OrderMenu>
-      <OrderMenu name="완료" count={1} isActive={activeMenu === 1} onClick={() => setActiveMenu(1)}>
-        <OrderItem id={"A1B2"} desc="메뉴 2개, 총 2개  20,000원" />
+      <OrderMenu name="진행" count={processingOrders.length}>
+        {processingOrders.map((item) => (
+          <OrderItem
+            key={item.id}
+            id={item.id}
+            desc={item.desc}
+            onClick={() => setCurrentOrder(item)}
+            isActive={order?.id === item.id}
+          />
+        ))}
       </OrderMenu>
     </div>
   )
@@ -20,33 +35,41 @@ const OrderList = () => {
 const OrderMenu = ({
   name,
   count,
-  isActive,
-  onClick,
   children,
 }: {
   name: string
   count: number
-  isActive?: boolean
-  onClick: () => void
   children?: React.ReactNode
 }) => {
   return (
     <ul>
       <li
-        className={cn(
-          "flex items-center w-full h-[52px] px-5 text-white font-bold bg-[#2E2E39] cursor-pointer",
-          isActive && "bg-[#2395FF]",
-        )}
-        onClick={onClick}
+        className={cn("flex items-center w-full h-[52px] px-5 text-white font-bold bg-[#2E2E39]")}
       >{`${name} ${count}건`}</li>
       {children}
     </ul>
   )
 }
 
-const OrderItem = ({ id, desc }: { id: string; desc: string }) => {
+const OrderItem = ({
+  id,
+  desc,
+  onClick,
+  isActive,
+}: {
+  id: string
+  desc: string
+  onClick: () => void
+  isActive: boolean
+}) => {
   return (
-    <li className="flex items-center w-full h-[108px] px-5 bg-[#161616] cursor-pointer">
+    <li
+      className={cn(
+        "flex items-center w-full h-[108px] px-5 cursor-pointer",
+        isActive ? "bg-[#2395FF]" : "bg-[#161616]",
+      )}
+      onClick={onClick}
+    >
       <div className="flex flex-col gap-5">
         <span className="text-3xl text-white font-bold">{`배달 ${id}`}</span>
         <span className="text-2xl text-white">{desc}</span>

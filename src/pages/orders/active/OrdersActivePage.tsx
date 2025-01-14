@@ -1,11 +1,14 @@
+import OrderDetail from "./components/OrderDetail"
 import OrderList from "./components/OrderList"
+import { OrderProvider } from "./contexts/OrderActiveProvider"
 
-const OrdersActivePage = () => {
+export default function OrdersActivePage() {
   return (
-    <div className="flex flex-1 h-full">
-      <OrderList />
-    </div>
+    <OrderProvider>
+      <div className="flex flex-1 h-full">
+        <OrderList />
+        <OrderDetail />
+      </div>
+    </OrderProvider>
   )
 }
-
-export default OrdersActivePage

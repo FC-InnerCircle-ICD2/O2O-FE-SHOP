@@ -8,6 +8,7 @@ export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   strokeWidth?: string | number
   absoluteStrokeWidth?: boolean
   fill?: string
+  onClick?: () => void
 }
 const Icon = ({
   name,
@@ -17,6 +18,7 @@ const Icon = ({
   absoluteStrokeWidth = false,
   fill = "none",
   className,
+  onClick,
 }: IconProps) => {
   const LucideIcon = icons[name]
   if (!LucideIcon) {
@@ -32,6 +34,7 @@ const Icon = ({
       style={{ width: size, height: size }} // !important 없이 인라인 스타일 사용
       fill={fill}
       className={className}
+      onClick={onClick}
     />
   )
 }

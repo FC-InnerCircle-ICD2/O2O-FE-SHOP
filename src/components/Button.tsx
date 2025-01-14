@@ -12,9 +12,9 @@ const buttonVariants = cva("inline-flex items-center justify-center gap-2 whites
     },
 
     size: {
-      default: "rounded-md text-2xl h-10",
-      s: "rounded text-xl h-8",
-      m: "rounded-md text-2xl h-12",
+      default: "rounded-[8px] text-2xl h-10",
+      s: "rounded-[6px] text-xl h-8",
+      m: "rounded-[6px] text-2xl h-12",
     },
   },
   defaultVariants: {
