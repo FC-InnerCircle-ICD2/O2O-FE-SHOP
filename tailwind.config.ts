@@ -116,6 +116,9 @@ const config: Config = {
       backgroundColor: {
         dark: "#1C2434",
       },
+      gridTemplateColumns: {
+        order: "1fr 100px 150px",
+      },
     },
   },
   corePlugins: {
