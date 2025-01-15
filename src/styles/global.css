@@ -1,6 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 스크롤바 스타일링 */
+@layer utilities {
+  /* 다크 모드 스크롤바 (OrderList) */
+  .dark-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb {
+    background: #4b4b4b;
+    border-radius: 3px;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #606060;
+  }
+
+  /* Firefox용 다크 모드 스크롤바 */
+  .dark-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #4b4b4b transparent;
+  }
+
+  /* 라이트 모드 스크롤바 (OrderDetail) */
+  .light-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .light-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .light-scrollbar::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+    border-radius: 3px;
+  }
+
+  .light-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+
+  /* Firefox용 라이트 모드 스크롤바 */
+  .light-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af transparent;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

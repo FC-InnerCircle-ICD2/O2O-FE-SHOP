@@ -1,7 +1,14 @@
-import React from "react"
+import OrderDetail from "./components/OrderDetail"
+import OrderList from "./components/OrderList"
+import { OrderProvider } from "./contexts/OrderActiveProvider"
 
-const OrdersActivePage = () => {
-  return <div>OrdersActivePage</div>
+export default function OrdersActivePage() {
+  return (
+    <OrderProvider>
+      <div className="h-[calc(100dvh-80px)] overflow-y-auto grid grid-cols-[350px_1fr] w-full">
+        <OrderList />
+        <OrderDetail />
+      </div>
+    </OrderProvider>
+  )
 }
-
-export default OrdersActivePage

@@ -22,7 +22,7 @@ const config: Config = {
         background: "#F1F4FA",
         foreground: "hsl(var(--foreground))",
         netural: "#FFFFFF",
-        grey: "#EFF4FB",
+        gray: "#B5B5B5",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -116,11 +116,15 @@ const config: Config = {
       backgroundColor: {
         dark: "#1C2434",
       },
+      gridTemplateColumns: {
+        order: "minmax(250px, 1fr) 150px 200px",
+      },
     },
   },
   corePlugins: {
     preflight: true,
   },
+  plugins: [],
 }
 
 export default config

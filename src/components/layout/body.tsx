@@ -30,6 +30,7 @@ export function Body() {
             <SidebarMenuButton
               asChild
               className="px-[3rem] py-[1.2rem] flex items-center text-sidebar-textLight"
+              isActive={pathname.startsWith(ROUTES.ORDER)}
             >
               <CollapsibleTrigger>
                 <a className="flex flex-1 items-center gap-3 h-fit">

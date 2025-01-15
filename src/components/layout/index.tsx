@@ -7,13 +7,11 @@ import { Header } from "./header"
 export function Layout() {
   const { state } = useSidebar()
 
-  console.log(state)
-
   if (!state) return null
   return (
     <>
       <Sidebar variant="sidebar">
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 border-r border-r-solid border-r-black">
           <Header />
           <Body />
           {/* <Footer /> */}
