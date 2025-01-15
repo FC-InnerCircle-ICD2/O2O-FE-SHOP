@@ -1,3 +1,5 @@
+import { cn } from "@/components/ui/lib/utils"
+import { operationStore } from "@/store/operation"
 import { Switch } from "@components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import {
@@ -8,14 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu"
 import Icon from "./Icon"
-import { operationStore } from "@/store/operation"
-import { cn } from "@/components/ui/lib/utils"
 
 const Header = () => {
   const { isOperational, setIsOperational } = operationStore()
 
   return (
-    <header className="h-header w-full px-6 bg-sidebar">
+    <header className="h-header min-h-header w-full px-6 bg-sidebar">
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="size-[3.4rem] p-[1rem]">

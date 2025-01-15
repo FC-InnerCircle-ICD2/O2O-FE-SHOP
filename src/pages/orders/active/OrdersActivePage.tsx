@@ -5,7 +5,7 @@ import { OrderProvider } from "./contexts/OrderActiveProvider"
 export default function OrdersActivePage() {
   return (
     <OrderProvider>
-      <div className="flex flex-1 h-full">
+      <div className="h-[calc(100dvh-80px)] overflow-y-auto grid grid-cols-[350px_1fr] w-full">
         <OrderList />
         <OrderDetail />
       </div>

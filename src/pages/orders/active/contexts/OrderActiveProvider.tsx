@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useState } from "react"
+import { createContext, ReactNode, useContext, useState } from "react"
 
 interface Order {
   id: string
@@ -35,6 +35,22 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const processingOrders = [
     {
       id: "A1B4",
+      desc: "메뉴 2개, 총 2개  20,000원",
+    },
+    {
+      id: "A1B5",
+      desc: "메뉴 2개, 총 2개  20,000원",
+    },
+    {
+      id: "A1B6",
+      desc: "메뉴 2개, 총 2개  20,000원",
+    },
+    {
+      id: "A1B7",
+      desc: "메뉴 2개, 총 2개  20,000원",
+    },
+    {
+      id: "A1B8",
       desc: "메뉴 2개, 총 2개  20,000원",
     },
   ]

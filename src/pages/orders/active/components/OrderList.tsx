@@ -5,7 +5,7 @@ const OrderList = () => {
   const { setCurrentOrder, newOrders, processingOrders, order } = useActiveOrder()
 
   return (
-    <div className="flex flex-col w-[350px] bg-sidebar">
+    <div className="flex flex-col h-full w-[350px] bg-sidebar overflow-y-auto dark-scrollbar">
       <OrderMenu name="신규" count={newOrders.length}>
         {newOrders.map((item) => (
           <OrderItem

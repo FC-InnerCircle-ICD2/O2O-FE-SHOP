@@ -1,14 +1,10 @@
-import { Button } from "@/components/Button"
 import { Separator } from "@/components/ui/separator"
-import { useCallback, useRef } from "react"
+import { useCallback } from "react"
 import { toast } from "sonner"
 
 export const useToast = () => {
-  const toastId = useRef<number>(1)
-
-  const showNewOrderNotification = useCallback(() => {
-    const id = toastId.current++
-
+  // 주문 알림 토스트 주문 id를 인자로 넣어주기
+  const showNewOrderNotification = useCallback((id: string) => {
     toast(
       () => (
         <div className="relative flex flex-col cursor-pointer w-full">
@@ -37,6 +33,7 @@ export const useToast = () => {
       ),
       {
         duration: Infinity,
+        id,
       },
     )
   }, [])

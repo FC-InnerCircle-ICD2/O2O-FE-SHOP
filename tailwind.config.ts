@@ -117,13 +117,14 @@ const config: Config = {
         dark: "#1C2434",
       },
       gridTemplateColumns: {
-        order: "1fr 100px 150px",
+        order: "minmax(250px, 1fr) 150px 200px",
       },
     },
   },
   corePlugins: {
     preflight: true,
   },
+  plugins: [],
 }
 
 export default config
