@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useState } from "react"
 
-interface Order {
+export interface Order {
   id: string
   desc: string
+  orderTime: string
 }
 
 interface OrderActiveContextType {
@@ -22,36 +23,43 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     setOrder(order)
   }
 
-  const newOrders = [
+  const newOrders: Order[] = [
     {
       id: "A1B2",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
     {
       id: "A1B3",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
   ]
-  const processingOrders = [
+  const processingOrders: Order[] = [
     {
       id: "A1B4",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
     {
       id: "A1B5",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
     {
       id: "A1B6",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
     {
       id: "A1B7",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
     {
       id: "A1B8",
       desc: "메뉴 2개, 총 2개  20,000원",
+      orderTime: "2025-01-01 12:00:00",
     },
   ]
 

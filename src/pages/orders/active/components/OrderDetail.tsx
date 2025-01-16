@@ -1,9 +1,9 @@
-import { Button } from "@/components/Button"
 import Icon from "@/components/Icon"
 import { Separator } from "@/components/ui/separator"
 import { useEffect, useRef, useState } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
+import { Button } from "@/components/Button"
 
 const OrderDetail = () => {
   // 해당 page에서 orderId가 있으면 주문 상세 api 호출 예정
@@ -19,7 +19,12 @@ const OrderDetail = () => {
     }
   }, [order])
 
-  if (!order) return <div className="flex flex-col flex-1 bg-white">주문을 선택해주세요.</div>
+  if (!order)
+    return (
+      <div className="flex flex-col items-center justify-center flex-1 bg-white text-3xl font-bold">
+        주문을 선택해주세요
+      </div>
+    )
 
   return (
     <div
@@ -76,8 +81,9 @@ const OrderDetail = () => {
         <Separator className="h-3 bg-zinc-100" />
         {/* 주문 정보 */}
         <div className="flex flex-col">
-          <div className="flex h-[60px] items-center text-2xl font-bold border-b-[1px] border-b-slate-300 px-[30px]">
-            주문정보
+          <div className="flex h-[60px] items-center justify-between text-2xl font-bold border-b-[1px] border-b-slate-300 px-[30px]">
+            <span>주문정보</span>
+            <span className="text-xl text-zinc-00">{order.orderTime}</span>
           </div>
           <div className="px-[30px]">
             <OrderMenuItem
