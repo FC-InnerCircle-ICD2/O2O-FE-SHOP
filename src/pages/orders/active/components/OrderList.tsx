@@ -1,5 +1,5 @@
 import { cn } from "@/components/ui/lib/utils"
-import { useActiveOrder } from "../contexts/OrderActiveProvider"
+import { Order, useActiveOrder } from "../contexts/OrderActiveProvider"
 
 const OrderList = () => {
   const { setCurrentOrder, newOrders, processingOrders, order } = useActiveOrder()
@@ -10,8 +10,7 @@ const OrderList = () => {
         {newOrders.map((item) => (
           <OrderItem
             key={item.id}
-            id={item.id}
-            desc={item.desc}
+            order={item}
             onClick={() => setCurrentOrder(item)}
             isActive={order?.id === item.id}
           />
@@ -21,8 +20,7 @@ const OrderList = () => {
         {processingOrders.map((item) => (
           <OrderItem
             key={item.id}
-            id={item.id}
-            desc={item.desc}
+            order={item}
             onClick={() => setCurrentOrder(item)}
             isActive={order?.id === item.id}
           />
@@ -45,34 +43,44 @@ const OrderMenu = ({
     <ul>
       <li
         className={cn("flex items-center w-full h-[52px] px-5 text-white font-bold bg-[#2E2E39]")}
-      >{`${name} ${count}건`}</li>
+      >
+        <p className="flex items-center gap-2">
+          <span className="text-2xl">{`${name}`}</span>
+          <span className="text-[#4BB6FF] text-3xl">{`${count}건`}</span>
+        </p>
+      </li>
       {children}
     </ul>
   )
 }
 
 const OrderItem = ({
-  id,
-  desc,
+  order,
   onClick,
   isActive,
 }: {
-  id: string
-  desc: string
+  order: Order
   onClick: () => void
   isActive: boolean
 }) => {
   return (
     <li
       className={cn(
-        "flex items-center w-full h-[108px] px-5 cursor-pointer",
-        isActive ? "bg-[#2395FF]" : "bg-[#161616]",
+        "flex items-start w-full cursor-pointer",
+        "border-b border-[#222222]",
+        isActive ? "bg-[#2395FF]" : "bg-[#1A1A1A]",
       )}
       onClick={onClick}
     >
-      <div className="flex flex-col gap-5">
-        <span className="text-3xl text-white font-bold">{`배달 ${id}`}</span>
-        <span className="text-2xl text-white">{desc}</span>
+      <div className="flex flex-col w-full py-4 px-5">
+        {/* 주문 ID */}
+        <div className="text-3xl text-white font-bold mb-2">{`배달 ${order.id}`}</div>
+
+        {/* 주문 시간 */}
+        <div className="text-xl text-zinc-200 mb-0.5">{order.orderTime}</div>
+
+        {/* 주문 내역 */}
+        <span className="text-2xl text-zinc-200">{order.desc}</span>
       </div>
     </li>
   )
