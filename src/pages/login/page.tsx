@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 
-const LoginPage = () => {
+export default function Page() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
       <Card className="w-full max-w-md p-8">
@@ -40,5 +40,3 @@ const LoginPage = () => {
     </div>
   )
 }
-
-export default LoginPage
