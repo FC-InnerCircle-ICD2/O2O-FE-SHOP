@@ -7,6 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/shadcn/pagination"
+
 import { Order } from "@/types/models"
 import { useState } from "react"
 export function SearchResult() {
@@ -44,26 +54,44 @@ export function SearchResult() {
     },
   ])
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">주문시각</TableHead>
-          <TableHead>상태</TableHead>
-          <TableHead>메뉴</TableHead>
-          <TableHead className="text-right">주문금액</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {orders.map((order, key) => (
-          <TableRow key={key}>
-            <TableCell className="font-medium">{order.time}</TableCell>
-            <TableCell>{order.status}</TableCell>
-            <TableCell>{order.name}</TableCell>
-            <TableCell className="text-right">{order.totalPrice}</TableCell>
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">주문시각</TableHead>
+            <TableHead>상태</TableHead>
+            <TableHead>메뉴</TableHead>
+            <TableHead className="text-right">주문금액</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {orders.map((order, key) => (
+            <TableRow key={key}>
+              <TableCell className="font-medium">{order.time}</TableCell>
+              <TableCell>{order.status}</TableCell>
+              <TableCell>{order.name}</TableCell>
+              <TableCell className="text-right">{order.totalPrice}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {/* TODO: 검색버튼 클릭 시, 페이지 클릭 시 필터내용을 쿼리파라미터로 변환해 검색 */}
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
   )
 }
