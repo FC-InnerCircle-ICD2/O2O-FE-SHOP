@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/lib/utils"
+import { cn } from "@/lib/utils"
 import { operationStore } from "@/store/operation"
 import { Switch } from "@components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
