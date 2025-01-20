@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/select"
+import { Button } from "@/components/shadcn/button"
 type OrderStatus = "완료" | "취소"
 export function SearchFilter() {
   const [date, setDate] = useState<DateRange | undefined>({
@@ -16,6 +17,9 @@ export function SearchFilter() {
     to: new Date(),
   })
   const [status, setStatus] = useState<OrderStatus>()
+  const handleClickSearchButton = () => {
+    console.log("searched")
+  }
   return (
     <div>
       <div className="flex items-center mb-4">
@@ -34,6 +38,7 @@ export function SearchFilter() {
           </SelectContent>
         </Select>
       </div>
+      <Button onClick={handleClickSearchButton}>조회</Button>
     </div>
   )
 }
