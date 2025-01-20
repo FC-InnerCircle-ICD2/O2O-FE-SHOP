@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import Main from "../Main"
-import { Sidebar, useSidebar } from "../ui/sidebar"
+import { Sidebar, useSidebar } from "../shadcn/sidebar"
 import { Body } from "./body"
 import { Header } from "./header"
 

@@ -2,7 +2,7 @@ import { ROUTES } from "@/utils/routes"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible"
 import { useLocation, useNavigate } from "react-router-dom"
 import Icon from "../Icon"
-import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../shadcn/sidebar"
 
 export function Body() {
   const navigate = useNavigate()

@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/shadcn/button"
+import { Card } from "@/components/shadcn/card"
+import { Input } from "@/components/shadcn/input"
 
 export default function Page() {
   return (

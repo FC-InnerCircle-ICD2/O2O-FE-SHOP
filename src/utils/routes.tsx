@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/shadcn/sidebar"
 import { RouteObject } from "react-router-dom"
 
 import DashboardPage from "@/pages/dashboard/page"
