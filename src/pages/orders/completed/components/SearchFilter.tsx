@@ -28,12 +28,14 @@ export function SearchFilter() {
     const endDate = searchParams.get("end_date")
     const statusParam = searchParams.get("status") as OrderStatus | null
 
-    if (startDate && endDate) {
-      setDate({
-        from: new Date(startDate),
-        to: new Date(endDate),
-      })
+    if (startDate || endDate) {
+      setDate((prev) => ({
+        ...prev,
+        from: startDate ? new Date(startDate) : prev?.from,
+        to: endDate ? new Date(endDate) : prev?.to,
+      }))
     }
+    
     if (statusParam) {
       setStatus(statusParam)
     }
