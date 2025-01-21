@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/select"
-import { Button } from "@/components/shadcn/button"
+import { Button } from "@/components/Button"
 type OrderStatus = "완료" | "취소"
 export function SearchFilter() {
   const [date, setDate] = useState<DateRange | undefined>({
@@ -23,11 +23,11 @@ export function SearchFilter() {
   return (
     <div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mr-4">주문일시</div>
+        <div className="text-base mr-4">주문일시</div>
         <DatePickerWithRange date={date} onSelect={setDate} />
       </div>
-      <div className="flex items-center">
-        <div className="text-xl mr-4">주문상태</div>
+      <div className="flex items-center ">
+        <div className="text-base mr-4">주문상태</div>
         <Select value={status} onValueChange={(e) => setStatus(e as OrderStatus)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="주문상태" />
@@ -38,7 +38,9 @@ export function SearchFilter() {
           </SelectContent>
         </Select>
       </div>
-      <Button onClick={handleClickSearchButton}>조회</Button>
+      <div className="mt-8">
+        <Button  onClick={handleClickSearchButton}>조회</Button>
+      </div>
     </div>
   )
 }

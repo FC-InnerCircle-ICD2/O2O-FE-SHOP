@@ -95,24 +95,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
         jua: ["BMJUA", "sans-serif"],
-      },
-      spacing: {
-        1: "0.4rem", // 4px
-        2: "0.8rem", // 8px
-        3: "1.2rem", // 12px
-        4: "1.6rem", // 16px
-        5: "2rem", // 20px
-        6: "2.4rem", // 24px
-        7: "2.8rem", // 28px
-        8: "3.2rem", // 32px
-        9: "3.6rem", // 36px
-        10: "4rem", // 40px
-        11: "4.4rem", // 44px
-        12: "4.8rem", // 48px
-        13: "5.2rem", // 52px
-        14: "5.6rem", // 56px
-        15: "6rem", // 60px
-      },
+      },  
       backgroundColor: {
         dark: "#1C2434",
       },

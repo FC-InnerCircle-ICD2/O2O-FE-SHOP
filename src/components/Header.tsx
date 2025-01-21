@@ -18,16 +18,16 @@ const Header = () => {
     <header className="h-header min-h-header w-full px-6 bg-sidebar">
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="size-[3.4rem] p-[1rem]">
+          <div className="p-[1rem]">
             <div
               className={cn(
-                "size-full rounded-full",
+                "size-[1rem] rounded-full",
                 isOperational ? "bg-operational" : "bg-closed",
               )}
             ></div>
           </div>
-          <span className="text-[2rem] leading-[2rem] font-bold text-netural">
-            {isOperational ? "영업 중" : "영업 종료"}
+          <span className="text-xl font-bold text-netural">
+            {isOperational ? "영업중" : "영업종료"}
           </span>
         </div>
         <div className="flex items-center gap-6">

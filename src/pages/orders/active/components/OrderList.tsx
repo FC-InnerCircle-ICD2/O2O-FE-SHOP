@@ -45,8 +45,8 @@ const OrderMenu = ({
         className={cn("flex items-center w-full h-[52px] px-5 text-white font-bold bg-[#2E2E39]")}
       >
         <p className="flex items-center gap-2">
-          <span className="text-2xl">{`${name}`}</span>
-          <span className="text-[#4BB6FF] text-3xl">{`${count}건`}</span>
+          <span className="text-lg">{`${name}`}</span>
+          <span className="text-[#4BB6FF] text-lg">{`${count}건`}</span>
         </p>
       </li>
       {children}
@@ -74,13 +74,13 @@ const OrderItem = ({
     >
       <div className="flex flex-col w-full py-4 px-5">
         {/* 주문 ID */}
-        <div className="text-3xl text-white font-bold mb-2">{`배달 ${order.id}`}</div>
+        <div className="text-lg text-white font-bold mb-2">{`배달 ${order.id}`}</div>
 
         {/* 주문 시간 */}
-        <div className="text-xl text-zinc-200 mb-0.5">{order.orderTime}</div>
+        <div className="text-base text-zinc-200 mb-0.5">{order.orderTime}</div>
 
         {/* 주문 내역 */}
-        <span className="text-2xl text-zinc-200">{order.desc}</span>
+        <span className="text-lg text-zinc-200">{order.desc}</span>
       </div>
     </li>
   )
