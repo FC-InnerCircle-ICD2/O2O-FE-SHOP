@@ -1,4 +1,4 @@
-import { ROUTES } from "@/utils/routes"
+import { ROUTES } from "@/routes"
 import { useNavigate } from "react-router-dom"
 import { SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../shadcn/sidebar"
 
