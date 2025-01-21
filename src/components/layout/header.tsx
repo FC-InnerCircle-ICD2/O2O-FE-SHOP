@@ -1,6 +1,6 @@
 import { ROUTES } from "@/utils/routes"
 import { useNavigate } from "react-router-dom"
-import { SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../shadcn/sidebar"
 
 export function Header() {
   const navigate = useNavigate()

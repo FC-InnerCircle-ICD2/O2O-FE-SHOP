@@ -4,9 +4,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
-import { SidebarFooter } from "../ui/sidebar"
+} from "../shadcn/dropdown"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../shadcn/sidebar"
+import { SidebarFooter } from "../shadcn/sidebar"
 
 export function Footer() {
   return (

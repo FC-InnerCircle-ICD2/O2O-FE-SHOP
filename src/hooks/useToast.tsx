@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/shadcn/separator"
 import { useCallback } from "react"
 import { toast } from "sonner"
 

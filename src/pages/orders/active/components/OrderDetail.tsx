@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon"
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/shadcn/separator"
 import { useEffect, useRef, useState } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"

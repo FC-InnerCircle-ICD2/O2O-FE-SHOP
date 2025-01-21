@@ -1,13 +1,14 @@
 import { Layout } from "@/components/layout"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import DashboardPage from "@/pages/dashboard/Dashboard"
-import LoginPage from "@/pages/login/LoginPage"
-import OrdersActivePage from "@/pages/orders/active/OrdersActivePage"
-import OrdersCompletedPage from "@/pages/orders/completed/OrdersCompletedPage"
-import StoreInfoPage from "@/pages/store/info/StoreInfo"
-import StoreMenuPage from "@/pages/store/menu/StoreMenu"
-import StoreReviewPage from "@/pages/store/review/StoreReview"
+import { SidebarProvider } from "@/components/shadcn/sidebar"
 import { RouteObject } from "react-router-dom"
+
+import DashboardPage from "@/pages/dashboard/page"
+import LoginPage from "@/pages/login/page"
+import OrdersActivePage from "@/pages/orders/active/page"
+import OrdersCompletedPage from "@/pages/orders/completed/page"
+import ShopInfoPage from "@/pages/shop/info/page"
+import ShopMenuPage from "@/pages/shop/menu/page"
+import ShopReviewPage from "@/pages/shop/review/page"
 
 export const ROUTES = {
   LOGIN: "/login",
@@ -15,9 +16,9 @@ export const ROUTES = {
   ORDER: "/orders",
   COMPLETED_ORDER: "/orders/completed",
   ACTIVE_ORDER: "/orders/active",
-  STORE_INFO: "/store/info",
-  STORE_REVIEW: "/store/review",
-  STORE_MENU: "/store/menu",
+  SHOP_INFO: "/shop/info",
+  SHOP_REVIEW: "/shop/review",
+  SHOP_MENU: "/shop/menu",
 }
 
 export const routes: RouteObject[] = [
@@ -51,16 +52,16 @@ export const routes: RouteObject[] = [
         element: <OrdersActivePage />,
       },
       {
-        path: ROUTES.STORE_INFO,
-        element: <StoreInfoPage />,
+        path: ROUTES.SHOP_INFO,
+        element: <ShopInfoPage />,
       },
       {
-        path: ROUTES.STORE_REVIEW,
-        element: <StoreReviewPage />,
+        path: ROUTES.SHOP_REVIEW,
+        element: <ShopReviewPage />,
       },
       {
-        path: ROUTES.STORE_MENU,
-        element: <StoreMenuPage />,
+        path: ROUTES.SHOP_MENU,
+        element: <ShopMenuPage />,
       },
     ],
   },
