@@ -5,14 +5,19 @@ export type Order = {
   name: string
   status: OrderStatus
   type: OrderType
-  time: number
+  time: string
   totalPrice: number
   totalItems: number
+  address: {
+    road: string
+    jihub: string
+    detail: string
+  }
   details: OrderDetail[]
 }
 
 export type OrderDetail = {
-  id: string
+  id: number
   price: number
   menuName: string
   quantity: number
@@ -21,13 +26,13 @@ export type OrderDetail = {
 }
 
 export type OptionGroup = {
-  id: string
+  id: number
   name: string
   options: Option[]
 }
 
 export type Option = {
-  id: string
+  id: number
   name: string
   price: number
 }

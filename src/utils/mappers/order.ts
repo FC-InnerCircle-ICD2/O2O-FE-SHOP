@@ -10,20 +10,22 @@ export const mapOrderDtoToModel = (dto: OrderDto): Order => ({
   time: dto.orderTime,
   totalPrice: dto.totalPrice,
   totalItems: dto.totalMenuCount,
-  details: dto.orderDetail.map<OrderDetail>((detail) => ({
+  address: {
+    road: dto.roadAddress,
+    jihub: dto.jibunAddress,
+    detail: dto.detailAddress,
+  },
+  details: dto.orderMenuInquiryResponses.map<OrderDetail>((detail) => ({
     id: detail.id,
-    orderId: detail.orderId,
-    price: detail.price,
+    price: detail.menuPrice,
     menuName: detail.menuName,
     quantity: detail.menuQuantity,
     menuPrice: detail.menuPrice,
-    optionGroups: detail.menuOptionGroups.map<OptionGroup>((group) => ({
+    optionGroups: detail.orderMenuOptionGroupInquiryResponses.map<OptionGroup>((group) => ({
       id: group.id,
-      detailId: group.orderDetailId,
-      name: group.menuOptionGroupNm,
-      options: group.menuOption.map<Option>((option) => ({
+      name: group.orderMenuOptionGroupName,
+      options: group.orderMenuOptionInquiryResponses.map<Option>((option) => ({
         id: option.id,
-        groupId: option.menuOptionGroupId,
         name: option.menuOptionName,
         price: option.menuOptionPrice,
       })),

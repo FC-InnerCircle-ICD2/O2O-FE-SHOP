@@ -16,43 +16,35 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/shadcn/pagination"
-
+import { Pagination as TPagination } from "@/types/common"
 import { Order } from "@/types/models"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { fetchOrders } from "@/apis/order"
+import { DEFAULT_PAGINATION } from "@/constants"
+
 export function SearchResult() {
-  const [orders, setOrders] = useState<Order[]>([
-    {
-      id: "F251232323-12321323",
-      name: "보쌈정식(배추김치) 외 1개",
-      status: "NEW",
-      type: "DELIVERY",
-      time: 1736938800,
-      totalPrice: 21900,
-      totalItems: 12,
-      details: [
-        {
-          id: "6f93ea92-e26e-41fc-8f09-29de608340f0",
-          price: 12900,
-          menuName: "[주문폭주] 투움바 파스타 1",
-          quantity: 1,
-          menuPrice: 12400,
-          optionGroups: [
-            {
-              id: "7b93ea92-e26e-12ab-8f09-29de608340n1",
-              name: "피클 선택",
-              options: [
-                {
-                  id: "9a45ea92-e26e-12ab-8f09-29de608340n1",
-                  name: "상큼한 피클",
-                  price: 500,
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ])
+  const [orders, setOrders] = useState<Order[]>([])
+  const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { content, currentPage, hasNext, totalItems, totalPages } = await fetchOrders({
+        page: 1,
+        storeId: 1,
+        size: 1,
+      })
+
+      setOrders(content)
+      setPagination({ currentPage, hasNext, totalItems, totalPages })
+    }
+    fetch()
+  }, [])
+
+  // Calculate the range of pages to display (for simplicity, display up to 5 pages)
+  const pages = Array.from({ length: pagination.totalPages }, (_, index) => index + 1)
+  const showEllipsesBefore = pagination.currentPage > 3
+  const showEllipsesAfter = pagination.currentPage < pagination.totalPages - 2
+
   return (
     <>
       <Table>
@@ -75,20 +67,70 @@ export function SearchResult() {
           ))}
         </TableBody>
       </Table>
-      {/* TODO: 검색버튼 클릭 시, 페이지 클릭 시 필터내용을 쿼리파라미터로 변환해 검색 */}
+
       <Pagination>
         <PaginationContent>
+          {/* Previous Button */}
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious
+              href="#"
+              // disabled={pagination.currentPage === 1}
+            />
           </PaginationItem>
+
+          {/* Display first page */}
+          {pagination.currentPage > 2 && (
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+          )}
+
+          {/* Ellipsis before if the current page is far enough */}
+          {showEllipsesBefore && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+
+          {/* Pages around the current page */}
+          {pages
+            .filter(
+              (page) =>
+                page === pagination.currentPage ||
+                page === pagination.currentPage - 1 ||
+                page === pagination.currentPage + 1,
+            )
+            .map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  href="#"
+                  className={pagination.currentPage === page ? "text-blue-500" : ""}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+          {/* Ellipsis after if the current page is far enough */}
+          {showEllipsesAfter && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+
+          {/* Display last page */}
+          {pagination.currentPage < pagination.totalPages - 1 && (
+            <PaginationItem>
+              <PaginationLink href="#">{pagination.totalPages}</PaginationLink>
+            </PaginationItem>
+          )}
+
+          {/* Next Button */}
           <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext
+              href="#"
+              // disabled={!pagination.hasNext}
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

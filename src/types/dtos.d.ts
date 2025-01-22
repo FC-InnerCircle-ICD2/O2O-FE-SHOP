@@ -1,27 +1,30 @@
 import { OrderStatus, OrderType } from "./common"
-
 export interface OrderDto {
   orderId: string
   orderName: string
   orderStatus: OrderStatus
   orderType: OrderType
-  orderTime: number
+  orderTime: string // 날짜 형식 그대로 사용
   totalPrice: number
   totalMenuCount: number
-  orderDetail: {
-    id: string
+  roadAddress: string
+  jibunAddress: string
+  detailAddress: string
+  orderMenuInquiryResponses: {
+    id: number
     orderId: string
-    price: number
+    menuId: string
     menuName: string
     menuQuantity: number
     menuPrice: number
-    menuOptionGroups: {
-      id: string
-      orderDetailId: string
-      menuOptionGroupNm: string
-      menuOption: {
-        id: string
-        menuOptionGroupId: string
+    totalPrice: number
+    orderMenuOptionGroupInquiryResponses: {
+      id: number
+      orderMenuId: number
+      orderMenuOptionGroupName: string
+      orderMenuOptionInquiryResponses: {
+        id: number
+        orderMenuOptionGroupId: number
         menuOptionName: string
         menuOptionPrice: number
       }[]
