@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -19,7 +18,10 @@ import {
 
 import { Order } from "@/types/models"
 import { useState } from "react"
+import { useQueryParams } from "../hooks/useQueryParams"
 export function SearchResult() {
+  const { startDate, endDate, status: initialStatus } = useQueryParams()
+
   const [orders, setOrders] = useState<Order[]>([
     {
       id: "F251232323-12321323",

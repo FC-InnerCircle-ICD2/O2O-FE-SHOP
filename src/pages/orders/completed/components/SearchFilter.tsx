@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { DateRange } from "react-day-picker"
-import { subDays, format } from "date-fns"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { format } from "date-fns"
+import { useNavigate } from "react-router-dom"
 import { DatePickerWithRange } from "@/components/DatePicker"
 import {
   Select,
@@ -13,39 +13,33 @@ import {
 import { Button } from "@/components/Button"
 import { orderStatusLabels } from "@/constants/order"
 import { OrderStatus } from "@/types/common"
+import { useQueryParams } from "../hooks/useQueryParams" // 훅을 가져옵니다.
 
 export function SearchFilter() {
-  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const { startDate, endDate, status: initialStatus } = useQueryParams()
 
-  // 기본 상태값 설정
   const [date, setDate] = useState<DateRange | undefined>()
   const [status, setStatus] = useState<OrderStatus | undefined>()
 
   useEffect(() => {
-    // URL 쿼리 파라미터 읽어서 상태 업데이트
-    const startDate = searchParams.get("start_date")
-    const endDate = searchParams.get("end_date")
-    const statusParam = searchParams.get("status") as OrderStatus | null
-
     if (startDate || endDate) {
-      setDate((prev) => ({
-        ...prev,
-        from: startDate ? new Date(startDate) : prev?.from,
-        to: endDate ? new Date(endDate) : prev?.to,
-      }))
+      setDate({
+        from: startDate ? new Date(startDate) : undefined,
+        to: endDate ? new Date(endDate) : undefined,
+      })
     }
-    
-    if (statusParam) {
-      setStatus(statusParam)
+
+    if (initialStatus) {
+      setStatus(initialStatus)
     }
-  }, [searchParams])
+  }, [startDate, endDate, initialStatus])
 
   const handleClickSearchButton = () => {
     const queryParams: Record<string, string> = {}
 
-    if (date?.from) queryParams.start_date = format(date.from, "yyyy-MM-dd")
-    if (date?.to) queryParams.end_date = format(date.to, "yyyy-MM-dd")
+    if (date?.from) queryParams.startDate = format(date.from, "yyyy-MM-dd")
+    if (date?.to) queryParams.endDate = format(date.to, "yyyy-MM-dd")
     if (status) queryParams.status = status
 
     const queryString = new URLSearchParams(queryParams).toString()
