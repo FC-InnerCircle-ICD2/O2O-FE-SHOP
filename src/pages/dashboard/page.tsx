@@ -1,6 +1,6 @@
 import { useToast } from "@/hooks/useToast"
 
-const DashboardPage = () => {
+export default function Page() {
   const { showNewOrderNotification } = useToast()
 
   const generateRandomId = () => {
@@ -13,5 +13,3 @@ const DashboardPage = () => {
     </div>
   )
 }
-
-export default DashboardPage

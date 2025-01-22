@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/lib/utils"
+import { cn } from "@/lib/utils"
 import { Order, useActiveOrder } from "../contexts/OrderActiveProvider"
 
 const OrderList = () => {

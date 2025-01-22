@@ -3,13 +3,18 @@ import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeft } from "lucide-react"
 import * as React from "react"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/components/ui/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { Button } from "@/components/shadcn/button"
+import { Input } from "@/components/shadcn/input"
+import { cn } from "@/lib/utils"
+import { Separator } from "@/components/shadcn/separator"
+import { Skeleton } from "@/components/shadcn/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/shadcn/tooltip"
+import { useIsMobile } from "@/hooks/useMobile"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
