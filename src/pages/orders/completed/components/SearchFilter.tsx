@@ -1,48 +1,53 @@
 import { useEffect, useState } from "react"
-import { DateRange } from "react-day-picker"
-import { format } from "date-fns"
 import { useNavigate } from "react-router-dom"
-import { DatePickerWithRange } from "@/components/DatePicker"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/shadcn/select"
+
+import { format } from "date-fns"
+import { DateRange } from "react-day-picker"
+
 import { Button } from "@/components/Button"
-import { orderStatusLabels } from "@/constants/order"
+import { Checkbox } from "@/components/shadcn/checkbox"
+import { DatePickerWithRange } from "@/components/DatePicker"
 import { OrderStatus } from "@/types/common"
-import { useQueryParams } from "../hooks/useQueryParams" // 훅을 가져옵니다.
+import { orderStatusLabels } from "@/constants/order"
+import { useQueryParams } from "../hooks/useQueryParams"
 
 export function SearchFilter() {
   const navigate = useNavigate()
   const { startDate, endDate, status: initialStatus } = useQueryParams()
 
   const [date, setDate] = useState<DateRange | undefined>()
-  const [status, setStatus] = useState<OrderStatus | undefined>()
+  const [selectedStatuses, setSelectedStatuses] = useState<OrderStatus[]>([])
 
   useEffect(() => {
-    if (startDate || endDate) {
-      setDate({
-        from: startDate ? new Date(startDate) : undefined,
-        to: endDate ? new Date(endDate) : undefined,
-      })
+    const initialDate: DateRange = {
+      from: startDate ? new Date(startDate) : undefined,
+      to: endDate ? new Date(endDate) : undefined,
     }
+    setDate(initialDate)
+  }, [startDate, endDate])
 
+  useEffect(() => {
     if (initialStatus) {
-      setStatus(initialStatus)
+      setSelectedStatuses(initialStatus)
     }
-  }, [startDate, endDate, initialStatus])
+  }, [initialStatus])
+
+  const handleStatusChange = (value: OrderStatus) => {
+    setSelectedStatuses((prevStatuses) =>
+      prevStatuses.includes(value)
+        ? prevStatuses.filter((status) => status !== value)
+        : [...prevStatuses, value],
+    )
+  }
 
   const handleClickSearchButton = () => {
-    const queryParams: Record<string, string> = {}
+    const queryParams = new URLSearchParams()
 
-    if (date?.from) queryParams.startDate = format(date.from, "yyyy-MM-dd")
-    if (date?.to) queryParams.endDate = format(date.to, "yyyy-MM-dd")
-    if (status) queryParams.status = status
+    if (date?.from) queryParams.set("startDate", format(date.from, "yyyy-MM-dd"))
+    if (date?.to) queryParams.set("endDate", format(date.to, "yyyy-MM-dd"))
+    selectedStatuses.forEach((status) => queryParams.append("status", status))
 
-    const queryString = new URLSearchParams(queryParams).toString()
+    const queryString = queryParams.toString()
     navigate(`/orders/completed?${queryString}`)
   }
 
@@ -53,20 +58,20 @@ export function SearchFilter() {
         <DatePickerWithRange date={date} onSelect={setDate} />
       </div>
 
-      <div className="flex items-center ">
+      <div className="flex items-center mb-4">
         <div className="text-base mr-4">주문상태</div>
-        <Select value={status} onValueChange={(e) => setStatus(e as OrderStatus)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="주문상태" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(orderStatusLabels).map(([key, label]) => (
-              <SelectItem key={key} value={key}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-wrap">
+          {Object.entries(orderStatusLabels).map(([key, label]) => (
+            <div key={key} className="mr-4">
+              <Checkbox
+                id={key}
+                checked={selectedStatuses.includes(key as OrderStatus)}
+                onCheckedChange={() => handleStatusChange(key as OrderStatus)}
+              />
+              <label htmlFor={key}>{label}</label>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-8">

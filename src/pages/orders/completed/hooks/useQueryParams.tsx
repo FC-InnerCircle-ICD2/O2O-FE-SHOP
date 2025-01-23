@@ -3,9 +3,9 @@ import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 
 export interface QueryParams {
-  startDate?: string // ISO 형식 문자열로 날짜 전달
+  startDate?: string
   endDate?: string
-  status?: OrderStatus // 사용자 정의 OrderStatus 타입
+  status?: OrderStatus[]
   storeId?: string
   page?: number
   size?: number
@@ -15,12 +15,13 @@ export function useQueryParams(): QueryParams {
   const [searchParams] = useSearchParams()
 
   return useMemo(() => {
+    // 주문목록 조회 필터
     const startDate = searchParams.get("start_date") || undefined
     const endDate = searchParams.get("end_date") || undefined
-    const status = (searchParams.get("status") as OrderStatus) || undefined
+    const status = (searchParams.getAll("status") as OrderStatus[]) || undefined
     const storeId = searchParams.get("storeId") || undefined
 
-    // 숫자 파라미터 처리 (페이지 번호와 사이즈)
+    // 페이지네이션
     const page = searchParams.get("page") ? parseInt(searchParams.get("page")!, 10) : undefined
     const size = searchParams.get("size") ? parseInt(searchParams.get("size")!, 10) : undefined
 
