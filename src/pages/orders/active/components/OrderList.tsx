@@ -1,44 +1,21 @@
 import { cn } from "@/lib/utils"
 import { Order, useActiveOrder } from "../contexts/OrderActiveProvider"
+import { useNavigate } from "react-router-dom"
 
 const OrderList = () => {
-  const { setCurrentOrder, newOrders, processingOrders, order } = useActiveOrder()
+  const { newOrders, processingOrders } = useActiveOrder()
 
   return (
     <div className="flex flex-col h-full w-[350px] bg-sidebar overflow-y-auto dark-scrollbar">
-      <OrderMenu name="신규" count={newOrders.length}>
-        {newOrders.map((item) => (
-          <OrderItem
-            key={item.id}
-            order={item}
-            onClick={() => setCurrentOrder(item)}
-            isActive={order?.id === item.id}
-          />
-        ))}
-      </OrderMenu>
-      <OrderMenu name="진행" count={processingOrders.length}>
-        {processingOrders.map((item) => (
-          <OrderItem
-            key={item.id}
-            order={item}
-            onClick={() => setCurrentOrder(item)}
-            isActive={order?.id === item.id}
-          />
-        ))}
-      </OrderMenu>
+      <OrderMenu name="신규" orders={newOrders}></OrderMenu>
+      <OrderMenu name="진행" orders={processingOrders}></OrderMenu>
     </div>
   )
 }
 
-const OrderMenu = ({
-  name,
-  count,
-  children,
-}: {
-  name: string
-  count: number
-  children?: React.ReactNode
-}) => {
+const OrderMenu = ({ name, orders }: { name: string; orders: Order[] }) => {
+  const navigate = useNavigate()
+  const { order } = useActiveOrder()
   return (
     <ul>
       <li
@@ -46,10 +23,17 @@ const OrderMenu = ({
       >
         <p className="flex items-center gap-2">
           <span className="text-lg">{`${name}`}</span>
-          <span className="text-[#4BB6FF] text-lg">{`${count}건`}</span>
+          <span className="text-[#4BB6FF] text-lg">{`${orders.length}건`}</span>
         </p>
       </li>
-      {children}
+      {orders.map((item) => (
+        <OrderItem
+          key={item.id}
+          order={item}
+          onClick={() => navigate(`/orders/active?orderId=${item.id}`)}
+          isActive={order?.id === item.id}
+        />
+      ))}
     </ul>
   )
 }

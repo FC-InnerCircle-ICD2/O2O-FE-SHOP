@@ -6,9 +6,9 @@ import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
 
 const OrderDetail = () => {
-  // 해당 page에서 orderId가 있으면 주문 상세 api 호출 예정
-  const [orderTime, setOrderTime] = useState<number>(1)
   const { order } = useActiveOrder()
+
+  const [orderTime, setOrderTime] = useState<number>(1)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

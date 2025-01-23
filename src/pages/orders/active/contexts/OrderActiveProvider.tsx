@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, ReactNode, useContext } from "react"
+import { useSearchParams } from "react-router-dom"
 
 export interface Order {
   id: string
@@ -7,22 +8,15 @@ export interface Order {
 }
 
 interface OrderActiveContextType {
-  order?: Order
+  order: Order | undefined
   newOrders: Order[]
   processingOrders: Order[]
-  setCurrentOrder: (order: Order) => void
 }
 
 const OrderActiveContext = createContext<OrderActiveContextType | null>(null)
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
-  // provider에서 api 호출 로직 구현 예정
-  const [order, setOrder] = useState<Order | undefined>(undefined)
-
-  const setCurrentOrder = (order: Order) => {
-    setOrder(order)
-  }
-
+  const [searchParams] = useSearchParams()
   const newOrders: Order[] = [
     {
       id: "A1B2",
@@ -62,12 +56,16 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       orderTime: "2025-01-01 12:00:00",
     },
   ]
+  const getOrderById = (id: string) => {
+    return [...newOrders, ...processingOrders].find((order) => order.id === id)
+  }
+  const orderId = searchParams.get("orderId")
+  const order = orderId ? getOrderById(orderId) : undefined
 
   const value = {
     order,
     newOrders,
     processingOrders,
-    setCurrentOrder,
   }
 
   return <OrderActiveContext.Provider value={value}>{children}</OrderActiveContext.Provider>
