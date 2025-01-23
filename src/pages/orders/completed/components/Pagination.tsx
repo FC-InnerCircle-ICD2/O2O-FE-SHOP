@@ -8,7 +8,20 @@ import {
   PaginationPrevious,
 } from "@/components/shadcn/pagination"
 import { Pagination as TPagination } from "@/types/common"
+import { useLocation, useNavigate } from "react-router-dom"
+
 export function PaginationComponent({ pagination }: { pagination: TPagination }) {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handlePageChange = (page: number) => {
+    const searchParams = new URLSearchParams(location.search)
+
+    searchParams.set("page", page.toString())
+
+    navigate(`${location.pathname}?${searchParams.toString()}`)
+  }
+
   const pages = Array.from({ length: pagination.totalPages }, (_, index) => index + 1)
   const showEllipsesBefore = pagination.currentPage > 3
   const showEllipsesAfter = pagination.currentPage < pagination.totalPages - 2
@@ -18,17 +31,17 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
       <PaginationContent>
         {/* Previous Button */}
         <PaginationItem>
-          <PaginationPrevious href="#" />
+          <PaginationPrevious onClick={() => handlePageChange(pagination.currentPage - 1)} />
         </PaginationItem>
 
         {/* Display first page */}
         {pagination.currentPage > 2 && (
           <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
+            <PaginationLink onClick={() => handlePageChange(1)}>1</PaginationLink>
           </PaginationItem>
         )}
 
-        {/* Ellipsis before if the current page is far enough */}
+        {/* Ellipsis before */}
         {showEllipsesBefore && (
           <PaginationItem>
             <PaginationEllipsis />
@@ -46,7 +59,7 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
           .map((page) => (
             <PaginationItem key={page}>
               <PaginationLink
-                href="#"
+                onClick={() => handlePageChange(page)}
                 className={pagination.currentPage === page ? "text-blue-500" : ""}
               >
                 {page}
@@ -54,7 +67,7 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
             </PaginationItem>
           ))}
 
-        {/* Ellipsis after if the current page is far enough */}
+        {/* Ellipsis after */}
         {showEllipsesAfter && (
           <PaginationItem>
             <PaginationEllipsis />
@@ -64,13 +77,15 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
         {/* Display last page */}
         {pagination.currentPage < pagination.totalPages - 1 && (
           <PaginationItem>
-            <PaginationLink href="#">{pagination.totalPages}</PaginationLink>
+            <PaginationLink onClick={() => handlePageChange(pagination.totalPages)}>
+              {pagination.totalPages}
+            </PaginationLink>
           </PaginationItem>
         )}
 
         {/* Next Button */}
         <PaginationItem>
-          <PaginationNext href="#" />
+          <PaginationNext onClick={() => handlePageChange(pagination.currentPage + 1)} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

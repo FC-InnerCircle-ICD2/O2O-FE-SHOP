@@ -72,9 +72,9 @@ export const handlers = [
             ],
           },
         ],
-        currentPage: 3,
-        totalPages: 10,
-        totalItems: 100,
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 10,
         hasNext: false,
       },
     })
