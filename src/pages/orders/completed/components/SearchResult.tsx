@@ -13,9 +13,14 @@ import { fetchOrders } from "@/apis/order"
 import { DEFAULT_PAGINATION } from "@/constants"
 
 import { PaginationComponent } from "./Pagination"
+import { useQueryParams } from "../hooks/useQueryParams"
+import { useSearchParams } from "react-router-dom"
 export function SearchResult() {
+  const [searchParams] = useSearchParams()
+
   const [orders, setOrders] = useState<Order[]>([])
   const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
+  const { startDate, endDate, status } = useQueryParams()
 
   useEffect(() => {
     const fetch = async () => {
@@ -23,13 +28,16 @@ export function SearchResult() {
         page: 1,
         storeId: 1,
         size: 1,
+        ...(startDate && { OrderInquiryStartDate: startDate }),
+        ...(endDate && { OrderInquiryEndDate: endDate }),
+        ...(status && { orderStatus: status }),
       })
 
       setOrders(content)
       setPagination({ currentPage, hasNext, totalItems, totalPages })
     }
     fetch()
-  }, [])
+  }, [searchParams])
 
   return (
     <>
