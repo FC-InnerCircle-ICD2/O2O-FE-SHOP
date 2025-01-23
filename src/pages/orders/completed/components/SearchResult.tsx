@@ -6,25 +6,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/shadcn/pagination"
 import { Pagination as TPagination } from "@/types/common"
 import { Order } from "@/types/models"
 import { useEffect, useState } from "react"
 import { fetchOrders } from "@/apis/order"
 import { DEFAULT_PAGINATION } from "@/constants"
 
-import { useQueryParams } from "../hooks/useQueryParams"
+import { PaginationComponent } from "./Pagination"
 export function SearchResult() {
-  const { startDate, endDate, status: initialStatus } = useQueryParams()
-
   const [orders, setOrders] = useState<Order[]>([])
   const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
 
@@ -41,11 +30,6 @@ export function SearchResult() {
     }
     fetch()
   }, [])
-
-  // Calculate the range of pages to display (for simplicity, display up to 5 pages)
-  const pages = Array.from({ length: pagination.totalPages }, (_, index) => index + 1)
-  const showEllipsesBefore = pagination.currentPage > 3
-  const showEllipsesAfter = pagination.currentPage < pagination.totalPages - 2
 
   return (
     <>
@@ -70,72 +54,7 @@ export function SearchResult() {
         </TableBody>
       </Table>
 
-      <Pagination>
-        <PaginationContent>
-          {/* Previous Button */}
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              // disabled={pagination.currentPage === 1}
-            />
-          </PaginationItem>
-
-          {/* Display first page */}
-          {pagination.currentPage > 2 && (
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-          )}
-
-          {/* Ellipsis before if the current page is far enough */}
-          {showEllipsesBefore && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-
-          {/* Pages around the current page */}
-          {pages
-            .filter(
-              (page) =>
-                page === pagination.currentPage ||
-                page === pagination.currentPage - 1 ||
-                page === pagination.currentPage + 1,
-            )
-            .map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href="#"
-                  className={pagination.currentPage === page ? "text-blue-500" : ""}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-
-          {/* Ellipsis after if the current page is far enough */}
-          {showEllipsesAfter && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-
-          {/* Display last page */}
-          {pagination.currentPage < pagination.totalPages - 1 && (
-            <PaginationItem>
-              <PaginationLink href="#">{pagination.totalPages}</PaginationLink>
-            </PaginationItem>
-          )}
-
-          {/* Next Button */}
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              // disabled={!pagination.hasNext}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationComponent pagination={pagination} />
     </>
   )
 }
