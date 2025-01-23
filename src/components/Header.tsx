@@ -18,16 +18,16 @@ const Header = () => {
     <header className="h-header min-h-header w-full px-6 bg-sidebar">
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="size-[3.4rem] p-[1rem]">
+          <div className="p-[1rem]">
             <div
               className={cn(
-                "size-full rounded-full",
+                "size-[1rem] rounded-full",
                 isOperational ? "bg-operational" : "bg-closed",
               )}
             ></div>
           </div>
-          <span className="text-[2rem] leading-[2rem] font-bold text-netural">
-            {isOperational ? "영업 중" : "영업 종료"}
+          <span className="text-xl font-bold text-netural">
+            {isOperational ? "영업중" : "영업종료"}
           </span>
         </div>
         <div className="flex items-center gap-6">
@@ -44,14 +44,14 @@ const Header = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="py-2 px-3 mt-[10px] bg-netural rounded-xl shadow-lg shadow-black/20">
-              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted outline-none">
+              <DropdownMenuItem className="px-3 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="User" size={18} />
                   <span>Profile</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="h-[1px] bg-muted my-1" />
-              <DropdownMenuItem className="px-3 py-2 rounded-md text-2xl font-semibold cursor-pointer hover:bg-muted outline-none">
+              <DropdownMenuItem className="px-3 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="LogOut" size={18} />
                   <span>Logout</span>

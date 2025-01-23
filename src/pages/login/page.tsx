@@ -1,4 +1,4 @@
-import { Button } from "@/components/shadcn/button"
+import { Button } from "@/components/Button"
 import { Card } from "@/components/shadcn/card"
 import { Input } from "@/components/shadcn/input"
 

@@ -1,5 +1,5 @@
 import { BrowserRouter, useRoutes } from "react-router-dom"
-import { routes } from "@utils/routes"
+import { routes } from "@/routes"
 import "@styles/fonts.css"
 
 function AppRoutes() {

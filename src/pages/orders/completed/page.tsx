@@ -4,11 +4,11 @@ import { SearchResult } from "./components/SearchResult"
 export default function Page() {
   return (
     <div className="bg-white w-full">
-      <div className="text-3xl p-4 border-b border-b-slate-300">완료된 주문</div>
-      <div className="p-4">
+      <div className="text-xl font-medium py-4 px-8 border-b border-b-slate-300">주문 내역</div>
+      <div className="p-8">
         <SearchFilter />
       </div>
-      <div className="p-4">
+      <div className="p-8">
         <SearchResult />
       </div>
     </div>

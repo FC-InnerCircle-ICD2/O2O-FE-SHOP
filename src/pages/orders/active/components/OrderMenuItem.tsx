@@ -18,7 +18,7 @@ const OrderMenuItem = ({ className, menuItem, isMainMenu = false }: OrderMenuIte
     <div
       className={cn(
         "font-medium grid grid-cols-order py-1",
-        isMainMenu ? "text-2xl" : "text-xl text-zinc-400",
+        isMainMenu ? "text-lg" : "text-base text-zinc-400",
         className,
       )}
     >

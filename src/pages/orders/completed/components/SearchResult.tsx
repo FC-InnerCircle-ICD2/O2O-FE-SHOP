@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -22,7 +21,10 @@ import { useEffect, useState } from "react"
 import { fetchOrders } from "@/apis/order"
 import { DEFAULT_PAGINATION } from "@/constants"
 
+import { useQueryParams } from "../hooks/useQueryParams"
 export function SearchResult() {
+  const { startDate, endDate, status: initialStatus } = useQueryParams()
+
   const [orders, setOrders] = useState<Order[]>([])
   const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
 
