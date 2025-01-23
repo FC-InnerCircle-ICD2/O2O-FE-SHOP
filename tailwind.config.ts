@@ -22,7 +22,6 @@ const config: Config = {
         background: "#F1F4FA",
         foreground: "hsl(var(--foreground))",
         netural: "#FFFFFF",
-        gray: "#B5B5B5",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -95,7 +94,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Pretendard Variable", "sans-serif"],
         jua: ["BMJUA", "sans-serif"],
-      },  
+      },
       backgroundColor: {
         dark: "#1C2434",
       },

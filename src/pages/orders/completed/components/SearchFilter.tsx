@@ -80,11 +80,13 @@ export function SearchFilter() {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
-        <Button onClick={handleResetFilter} variant={"grayFit"}>
+      <div className="mt-8 flex items-center gap-4">
+        <Button onClick={handleResetFilter} variant={"outlined"} color={"primary"} fullWidth>
           초기화
         </Button>
-        <Button onClick={handleClickSearchButton}>조회</Button>
+        <Button onClick={handleClickSearchButton} variant={"contained"} color={"primary"} fullWidth>
+          조회
+        </Button>
       </div>
     </div>
   )

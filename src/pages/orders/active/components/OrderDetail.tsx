@@ -40,7 +40,7 @@ const OrderDetail = () => {
             <p className="text-lg font-bold text-black">{order?.desc}</p>
           </div>
           <div className="flex gap-3 items-center">
-            <Button variant="grayFit">거부</Button>
+            <Button variant={"outlined"}>거부</Button>
             <div className="flex flex-1 min-w-[150px] h-10 gap-2 items-center border border-gray-400 rounded-[6px] px-3">
               <div
                 className="cursor-pointer"
@@ -59,7 +59,7 @@ const OrderDetail = () => {
                 <Icon name="Plus" size={20} />
               </div>
             </div>
-            <Button>접수</Button>
+            <Button color={"primary"}>접수</Button>
           </div>
         </div>
         {/* 요청사항 */}
