@@ -8,7 +8,7 @@ import "./styles/global.css"
 async function enableMocking() {
   console.log(process.env.NODE_ENV)
   if (process.env.NODE_ENV !== "development") return
-  const { worker } = await import("./mocks/browsers")
+  const { worker } = await import("./apis/mocks/browsers")
   return worker.start()
 }
 enableMocking().then(() => {

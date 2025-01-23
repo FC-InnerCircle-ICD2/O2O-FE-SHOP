@@ -19,12 +19,11 @@ export function useQueryParams(): QueryParams {
     const startDate = searchParams.get("startDate") || undefined
     const endDate = searchParams.get("endDate") || undefined
     const status = (searchParams.getAll("status") as OrderStatus[]) || undefined
-    const storeId = searchParams.get("storeId") || undefined
 
     // 페이지네이션
     const page = searchParams.get("page") ? parseInt(searchParams.get("page")!, 10) : undefined
     const size = searchParams.get("size") ? parseInt(searchParams.get("size")!, 10) : undefined
 
-    return { startDate, endDate, status, storeId, page, size }
+    return { startDate, endDate, status, page, size }
   }, [searchParams])
 }
