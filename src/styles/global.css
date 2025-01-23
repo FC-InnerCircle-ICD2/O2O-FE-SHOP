@@ -62,7 +62,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 259 94% 61%;
-    --primary-foreground: 259 94% 61%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 327 82% 70%;
     --secondary-foreground: 327 82% 70% 0.2;
     --stroke: 220 13% 91%;
@@ -130,8 +130,8 @@
 @layer base {
   * {
     @apply border-border;
-  } 
+  }
   body {
-    @apply bg-background text-foreground; 
+    @apply bg-background text-foreground;
   }
 }
