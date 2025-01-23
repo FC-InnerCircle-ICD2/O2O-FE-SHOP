@@ -68,7 +68,7 @@ export function SearchFilter() {
         <div className="text-base mr-4">주문상태</div>
         <div className="flex flex-wrap">
           {Object.entries(orderStatusLabels).map(([key, label]) => (
-            <div key={key} className="mr-4">
+            <div key={key} className="mr-4 flex items-center gap-1">
               <Checkbox
                 id={key}
                 checked={selectedStatuses.includes(key as OrderStatus)}
