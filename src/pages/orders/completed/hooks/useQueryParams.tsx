@@ -16,8 +16,8 @@ export function useQueryParams(): QueryParams {
 
   return useMemo(() => {
     // 주문목록 조회 필터
-    const startDate = searchParams.get("start_date") || undefined
-    const endDate = searchParams.get("end_date") || undefined
+    const startDate = searchParams.get("startDate") || undefined
+    const endDate = searchParams.get("endDate") || undefined
     const status = (searchParams.getAll("status") as OrderStatus[]) || undefined
     const storeId = searchParams.get("storeId") || undefined
 

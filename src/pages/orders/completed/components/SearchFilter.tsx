@@ -51,6 +51,12 @@ export function SearchFilter() {
     navigate(`/orders/completed?${queryString}`)
   }
 
+  const handleResetFilter = () => {
+    // 필터 초기화: 날짜와 상태를 초기 상태로 설정
+    setDate(undefined)
+    setSelectedStatuses([])
+  }
+
   return (
     <div>
       <div className="flex items-center mb-4">
@@ -74,7 +80,10 @@ export function SearchFilter() {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex items-center justify-between">
+        <Button onClick={handleResetFilter} variant={"grayFit"}>
+          초기화
+        </Button>
         <Button onClick={handleClickSearchButton}>조회</Button>
       </div>
     </div>
