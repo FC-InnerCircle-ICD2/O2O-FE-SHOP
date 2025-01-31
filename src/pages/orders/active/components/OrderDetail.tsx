@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
-import { refuseOrder } from "@/apis/order"
+import { approveOrder, refuseOrder } from "@/apis/order"
 
 const OrderDetail = () => {
   const { order } = useActiveOrder()
@@ -22,6 +22,10 @@ const OrderDetail = () => {
 
   const handleClickRefuseButton = async () => {
     const { success } = await refuseOrder(order?.id || "0")
+    console.log(success)
+  }
+  const handleClickApproveButton = async () => {
+    const { success } = await approveOrder(order?.id || "0")
     console.log(success)
   }
 
@@ -67,7 +71,9 @@ const OrderDetail = () => {
                 <Icon name="Plus" size={20} />
               </div>
             </div>
-            <Button color={"primary"}>접수</Button>
+            <Button color={"primary"} onClick={handleClickApproveButton}>
+              접수
+            </Button>
           </div>
         </div>
         {/* 요청사항 */}
