@@ -1,6 +1,5 @@
-import Icon from "@/components/Icon"
 import { Separator } from "@/components/shadcn/separator"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
@@ -8,13 +7,9 @@ import { approveOrder, refuseOrder } from "@/apis/order"
 
 const OrderDetail = () => {
   const { order } = useActiveOrder()
-
-  const [orderTime, setOrderTime] = useState<number>(1)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setOrderTime(1)
-
     if (containerRef.current) {
       containerRef.current.scrollTop = 0
     }
@@ -53,24 +48,6 @@ const OrderDetail = () => {
             <Button variant={"outlined"} onClick={handleClickRefuseButton}>
               거부
             </Button>
-            <div className="flex flex-1 min-w-[150px] h-10 gap-2 items-center border border-gray-400 rounded-[6px] px-3">
-              <div
-                className="cursor-pointer"
-                onClick={() => {
-                  if (orderTime <= 1) return
-
-                  setOrderTime(orderTime - 1)
-                }}
-              >
-                <Icon name="Minus" size={20} />
-              </div>
-              <p className="flex flex-1 whitespace-nowrap text-lg justify-center">{`${
-                orderTime * 5
-              }~${orderTime * 5 + 5}분`}</p>
-              <div className="cursor-pointer" onClick={() => setOrderTime(orderTime + 1)}>
-                <Icon name="Plus" size={20} />
-              </div>
-            </div>
             <Button color={"primary"} onClick={handleClickApproveButton}>
               접수
             </Button>
