@@ -1,12 +1,17 @@
+import { ROUTES } from "@/routes"
 import { useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 export const useToast = () => {
-  // 주문 알림 토스트 주문 id를 인자로 넣어주기
+  const navigate = useNavigate()
   const showNewOrderNotification = useCallback((id: string) => {
     toast(
       () => (
-        <div className="relative flex flex-col cursor-pointer w-full rounded-2xl">
+        <div
+          className="relative flex flex-col cursor-pointer w-full rounded-2xl"
+          onClick={() => navigate(`${ROUTES.ACTIVE_ORDER}?orderId=${id}`)}
+        >
           <div
             className="flex flex-col flex-1 w-full"
             onClick={() => {
@@ -18,7 +23,7 @@ export const useToast = () => {
               <p className="text-base text-netural/80">#1078</p>
             </div>
             <div className="flex flex-col px-7 py-5 bg-white rounded-b-2xl">
-              <div className="flex flex-col gap-5"> 
+              <div className="flex flex-col gap-5">
                 <p className="text-lg font-medium">삼겹살 구이삼겹살 구이삼겹살 구이 외 2건</p>
                 <p className="text-lg flex-1 font-medium truncate">총 금액 10,000원 (결제완료)</p>
               </div>
@@ -29,7 +34,7 @@ export const useToast = () => {
       {
         duration: Infinity,
         id,
-        className: "rounded-2xl",   
+        className: "rounded-2xl",
       },
     )
   }, [])
