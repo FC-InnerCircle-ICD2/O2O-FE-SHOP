@@ -37,7 +37,7 @@ const OrderDetail = () => {
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
             <p className="text-2xl font-bold text-primary">배달 {order?.id}</p>
-            <p className="text-lg font-bold text-black">{order?.desc}</p>
+            <p className="text-lg font-bold text-black">{order?.name}</p>
           </div>
           <div className="flex gap-3 items-center">
             <Button variant={"outlined"}>거부</Button>
@@ -83,7 +83,7 @@ const OrderDetail = () => {
         <div className="flex flex-col">
           <div className="flex h-[60px] items-center justify-between text-lg font-bold border-b-[1px] border-b-slate-300 px-[30px]">
             <span>주문정보</span>
-            <span className="text-base text-zinc-00">{order.orderTime}</span>
+            <span className="text-base text-zinc-00">{order.time}</span>
           </div>
           <div className="px-[30px]">
             <OrderMenuItem

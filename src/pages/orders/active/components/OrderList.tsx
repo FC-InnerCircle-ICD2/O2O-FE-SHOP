@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
-import { Order, useActiveOrder } from "../contexts/OrderActiveProvider"
+import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import { useNavigate } from "react-router-dom"
+import { Order } from "@/types/models"
 
 const OrderList = () => {
   const { newOrders, processingOrders } = useActiveOrder()
@@ -61,10 +62,10 @@ const OrderItem = ({
         <div className="text-lg text-white font-bold mb-2">{`배달 ${order.id}`}</div>
 
         {/* 주문 시간 */}
-        <div className="text-base text-zinc-200 mb-0.5">{order.orderTime}</div>
+        <div className="text-base text-zinc-200 mb-0.5">{order.time}</div>
 
         {/* 주문 내역 */}
-        <span className="text-lg text-zinc-200">{order.desc}</span>
+        <span className="text-lg text-zinc-200">{order.name}</span>
       </div>
     </li>
   )

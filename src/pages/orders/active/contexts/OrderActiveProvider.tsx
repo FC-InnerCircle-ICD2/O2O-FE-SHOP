@@ -1,11 +1,13 @@
-import { createContext, ReactNode, useContext } from "react"
+import { fetchOrders } from "@/apis/order"
+import { Order } from "@/types/models"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
-export interface Order {
-  id: string
-  desc: string
-  orderTime: string
-}
+// export interface Order {
+//   id: string
+//   desc: string
+//   orderTime: string
+// }
 
 interface OrderActiveContextType {
   order: Order | undefined
@@ -17,48 +19,35 @@ const OrderActiveContext = createContext<OrderActiveContextType | null>(null)
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [searchParams] = useSearchParams()
-  const newOrders: Order[] = [
-    {
-      id: "A1B2",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-    {
-      id: "A1B3",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-  ]
-  const processingOrders: Order[] = [
-    {
-      id: "A1B4",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-    {
-      id: "A1B5",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-    {
-      id: "A1B6",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-    {
-      id: "A1B7",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-    {
-      id: "A1B8",
-      desc: "메뉴 2개, 총 2개  20,000원",
-      orderTime: "2025-01-01 12:00:00",
-    },
-  ]
+  const [newOrders, setNewOrders] = useState<Order[]>([])
+  const [processingOrders, setProcessingOrders] = useState<Order[]>([])
+  useEffect(() => {
+    const fetch = async () => {
+      const { content: newOrders } = await fetchOrders({
+        page: 1,
+        storeId: 1,
+        size: 999,
+        orderStatus: ["NEW"],
+      })
+
+      setNewOrders(newOrders)
+
+      const { content: processingOrders } = await fetchOrders({
+        page: 1,
+        storeId: 1,
+        size: 999,
+        orderStatus: ["ONGOING"],
+      })
+
+      setProcessingOrders(processingOrders)
+    }
+    fetch()
+  }, [])
+
   const getOrderById = (id: string) => {
     return [...newOrders, ...processingOrders].find((order) => order.id === id)
   }
+
   const orderId = searchParams.get("orderId")
   const order = orderId ? getOrderById(orderId) : undefined
 
