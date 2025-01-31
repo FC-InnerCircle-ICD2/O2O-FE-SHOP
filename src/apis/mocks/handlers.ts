@@ -79,4 +79,11 @@ export const handlers = [
       },
     })
   }),
+  http.post(`${BASE_URL}/orders/:orderId/refuse`, () => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {},
+    })
+  }),
 ]

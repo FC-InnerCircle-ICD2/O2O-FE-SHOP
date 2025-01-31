@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
+import { refuseOrder } from "@/apis/order"
 
 const OrderDetail = () => {
   const { order } = useActiveOrder()
@@ -18,6 +19,11 @@ const OrderDetail = () => {
       containerRef.current.scrollTop = 0
     }
   }, [order])
+
+  const handleClickRefuseButton = async () => {
+    const { success } = await refuseOrder(order?.id || "0")
+    console.log(success)
+  }
 
   if (!order)
     return (
@@ -40,7 +46,9 @@ const OrderDetail = () => {
             <p className="text-lg font-bold text-black">{order?.name}</p>
           </div>
           <div className="flex gap-3 items-center">
-            <Button variant={"outlined"}>거부</Button>
+            <Button variant={"outlined"} onClick={handleClickRefuseButton}>
+              거부
+            </Button>
             <div className="flex flex-1 min-w-[150px] h-10 gap-2 items-center border border-gray-400 rounded-[6px] px-3">
               <div
                 className="cursor-pointer"
