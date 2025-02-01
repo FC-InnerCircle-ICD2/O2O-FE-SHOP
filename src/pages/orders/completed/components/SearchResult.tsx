@@ -15,6 +15,8 @@ import { DEFAULT_PAGINATION } from "@/constants"
 import { PaginationComponent } from "./Pagination"
 import { useQueryParams } from "../hooks/useQueryParams"
 import { useSearchParams } from "react-router-dom"
+
+// TODO: 행 클릭 시 상세정보 모달로 띄우기
 export function SearchResult() {
   const [searchParams] = useSearchParams()
 

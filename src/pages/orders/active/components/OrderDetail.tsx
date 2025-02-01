@@ -5,6 +5,7 @@ import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
 import { approveOrder, refuseOrder } from "@/apis/order"
 
+// TODO: 실제 주문 데이터 사용하도록 수정
 const OrderDetail = () => {
   const { order, refuse, approve } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)

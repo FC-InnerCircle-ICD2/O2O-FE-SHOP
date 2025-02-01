@@ -3,6 +3,8 @@ import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
+// TODO: 신규 주문 목록 관리하는 스토어(zustand) 추가
+// TODO: 최상위 컴포넌트에서 SSE 구독 -> 메시지 오면 스토어에 추가
 export const useToast = () => {
   const navigate = useNavigate()
   const showNewOrderNotification = useCallback((id: string) => {
