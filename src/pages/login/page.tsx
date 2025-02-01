@@ -18,8 +18,7 @@ export default function Page() {
   const handleClickLoginButton = async () => {
     const { success, data, message } = await signIn(input.email, input.password)
     if (success && data) {
-      const { accessToken, refreshToken } = data
-      setUserInfo(accessToken, refreshToken)
+      setUserInfo(data)
     } else {
       // TODO: 로그인 실패 처리(토스트 메시지 띄우기)
       console.log(message)
