@@ -21,47 +21,88 @@ export const ROUTES = {
   SHOP_MENU: "/shop/menu",
 }
 
+import { useNavigate, Outlet } from "react-router-dom"
+import userStore from "@/store/user"
+import { useEffect } from "react"
+
+const RequireGuest = () => {
+  const navigate = useNavigate()
+  const { accessToken } = userStore()
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate(ROUTES.ACTIVE_ORDER, { replace: true })
+    }
+  }, [accessToken, navigate])
+
+  return <Outlet />
+}
+const RequireAuth = () => {
+  const navigate = useNavigate()
+  const { accessToken } = userStore()
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate(ROUTES.LOGIN, { replace: true })
+    }
+  }, [accessToken, navigate])
+
+  return <Outlet />
+}
+
+export default RequireAuth
+
 export const routes: RouteObject[] = [
   {
-    path: ROUTES.LOGIN,
-    element: <LoginPage />,
-  },
-  {
-    element: (
-      <SidebarProvider
-        style={{
-          "--sidebar-width": "26rem",
-          "--sidebar-width-mobile": "26rem",
-          "--sidebar-width-icon": "8rem",
-        }}
-      >
-        <Layout />
-      </SidebarProvider>
-    ),
+    element: <RequireGuest />,
     children: [
       {
-        path: ROUTES.DASHBOARD,
-        element: <DashboardPage />,
+        path: ROUTES.LOGIN,
+        element: <LoginPage />,
       },
+    ],
+  },
+  {
+    element: <RequireAuth />,
+    children: [
       {
-        path: ROUTES.COMPLETED_ORDER,
-        element: <OrdersCompletedPage />,
-      },
-      {
-        path: ROUTES.ACTIVE_ORDER,
-        element: <OrdersActivePage />,
-      },
-      {
-        path: ROUTES.SHOP_INFO,
-        element: <ShopInfoPage />,
-      },
-      {
-        path: ROUTES.SHOP_REVIEW,
-        element: <ShopReviewPage />,
-      },
-      {
-        path: ROUTES.SHOP_MENU,
-        element: <ShopMenuPage />,
+        element: (
+          <SidebarProvider
+            style={{
+              "--sidebar-width": "26rem",
+              "--sidebar-width-mobile": "26rem",
+              "--sidebar-width-icon": "8rem",
+            }}
+          >
+            <Layout />
+          </SidebarProvider>
+        ),
+        children: [
+          {
+            path: ROUTES.DASHBOARD,
+            element: <DashboardPage />,
+          },
+          {
+            path: ROUTES.COMPLETED_ORDER,
+            element: <OrdersCompletedPage />,
+          },
+          {
+            path: ROUTES.ACTIVE_ORDER,
+            element: <OrdersActivePage />,
+          },
+          {
+            path: ROUTES.SHOP_INFO,
+            element: <ShopInfoPage />,
+          },
+          {
+            path: ROUTES.SHOP_REVIEW,
+            element: <ShopReviewPage />,
+          },
+          {
+            path: ROUTES.SHOP_MENU,
+            element: <ShopMenuPage />,
+          },
+        ],
       },
     ],
   },

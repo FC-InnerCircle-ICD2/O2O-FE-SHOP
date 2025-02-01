@@ -10,9 +10,10 @@ type User = {
 
 interface UserState extends User {
   setUserInfo: (data: User) => void
+  resetUserInfo: () => void
 }
 
-const useUserStore = create<UserState>()(
+const userStore = create<UserState>()(
   persist(
     (set) => ({
       accessToken: null,
@@ -20,6 +21,13 @@ const useUserStore = create<UserState>()(
       accessTokenExpiresIn: null,
       refreshTokenExpiresIn: null,
       setUserInfo: (data) => set(() => data),
+      resetUserInfo: () =>
+        set({
+          accessToken: null,
+          refreshToken: null,
+          accessTokenExpiresIn: null,
+          refreshTokenExpiresIn: null,
+        }),
     }),
     {
       name: "userIdStorage",
@@ -27,4 +35,4 @@ const useUserStore = create<UserState>()(
   ),
 )
 
-export default useUserStore
+export default userStore
