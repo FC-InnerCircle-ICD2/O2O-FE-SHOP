@@ -48,13 +48,15 @@ const Header = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="py-2 px-3 mt-[10px] bg-netural rounded-xl shadow-lg shadow-black/20">
+              {/* 
+               TODO: 중간발표 이후 주석 해제
               <DropdownMenuItem className="px-3 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="User" size={18} />
                   <span>Profile</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="h-[1px] bg-muted my-1" />
+              <DropdownMenuSeparator className="h-[1px] bg-muted my-1" /> */}
               <DropdownMenuItem className="px-3 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-muted outline-none">
                 <div className="flex items-center gap-3">
                   <Icon name="LogOut" size={18} />
