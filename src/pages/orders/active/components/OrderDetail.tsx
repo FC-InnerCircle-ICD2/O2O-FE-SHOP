@@ -6,7 +6,7 @@ import { Button } from "@/components/Button"
 import { approveOrder, refuseOrder } from "@/apis/order"
 
 const OrderDetail = () => {
-  const { order } = useActiveOrder()
+  const { order, refuse, approve } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -16,12 +16,14 @@ const OrderDetail = () => {
   }, [order])
 
   const handleClickRefuseButton = async () => {
-    const { success } = await refuseOrder(order?.id || "0")
-    console.log(success)
+    if (!order) return
+    const { success } = await refuseOrder(order?.id)
+    if (success) refuse(order.id)
   }
   const handleClickApproveButton = async () => {
-    const { success } = await approveOrder(order?.id || "0")
-    console.log(success)
+    if (!order) return
+    const { success } = await approveOrder(order.id)
+    if (success) approve(order.id)
   }
 
   if (!order)

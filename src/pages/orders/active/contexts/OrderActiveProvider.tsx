@@ -13,6 +13,8 @@ interface OrderActiveContextType {
   order: Order | undefined
   newOrders: Order[]
   processingOrders: Order[]
+  approve: (id: string) => void
+  refuse: (id: string) => void
 }
 
 const OrderActiveContext = createContext<OrderActiveContextType | null>(null)
@@ -51,10 +53,21 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const orderId = searchParams.get("orderId")
   const order = orderId ? getOrderById(orderId) : undefined
 
+  const approve = (orderId: string) => {
+    const targetOrder = newOrders.find((order, _) => order.id === orderId)
+    setNewOrders((prev) => prev.filter((order, _) => order.id !== orderId))
+    if (targetOrder) setProcessingOrders((prev) => [targetOrder, ...prev])
+  }
+
+  const refuse = (orderId: string) => {
+    setNewOrders((prev) => prev.filter((order, _) => order.id !== orderId))
+  }
   const value = {
     order,
     newOrders,
     processingOrders,
+    approve,
+    refuse,
   }
 
   return <OrderActiveContext.Provider value={value}>{children}</OrderActiveContext.Provider>

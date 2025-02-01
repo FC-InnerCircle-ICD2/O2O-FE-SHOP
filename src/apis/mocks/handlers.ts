@@ -1,5 +1,6 @@
 // src/mocks/handlers.js
 import { BASE_URL } from "@/apis"
+import { OrderStatus } from "@/types/common"
 import { http, HttpResponse } from "msw"
 
 export const handlers = [
@@ -20,8 +21,8 @@ export const handlers = [
       { headers: { Authorization: `Bearer ${TOKEN}` } },
     )
   }),
-  http.get(`${BASE_URL}/orders`, () => {
-    return HttpResponse.json({
+  http.get(`${BASE_URL}/orders`, ({ request }) => {
+    const ORDERS = {
       status: 200,
       message: "OK",
       data: {
@@ -88,13 +89,80 @@ export const handlers = [
               },
             ],
           },
+          {
+            orderId: "casdf-621d-4926-9811-909dc2584cf9",
+            orderName: "된장찌개",
+            orderStatus: "ONGOING",
+            orderType: "DELIVERY",
+            orderTime: "2025-01-16T10:00:00",
+            totalPrice: 39400,
+            totalMenuCount: 3,
+            roadAddress: "서울특별시 구구구 동동동 123-4",
+            jibunAddress: "서울특별시 구구구 경리단길 123",
+            detailAddress: "401호",
+            orderMenuInquiryResponses: [
+              {
+                id: 1,
+                orderId: "casdf-621d-4926-9811-909dc2584cf9",
+                menuId: "d5010526-60ac-4656-b105-f591a2013435",
+                menuName: "[주문폭주] 투움바 파스타 1",
+                menuQuantity: 1,
+                menuPrice: 12400,
+                totalPrice: 12900,
+                orderMenuOptionGroupInquiryResponses: [
+                  {
+                    id: 1,
+                    orderMenuId: 1,
+                    orderMenuOptionGroupName: "피클 선택",
+                    orderMenuOptionInquiryResponses: [
+                      {
+                        id: 1,
+                        orderMenuOptionGroupId: 1,
+                        menuOptionName: "상큼한 피클",
+                        menuOptionPrice: 500,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 2,
+                orderId: "c735a637-621d-4926-9811-909dc2584cf9",
+                menuId: "d5010526-60ac-4656-b105-f591a2011235",
+                menuName: "[주문폭주] 감바스",
+                menuQuantity: 2,
+                menuPrice: 13000,
+                totalPrice: 26000,
+                orderMenuOptionGroupInquiryResponses: [
+                  {
+                    id: 2,
+                    orderMenuId: 2,
+                    orderMenuOptionGroupName: "빵 선택",
+                    orderMenuOptionInquiryResponses: [
+                      {
+                        id: 2,
+                        orderMenuOptionGroupId: 2,
+                        menuOptionName: "마늘빵",
+                        menuOptionPrice: 500,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         ],
         currentPage: 1,
         totalPages: 1,
         totalItems: 10,
         hasNext: false,
       },
-    })
+    }
+    const url = new URL(request.url)
+    const status = url.searchParams.get("orderStatus")
+    if (status === "NEW") ORDERS.data.content = [ORDERS.data.content[0]]
+    else if (status === "ONGOING") ORDERS.data.content = [ORDERS.data.content[1]]
+    return HttpResponse.json(ORDERS)
   }),
   http.post(`${BASE_URL}/orders/:orderId/refuse`, () => {
     return HttpResponse.json({

@@ -4,12 +4,12 @@ import { ApiResponse, PaginatedData } from "@/types/api"
 import { OrderDto } from "@/types/dtos"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
 import { DEFAULT_PAGINATION } from "@/constants"
-
+import { OrderStatus } from "@/types/common"
 type FetchOrdersParams = {
   storeId: number
   page: number
   size: number
-  orderStatus?: ("NEW" | "ONGOING" | "DONE")[]
+  orderStatus?: OrderStatus[]
   OrderInquiryStartDate?: string
   OrderInquiryEndDate?: string
 }
