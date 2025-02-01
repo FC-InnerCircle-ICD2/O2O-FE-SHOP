@@ -11,6 +11,8 @@ export function Body() {
   return (
     <SidebarContent>
       <SidebarMenu className="flex flex-col gap-0 [&_[data-sidebar='menu-button']]:h-[5.2rem]">
+        {/* 
+         TODO: 중간발표 이후 주석 해제
         <SidebarMenuItem className="flex justify-center gap-0">
           <SidebarMenuButton
             asChild
@@ -45,33 +47,35 @@ export function Body() {
               </CollapsibleTrigger>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          <CollapsibleContent className="flex flex-col">
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                className="py-2 px-12 text-sidebar-textLight cursor-pointer"
-                isActive={pathname === ROUTES.ACTIVE_ORDER}
-                onClick={() => navigate(ROUTES.ACTIVE_ORDER)}
-              >
-                <a>
-                  <span className="text-base leading-[1.6rem]">신규 • 진행중</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                className="py-2 px-12 text-sidebar-textLight cursor-pointer"
-                isActive={pathname === ROUTES.COMPLETED_ORDER}
-                onClick={() => navigate(ROUTES.COMPLETED_ORDER)}
-              >
-                <a>
-                  <span className="text-base leading-[1.6rem]">완료</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </CollapsibleContent>
-        </Collapsible>
+          <CollapsibleContent className="flex flex-col"> */}
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            asChild
+            className="py-2 px-12 text-sidebar-textLight cursor-pointer"
+            isActive={pathname === ROUTES.ACTIVE_ORDER}
+            onClick={() => navigate(ROUTES.ACTIVE_ORDER)}
+          >
+            <a>
+              <span className="text-base leading-[1.6rem]">신규 • 진행중</span>
+            </a>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            asChild
+            className="py-2 px-12 text-sidebar-textLight cursor-pointer"
+            isActive={pathname === ROUTES.COMPLETED_ORDER}
+            onClick={() => navigate(ROUTES.COMPLETED_ORDER)}
+          >
+            <a>
+              <span className="text-base leading-[1.6rem]">완료</span>
+            </a>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+
+        {/* TODO: 중간발표 이후 주석 해제
+         </CollapsibleContent>
+        </Collapsible> */}
       </SidebarMenu>
     </SidebarContent>
   )

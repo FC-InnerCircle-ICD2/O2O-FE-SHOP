@@ -16,7 +16,9 @@ const Header = () => {
 
   return (
     <header className="h-header min-h-header w-full px-6 bg-sidebar">
-      <div className="flex h-full items-center justify-between">
+      <div className="flex h-full items-center justify-end">
+        {/* 
+         TODO: 중간발표 이후 주석 해제
         <div className="flex items-center gap-2">
           <div className="p-[1rem]">
             <div
@@ -29,13 +31,15 @@ const Header = () => {
           <span className="text-xl font-bold text-netural">
             {isOperational ? "영업중" : "영업종료"}
           </span>
-        </div>
+        </div> */}
         <div className="flex items-center gap-6">
+          {/* 
+           TODO: 중간발표 이후 주석 해제
           <Switch
             className={`data-[state=checked]:bg-primary data-[state=unchecked]:bg-textLight h-7 w-12 [&>span]:h-6 [&>span]:w-6 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5 [&>span]:bg-background`}
             checked={isOperational}
             onCheckedChange={setIsOperational}
-          />
+          /> */}
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
               <Avatar className="block rounded-full size-10 overflow-hidden">
