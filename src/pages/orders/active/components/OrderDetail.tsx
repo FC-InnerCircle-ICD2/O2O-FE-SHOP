@@ -5,7 +5,6 @@ import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
 import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
 
-// TODO: 실제 주문 데이터 사용하도록 수정
 const OrderDetail = () => {
   const { order, refuse, approve, complete } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -114,8 +113,10 @@ const OrderDetail = () => {
                       name: `${options.name}(${options.options.length}) : ${options.options
                         .map((options) => options.name)
                         .join(", ")}`,
-                      price: 0,
-                      quantity: 0,
+                      price: options.options
+                        .map((option) => option.price)
+                        .reduce((acc, cur) => acc + cur),
+                      quantity: "",
                     }}
                   />
                 ))}
@@ -124,7 +125,11 @@ const OrderDetail = () => {
 
             <OrderMenuItem
               className="text-lg font-bold border-t py-4 mt-2"
-              menuItem={{ name: "상품합계", price: 19000, quantity: 4 }}
+              menuItem={{
+                name: "상품합계",
+                price: order.totalPrice,
+                quantity: order.details.length,
+              }}
               isMainMenu
             />
           </div>
