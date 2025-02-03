@@ -59,6 +59,12 @@ export const handlers = [
                         menuOptionName: "상큼한 피클",
                         menuOptionPrice: 500,
                       },
+                      {
+                        id: 1,
+                        orderMenuOptionGroupId: 1,
+                        menuOptionName: "시큼한 피클",
+                        menuOptionPrice: 500,
+                      },
                     ],
                   },
                 ],

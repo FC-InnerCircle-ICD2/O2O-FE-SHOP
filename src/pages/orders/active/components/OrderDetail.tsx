@@ -71,6 +71,8 @@ const OrderDetail = () => {
           </div>
         </div>
         {/* 요청사항 */}
+        {/* 
+          TODO: 중간발표 이후 주석 해제
         <div className="flex flex-col">
           <div className="flex h-[60px] items-center text-lg font-bold border-b-[1px] border-b-slate-300 px-[30px]">
             요청사항
@@ -86,12 +88,11 @@ const OrderDetail = () => {
             </div>
           </div>
         </div>
-        <Separator className="h-3 bg-zinc-100" />
+        <Separator className="h-3 bg-zinc-100" /> */}
         {/* 주문 정보 */}
         <div className="flex flex-col">
           <div className="flex h-[60px] items-center justify-between text-lg font-bold border-b-[1px] border-b-slate-300 px-[30px]">
             <span>주문정보</span>
-            <span className="text-base text-zinc-00">{order.time}</span>
           </div>
           <div className="px-[30px]">
             <OrderMenuItem
@@ -99,14 +100,27 @@ const OrderDetail = () => {
               menuItem={{ name: "상품", price: "금액", quantity: "수량" }}
               isMainMenu
             />
-
-            <OrderMenuItem menuItem={{ name: "주방 세제", price: 18000, quantity: 3 }} isMainMenu />
-            <OrderMenuItem menuItem={{ name: "표준형", price: 6000, quantity: 1 }} />
-            <OrderMenuItem menuItem={{ name: "저절임류", price: 6000, quantity: 1 }} />
-            <OrderMenuItem menuItem={{ name: "고본량", price: 6000, quantity: 1 }} />
-
-            <OrderMenuItem menuItem={{ name: "항균 봉투", price: 1000, quantity: 1 }} isMainMenu />
-            <OrderMenuItem menuItem={{ name: "봉투", price: 1000, quantity: 1 }} />
+            {order.details.map((menu, index) => (
+              <div>
+                <OrderMenuItem
+                  key={index}
+                  menuItem={{ name: menu.menuName, price: menu.price, quantity: 1 }}
+                  isMainMenu
+                />
+                {menu.optionGroups.map((options, index) => (
+                  <OrderMenuItem
+                    key={index}
+                    menuItem={{
+                      name: `${options.name}(${options.options.length}) : ${options.options
+                        .map((options) => options.name)
+                        .join(", ")}`,
+                      price: 0,
+                      quantity: 0,
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
 
             <OrderMenuItem
               className="text-lg font-bold border-t py-4 mt-2"
@@ -128,7 +142,9 @@ const OrderDetail = () => {
             </dl>
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">주소</dt>
-              <dd className="text-lg font-medium text-zinc-700">서울시 강남구 역삼동</dd>
+              <dd className="text-lg font-medium text-zinc-700">
+                {order.address.road} {order.address.detail}
+              </dd>
             </dl>
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">휴대폰번호</dt>
