@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
-import { approveOrder, refuseOrder } from "@/apis/order"
+import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
 
 // TODO: 실제 주문 데이터 사용하도록 수정
 const OrderDetail = () => {
-  const { order, refuse, approve } = useActiveOrder()
+  const { order, refuse, approve, complete } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,6 +25,11 @@ const OrderDetail = () => {
     if (!order) return
     const { success } = await approveOrder(order.id)
     if (success) approve(order.id)
+  }
+  const handleClickCompleteButton = async () => {
+    if (!order) return
+    const { success } = await completeOrder(order.id)
+    if (success) complete(order.id)
   }
 
   if (!order)
@@ -48,12 +53,21 @@ const OrderDetail = () => {
             <p className="text-lg font-bold text-black">{order?.name}</p>
           </div>
           <div className="flex gap-3 items-center">
-            <Button variant={"outlined"} onClick={handleClickRefuseButton}>
-              거부
-            </Button>
-            <Button color={"primary"} onClick={handleClickApproveButton}>
-              접수
-            </Button>
+            {order.status === "NEW" ? (
+              <>
+                {" "}
+                <Button variant={"outlined"} onClick={handleClickRefuseButton}>
+                  거부
+                </Button>
+                <Button color={"primary"} onClick={handleClickApproveButton}>
+                  접수
+                </Button>
+              </>
+            ) : (
+              <Button color={"primary"} onClick={handleClickCompleteButton}>
+                완료
+              </Button>
+            )}
           </div>
         </div>
         {/* 요청사항 */}

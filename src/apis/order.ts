@@ -74,3 +74,19 @@ export const approveOrder = async (orderId: string): Promise<ApiResult<null>> =>
     }
   }
 }
+
+export const completeOrder = async (orderId: string): Promise<ApiResult<null>> => {
+  try {
+    const { data } = await apiClient.post<ApiResponse<null>>(`/orders/${orderId}/complete`)
+    return {
+      success: data.status === 200,
+      ...data,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
+      message: "알 수 없는 오류가 발생했습니다.",
+    }
+  }
+}

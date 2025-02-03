@@ -178,4 +178,11 @@ export const handlers = [
       data: {},
     })
   }),
+  http.post(`${BASE_URL}/orders/:orderId/complete`, () => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {},
+    })
+  }),
 ]
