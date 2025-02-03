@@ -24,6 +24,7 @@ export const ROUTES = {
 import { useNavigate, Outlet } from "react-router-dom"
 import userStore from "@/store/user"
 import { useEffect } from "react"
+import { useOrderSSE } from "./hooks/useOrderSSE"
 
 const RequireGuest = () => {
   const navigate = useNavigate()
@@ -38,6 +39,7 @@ const RequireGuest = () => {
   return <Outlet />
 }
 const RequireAuth = () => {
+  useOrderSSE()
   const navigate = useNavigate()
   const { accessToken } = userStore()
 
