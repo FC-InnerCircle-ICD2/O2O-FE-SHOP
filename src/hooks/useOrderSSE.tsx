@@ -10,7 +10,9 @@ export const useOrderSSE = () => {
   const { showNewOrderNotification } = useToast()
 
   const [eventSource, setEventSource] = useState<EventSource | null>(null)
-
+  useEffect(() => {
+    console.log(eventSource?.readyState)
+  })
   useEffect(() => {
     if (!accessToken || eventSource) return
 
@@ -18,11 +20,8 @@ export const useOrderSSE = () => {
     const newEventSource = new EventSource(`${url}/api/event-stream`, {
       withCredentials: true,
     })
-    newEventSource.onopen = (e) => {
-      console.log("SSE connection opened", e)
-    }
 
-    newEventSource.onmessage = (event) => {
+    newEventSource.addEventListener("ORDER_NOTIFICATION", (event) => {
       try {
         const order = mapOrderDtoToModel(JSON.parse(event.data))
         addOrder(order)
@@ -30,7 +29,7 @@ export const useOrderSSE = () => {
       } catch (error) {
         console.error("Error parsing SSE message", error)
       }
-    }
+    })
 
     newEventSource.onerror = (error) => {
       console.error("SSE connection error", error)

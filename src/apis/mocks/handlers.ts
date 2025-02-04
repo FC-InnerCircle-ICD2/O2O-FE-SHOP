@@ -141,12 +141,15 @@ export const handlers = [
         start(controller) {
           const encoder = new TextEncoder()
           const sendEvent = () => {
-            controller.enqueue(encoder.encode(JSON.stringify(ORDERS[0])))
+            const eventType = "ORDER_NOTIFICATION" // 이벤트 타입 지정
+            const eventData = JSON.stringify(ORDERS[0])
+
+            const message = `event: ${eventType}\ndata: ${eventData}\n\n`
+            controller.enqueue(encoder.encode(message))
           }
           sendEvent()
 
           const interval = setInterval(sendEvent, 5000)
-          return () => clearInterval(interval)
         },
       }),
       {

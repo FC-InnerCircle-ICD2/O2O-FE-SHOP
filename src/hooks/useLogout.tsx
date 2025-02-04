@@ -3,18 +3,20 @@ import { toast } from "sonner"
 
 import { modalStore } from "@/store/modal"
 import userStore from "@/store/user"
+import { useOrderSSE } from "./useOrderSSE"
 
 const useLogout = () => {
   const { allHideModal } = modalStore()
   const { resetUserInfo } = userStore()
+  const { closeSSE } = useOrderSSE()
 
   const logout = useCallback(() => {
     allHideModal()
     resetUserInfo()
     toast.dismiss()
+    closeSSE()
   }, [])
   return logout
 }
 
 export default useLogout
-// TODO: 신규주문 알림 토스트 로그인한 경우일 때만 뜨도록 수정하기
