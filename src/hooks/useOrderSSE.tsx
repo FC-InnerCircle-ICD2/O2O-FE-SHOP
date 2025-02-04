@@ -3,7 +3,9 @@ import { newOrderStore } from "@/store/orders"
 import { useToast } from "./useToast"
 import userStore from "@/store/user"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
+import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill"
 
+const EventSource = EventSourcePolyfill
 export const useOrderSSE = () => {
   const { accessToken } = userStore()
   const { addOrder } = newOrderStore()
@@ -19,6 +21,9 @@ export const useOrderSSE = () => {
     const url = import.meta.env.VITE_API_BASE_URL
     const newEventSource = new EventSource(`${url}/api/event-stream`, {
       withCredentials: true,
+      headers: {
+        Authorization: accessToken,
+      },
     })
 
     newEventSource.addEventListener("ORDER_NOTIFICATION", (event) => {
