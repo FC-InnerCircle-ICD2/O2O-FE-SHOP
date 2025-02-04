@@ -1,20 +1,18 @@
-import { cn } from "@/lib/utils"
 import { operationStore } from "@/store/operation"
-import { Switch } from "@components/shadcn/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu"
 import Icon from "./Icon"
 import userStore from "@/store/user"
+import useLogout from "@/hooks/useLogout"
 
 const Header = () => {
   const { isOperational, setIsOperational } = operationStore()
-  const { resetUserInfo } = userStore()
+  const logout = useLogout()
 
   return (
     <header className="h-header min-h-header w-full px-6 bg-sidebar">
@@ -61,7 +59,7 @@ const Header = () => {
               <DropdownMenuSeparator className="h-[1px] bg-muted my-1" /> */}
               <DropdownMenuItem
                 className="px-3 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-muted outline-none"
-                onClick={resetUserInfo}
+                onClick={logout}
               >
                 <div className="flex items-center gap-3">
                   <Icon name="LogOut" size={18} />
