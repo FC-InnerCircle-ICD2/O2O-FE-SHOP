@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  o2o-fe:
+    container_name: o2o-fe
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: yong7317/o2o-fe-shop:latest
+    ports:
+      - "3001:3001"
+    networks:
+      - o2o-network
+
+networks:
+  o2o-network:
+    driver: bridge
