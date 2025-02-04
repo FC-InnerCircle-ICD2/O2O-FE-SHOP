@@ -31,7 +31,10 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
       <PaginationContent>
         {/* Previous Button */}
         <PaginationItem>
-          <PaginationPrevious onClick={() => handlePageChange(pagination.currentPage - 1)} />
+          <PaginationPrevious
+            className={pagination.currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
+            onClick={() => handlePageChange(pagination.currentPage - 1)}
+          />
         </PaginationItem>
 
         {/* Display first page */}
@@ -77,7 +80,10 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
         {/* Display last page */}
         {pagination.currentPage < pagination.totalPages - 1 && (
           <PaginationItem>
-            <PaginationLink onClick={() => handlePageChange(pagination.totalPages)}>
+            <PaginationLink
+              className={pagination.currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
+              onClick={() => handlePageChange(pagination.totalPages)}
+            >
               {pagination.totalPages}
             </PaginationLink>
           </PaginationItem>
@@ -85,7 +91,14 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
 
         {/* Next Button */}
         <PaginationItem>
-          <PaginationNext onClick={() => handlePageChange(pagination.currentPage + 1)} />
+          <PaginationNext
+            className={
+              pagination.currentPage === pagination.totalPages
+                ? "opacity-50 pointer-events-none"
+                : ""
+            }
+            onClick={() => handlePageChange(pagination.currentPage + 1)}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
