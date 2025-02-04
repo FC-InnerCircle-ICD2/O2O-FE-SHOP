@@ -2,10 +2,12 @@ import { signIn } from "@/apis/user"
 import { Button } from "@/components/Button"
 import { Card } from "@/components/shadcn/card"
 import { Input } from "@/components/shadcn/input"
+import { useToast } from "@/hooks/useToast"
 import userStore from "@/store/user"
 import { useState } from "react"
 
 export default function Page() {
+  const { showErrorNotification } = useToast()
   const { setUserInfo } = userStore()
   const [input, setInput] = useState({
     email: "",
@@ -20,8 +22,7 @@ export default function Page() {
     if (success && data) {
       setUserInfo(data)
     } else {
-      // TODO: 로그인 실패 처리(토스트 메시지 띄우기)
-      console.log(message)
+      showErrorNotification(message)
     }
   }
   return (
