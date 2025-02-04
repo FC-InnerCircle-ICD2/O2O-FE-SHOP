@@ -8,3 +8,5 @@ WORKDIR /app
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases/yarn-4.6.0.cjs .yarn/releases/yarn-4.6.0.cjs
+
+RUN yarn install --immutable
