@@ -45,7 +45,9 @@ type ApiResult<T> = {
 
 export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.post<ApiResponse<null>>(`/orders/${orderId}/refuse`)
+    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/refuse`, {
+      orderId,
+    })
     return {
       success: data.status === 200,
       ...data,
@@ -61,7 +63,9 @@ export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => 
 
 export const approveOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.post<ApiResponse<null>>(`/orders/${orderId}/approve`)
+    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/approve`, {
+      orderId,
+    })
     return {
       success: data.status === 200,
       ...data,

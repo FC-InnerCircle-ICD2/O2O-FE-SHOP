@@ -197,14 +197,14 @@ export const handlers = [
       },
     })
   }),
-  http.post(`${BASE_URL}/orders/:orderId/refuse`, () => {
+  http.patch(`${BASE_URL}/orders/:orderId/refuse`, () => {
     return HttpResponse.json({
       status: 200,
       message: "OK",
       data: {},
     })
   }),
-  http.post(`${BASE_URL}/orders/:orderId/approve`, () => {
+  http.patch(`${BASE_URL}/orders/:orderId/approve`, () => {
     return HttpResponse.json({
       status: 200,
       message: "OK",
