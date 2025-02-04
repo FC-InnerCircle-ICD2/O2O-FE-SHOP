@@ -15,15 +15,22 @@ import { DEFAULT_PAGINATION } from "@/constants"
 import { PaginationComponent } from "./Pagination"
 import { useQueryParams } from "../hooks/useQueryParams"
 import { useSearchParams } from "react-router-dom"
+import useModal from "@/hooks/useModal"
+import OrderDetail from "./OrderDetail"
 
-// TODO: 행 클릭 시 상세정보 모달로 띄우기
 export function SearchResult() {
   const [searchParams] = useSearchParams()
+  const { show } = useModal()
 
   const [orders, setOrders] = useState<Order[]>([])
   const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
   const { startDate, endDate, status } = useQueryParams()
-
+  const handleRowClick = (order: Order) => {
+    show({
+      content: <OrderDetail order={order} />,
+      useAnimation: true,
+    })
+  }
   useEffect(() => {
     const fetch = async () => {
       const { content, currentPage, hasNext, totalItems, totalPages } = await fetchOrders({
@@ -54,7 +61,7 @@ export function SearchResult() {
         </TableHeader>
         <TableBody>
           {orders.map((order, key) => (
-            <TableRow key={key}>
+            <TableRow key={key} onClick={() => handleRowClick(order)}>
               <TableCell className="font-medium">{order.time}</TableCell>
               <TableCell>{order.status}</TableCell>
               <TableCell>{order.name}</TableCell>

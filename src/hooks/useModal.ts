@@ -4,7 +4,7 @@ import React, { useCallback } from "react"
 const useModal = () => {
   const { showModal, hideModal, allHideModal } = modalStore()
 
-  const Modal = useCallback(
+  const show = useCallback(
     ({
       content,
       useAnimation,
@@ -28,7 +28,7 @@ const useModal = () => {
   }, [])
 
   return {
-    Modal,
+    show,
     hide,
     allHide,
   }
