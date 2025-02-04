@@ -100,9 +100,8 @@ const OrderDetail = () => {
               isMainMenu
             />
             {order.details.map((menu, index) => (
-              <div>
+              <div key={index}>
                 <OrderMenuItem
-                  key={index}
                   menuItem={{ name: menu.menuName, price: menu.price, quantity: 1 }}
                   isMainMenu
                 />

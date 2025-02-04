@@ -181,6 +181,7 @@ export const handlers = [
     let orders
     if (status === "NEW") orders = [ORDERS[0]]
     else if (status === "ONGOING") orders = [ORDERS[1]]
+    else orders = ORDERS
     return HttpResponse.json({
       status: 200,
       message: "OK",

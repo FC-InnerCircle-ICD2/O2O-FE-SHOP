@@ -3,6 +3,8 @@ import { useToast } from "./useToast"
 import userStore from "@/store/user"
 import { useEffect } from "react"
 import { Order } from "@/types/models"
+import { OrderDto } from "@/types/dtos"
+import { mapOrderDtoToModel } from "@/utils/mappers/order"
 
 export const useOrderSSE = () => {
   const { accessToken } = userStore()
@@ -34,9 +36,10 @@ export const useOrderSSE = () => {
           if (done) break
 
           const data = decoder.decode(value, { stream: true })
-          const order = JSON.parse(data) as Order
+          const order = mapOrderDtoToModel(JSON.parse(data))
+
           addOrder(order)
-          showNewOrderNotification(order.id)
+          showNewOrderNotification(order)
         }
       } catch (error) {
         console.error("SSE connection error", error)
