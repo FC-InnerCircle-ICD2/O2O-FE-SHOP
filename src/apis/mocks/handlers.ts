@@ -135,7 +135,7 @@ const ORDERS = [
   },
 ]
 export const handlers = [
-  http.post(`${import.meta.env.VITE_API_BASE_URL}/api/event-stream`, ({ request }) => {
+  http.get(`${import.meta.env.VITE_API_BASE_URL}/api/event-stream`, ({ request }) => {
     return new HttpResponse(
       new ReadableStream({
         start(controller) {
@@ -216,8 +216,3 @@ export const handlers = [
     })
   }),
 ]
-
-export const triggerMockOrderEvent = () => {
-  worker.use()
-  fetch("/api/event-stream", { method: "POST" })
-}

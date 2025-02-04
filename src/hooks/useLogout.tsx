@@ -17,3 +17,4 @@ const useLogout = () => {
 }
 
 export default useLogout
+// TODO: 신규주문 알림 토스트 로그인한 경우일 때만 뜨도록 수정하기
