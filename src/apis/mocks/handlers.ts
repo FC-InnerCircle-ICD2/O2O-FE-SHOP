@@ -158,7 +158,7 @@ export const handlers = [
       },
     )
   }),
-  http.post(`${BASE_URL}/login`, () => {
+  http.post(`${BASE_URL}/auth/login`, () => {
     const TOKEN =
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZWZyZXNoVG9rZW4iLCJyb2xlIjoiVVNFUiIsImlkIjo0LCJzdGF0ZSI6IkpPSU4iLCJleHAiOjE3Mzg0MjUwODV9.BUikWfdfd7A3CIBjMrw0hd8Z_ssJlIU_1aDuDHD9u_T5dUqzkSX9leOGOFW0_0O4qD0TigIPjGqiOxc40di22A"
     return HttpResponse.json(
