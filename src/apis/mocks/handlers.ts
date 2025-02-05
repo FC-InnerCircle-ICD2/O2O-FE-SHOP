@@ -135,7 +135,7 @@ const ORDERS = [
   },
 ]
 export const handlers = [
-  http.get(`${import.meta.env.VITE_API_BASE_URL}/api/event-stream`, ({ request }) => {
+  http.get(`${BASE_URL}/event-stream`, ({ request }) => {
     return new HttpResponse(
       new ReadableStream({
         start(controller) {

@@ -5,25 +5,34 @@ import { OrderDto } from "@/types/dtos"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
 import { DEFAULT_PAGINATION } from "@/constants"
 import { OrderStatus } from "@/types/common"
-type FetchOrdersParams = {
-  storeId: number
+import { orderStatusLabels } from "@/constants/order"
+type FetchOrdersParams = Partial<{
   page: number
   size: number
-  orderStatus?: OrderStatus[]
-  OrderInquiryStartDate?: string
-  OrderInquiryEndDate?: string
-}
+  status: OrderStatus[]
+  startDate: string
+  endDate: string
+}>
 type FetchOrderResponse = ApiResponse<PaginatedData<OrderDto[]>>
-export const fetchOrders = async (params: FetchOrdersParams): Promise<PaginatedData<Order[]>> => {
-  const queryParams = {
-    ...params,
-    ...(params.orderStatus && { orderStatus: params.orderStatus.join(",") }), // orderStatus가 있을 때만 추가
-  }
+const ALL_STATUS = Object.keys(orderStatusLabels) as OrderStatus[]
 
-  const { status, data } = await apiClient.get<FetchOrderResponse>("/orders", {
+export const fetchOrders = async (
+  params: FetchOrdersParams = {},
+): Promise<PaginatedData<Order[]>> => {
+  const {
+    page = 0,
+    size = 5,
+    status = ALL_STATUS,
+    startDate = "20250101",
+    endDate = "30000101",
+  } = params
+
+  const queryParams = { page, size, startDate, endDate, status: status.join(",") }
+
+  const { status: responseStatus, data } = await apiClient.get<FetchOrderResponse>("/orders", {
     params: queryParams,
   })
-  if (status === 200) {
+  if (responseStatus === 200) {
     const { content, currentPage, hasNext, totalItems, totalPages } = data.data
     return {
       content: content.map((order: OrderDto) => mapOrderDtoToModel(order)),
@@ -45,9 +54,7 @@ type ApiResult<T> = {
 
 export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/refuse`, {
-      orderId,
-    })
+    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/refuse`)
     return {
       success: data.status === 200,
       ...data,
@@ -63,9 +70,7 @@ export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => 
 
 export const approveOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/approve`, {
-      orderId,
-    })
+    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/approve`)
     return {
       success: data.status === 200,
       ...data,

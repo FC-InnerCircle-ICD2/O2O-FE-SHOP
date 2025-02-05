@@ -5,10 +5,8 @@ import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
 import { Button } from "@/components/Button"
-import { Checkbox } from "@/components/shadcn/checkbox"
 import { DatePickerWithRange } from "@/components/DatePicker"
 import { OrderStatus } from "@/types/common"
-import { orderStatusLabels } from "@/constants/order"
 import { useQueryParams } from "../hooks/useQueryParams"
 
 export function SearchFilter() {
@@ -65,7 +63,7 @@ export function SearchFilter() {
       </div>
 
       <div className="flex items-center mb-4">
-        <div className="text-base mr-4">주문상태</div>
+        {/* <div className="text-base mr-4">주문상태</div>
         <div className="flex flex-wrap">
           {Object.entries(orderStatusLabels).map(([key, label]) => (
             <div key={key} className="mr-4 flex items-center gap-1">
@@ -77,7 +75,7 @@ export function SearchFilter() {
               <label htmlFor={key}>{label}</label>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-8 flex items-center gap-4">
