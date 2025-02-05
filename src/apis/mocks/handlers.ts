@@ -1,7 +1,6 @@
 // src/mocks/handlers.js
 import { BASE_URL } from "@/apis"
-import { delay, http, HttpResponse } from "msw"
-import { worker } from "./browsers"
+import { http, HttpResponse } from "msw"
 const ORDERS = [
   {
     orderId: "c735a637-621d-4926-9811-909dc2584cf9",
@@ -135,7 +134,7 @@ const ORDERS = [
   },
 ]
 export const handlers = [
-  http.get(`${import.meta.env.VITE_API_BASE_URL}/api/event-stream`, ({ request }) => {
+  http.get(`${BASE_URL}/event-stream`, ({ request }) => {
     return new HttpResponse(
       new ReadableStream({
         start(controller) {
