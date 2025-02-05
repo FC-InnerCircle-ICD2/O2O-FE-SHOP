@@ -9,7 +9,7 @@ export default function Page() {
 
   return (
     <div>
-      <button onClick={() => showNewOrderNotification(generateRandomId())}>toast</button>
+      <button onClick={() => showNewOrderNotification(generateRandomId())}>{import.meta.env.VITE_PUBLIC_API_URL}</button>
     </div>
   )
 }
