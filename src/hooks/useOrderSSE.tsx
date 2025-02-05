@@ -22,6 +22,7 @@ export const useOrderSSE = () => {
       headers: {
         Authorization: accessToken,
       },
+      heartbeatTimeout: 60000,
     })
 
     newEventSource.addEventListener("ORDER_NOTIFICATION", (event) => {
