@@ -52,6 +52,7 @@ type ApiResult<T> = {
   data: T
 }
 
+// TODO: 실패 시 에러 토스트 띄우기
 export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
     const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/refuse`)

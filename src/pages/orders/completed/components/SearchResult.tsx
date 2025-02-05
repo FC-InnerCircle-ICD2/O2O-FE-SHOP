@@ -40,6 +40,7 @@ export function SearchResult() {
         startDate,
         endDate,
       })
+      // TODO: 시작, 종료일 yyyyMMdd 형식으로 맞추기
 
       setOrders(content)
       setPagination({ currentPage, hasNext, totalItems, totalPages })
