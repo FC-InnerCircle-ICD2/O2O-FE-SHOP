@@ -32,14 +32,13 @@ export function SearchResult() {
     })
   }
   useEffect(() => {
+    if (searchParams.size <= 0) return
     const fetch = async () => {
       const { content, currentPage, hasNext, totalItems, totalPages } = await fetchOrders({
-        page: 1,
-        storeId: 1,
-        size: 1,
-        ...(startDate && { OrderInquiryStartDate: startDate }),
-        ...(endDate && { OrderInquiryEndDate: endDate }),
-        ...(status && { orderStatus: status }),
+        page: 0,
+        size: 10,
+        startDate,
+        endDate,
       })
 
       setOrders(content)

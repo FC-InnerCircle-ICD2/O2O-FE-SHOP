@@ -13,9 +13,7 @@ export const useOrderSSE = () => {
   const { showNewOrderNotification } = useToast()
 
   const [eventSource, setEventSource] = useState<EventSource | null>(null)
-  useEffect(() => {
-    console.log(eventSource?.readyState)
-  })
+
   useEffect(() => {
     if (!accessToken || eventSource) return
 
