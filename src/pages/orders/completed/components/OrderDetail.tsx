@@ -1,12 +1,9 @@
 import { Separator } from "@/components/shadcn/separator"
 import { useEffect, useRef } from "react"
-import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
-import { Button } from "@/components/Button"
-import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
+import { Order } from "@/types/models"
 
-const OrderDetail = () => {
-  const { order, refuse, approve, complete } = useActiveOrder()
+const OrderDetail = ({ order }: { order: Order }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -14,22 +11,6 @@ const OrderDetail = () => {
       containerRef.current.scrollTop = 0
     }
   }, [order])
-
-  const handleClickRefuseButton = async () => {
-    if (!order) return
-    const { success } = await refuseOrder(order?.id)
-    if (success) refuse(order.id)
-  }
-  const handleClickApproveButton = async () => {
-    if (!order) return
-    const { success } = await approveOrder(order.id)
-    if (success) approve(order.id)
-  }
-  const handleClickCompleteButton = async () => {
-    if (!order) return
-    const { success } = await completeOrder(order.id)
-    if (success) complete(order.id)
-  }
 
   if (!order)
     return (
@@ -50,23 +31,6 @@ const OrderDetail = () => {
           <div className="flex flex-col gap-2">
             <p className="text-2xl font-bold text-primary">배달 {order?.id}</p>
             <p className="text-lg font-bold text-black">{order?.name}</p>
-          </div>
-          <div className="flex gap-3 items-center">
-            {order.status === "NEW" ? (
-              <>
-                {" "}
-                <Button variant={"outlined"} onClick={handleClickRefuseButton}>
-                  거부
-                </Button>
-                <Button color={"primary"} onClick={handleClickApproveButton}>
-                  접수
-                </Button>
-              </>
-            ) : (
-              <Button color={"primary"} onClick={handleClickCompleteButton}>
-                완료
-              </Button>
-            )}
           </div>
         </div>
         {/* 요청사항 */}

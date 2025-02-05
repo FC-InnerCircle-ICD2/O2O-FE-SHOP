@@ -3,39 +3,87 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const buttonVariants = cva("inline-flex items-center justify-center gap-2 whitespace-nowrap", {
-  variants: {
-    variant: {
-      default: "bg-primary text-white hover:bg-primary/90 w-full px-4 py-2",
-      primaryFit: "w-fit px-4 py-2 text-primary border-solid border border-primary",
-      grayFit: "w-fit px-4 py-2 text-gray-400 border-solid border border-gray-400",
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
+  {
+    variants: {
+      variant: {
+        contained: "",
+        text: "",
+        outlined: "",
+      },
+      color: {
+        primary: "",
+        default: "",
+      },
+      size: {
+        large: "h-14 rounded-[8px] text-2xl px-6",
+        medium: "h-10 rounded-[6px] text-xl px-4",
+        small: "h-8 rounded-[4px] text-sm px-2",
+      },
+      fullWidth: {
+        true: "w-full",
+        false: "",
+      },
     },
-
-    size: {
-      default: "rounded-[8px] text-2xl h-10",
-      s: "rounded-[6px] text-xl h-8",
-      m: "rounded-[6px] text-2xl h-12",
+    compoundVariants: [
+      {
+        variant: "contained",
+        color: "primary",
+        className: "bg-primary text-white hover:bg-primary/90",
+      },
+      {
+        variant: "contained",
+        color: "default",
+        className: "bg-gray-800 text-white hover:bg-gray-700",
+      },
+      {
+        variant: "text",
+        color: "primary",
+        className: "text-primary hover:bg-primary/10 bg-transparent",
+      },
+      {
+        variant: "text",
+        color: "default",
+        className: "text-gray-800 hover:bg-gray-200 bg-transparent",
+      },
+      {
+        variant: "outlined",
+        color: "primary",
+        className: "border border-primary text-primary hover:bg-primary/10 bg-transparent",
+      },
+      {
+        variant: "outlined",
+        color: "default",
+        className: "border border-gray-400 text-gray-800 hover:bg-gray-200 bg-transparent",
+      },
+    ],
+    defaultVariants: {
+      variant: "contained",
+      color: "default",
+      size: "medium",
+      fullWidth: false,
     },
   },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-})
+)
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant, size, fullWidth, color, ...props }, ref) => {
     return (
-      <button className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <button
+        className={cn(buttonVariants({ variant, color, size, fullWidth, className }))}
+        ref={ref}
+        {...props}
+      />
     )
   },
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+export { Button }

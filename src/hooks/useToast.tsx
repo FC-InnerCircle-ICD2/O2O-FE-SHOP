@@ -1,42 +1,64 @@
-import { Separator } from "@/components/shadcn/separator"
+import { ROUTES } from "@/routes"
+import { Order } from "@/types/models"
 import { useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 export const useToast = () => {
-  // 주문 알림 토스트 주문 id를 인자로 넣어주기
-  const showNewOrderNotification = useCallback((id: string) => {
+  const navigate = useNavigate()
+  const showNewOrderNotification = useCallback((order: Order) => {
     toast(
       () => (
-        <div className="relative flex flex-col cursor-pointer w-full">
+        <div
+          className="relative flex flex-col cursor-pointer w-full rounded-2xl"
+          onClick={() => navigate(`${ROUTES.ACTIVE_ORDER}?orderId=${order.id}`)}
+        >
           <div
             className="flex flex-col flex-1 w-full"
             onClick={() => {
-              toast.dismiss(id)
+              toast.dismiss(order.id)
             }}
           >
-            <div className="flex h-[6rem] px-[3rem] bg-black items-center justify-between max-w-full">
-              <p className="text-3xl text-white font-bold">신규 주문</p>
-              <p className="text-lg text-netural/80">주문일시: 2025-01-01 12:00:00</p>
+            <div className="flex px-7 py-5 bg-black items-center justify-between max-w-full rounded-t-2xl">
+              <p className="text-base text-white font-bold">신규 주문</p>
             </div>
-            <div className="flex flex-col py-[1.8rem] px-[3rem] bg-white">
-              <div className="flex flex-col gap-[1.5rem]">
-                <div className="text-2xl font-bold">주문 번호 #1078</div>
-                <div className="flex">
-                  <p className="text-xl font-bold">삼겹살 구이삼겹살 구이삼겹살 구이 외 2건</p>
-                  <Separator className="mx-2 h-[10px] bg-textLight" orientation="vertical" />
-                  <p className="text-xl flex-1 font-bold truncate">총 금액 10,000원 (결제완료)</p>
-                </div>
+            <div className="flex flex-col px-7 py-5 bg-white rounded-b-2xl">
+              <div className="flex flex-col gap-5">
+                <p className="text-lg font-medium">{order.name}</p>
+                <p className="text-lg flex-1 font-medium truncate">총 금액 {order.totalPrice}원</p>
               </div>
             </div>
           </div>
         </div>
       ),
       {
+        id: order.id,
         duration: Infinity,
-        id,
+        className: "rounded-2xl",
       },
     )
   }, [])
 
-  return { showNewOrderNotification }
+  const showErrorNotification = useCallback((message: string) => {
+    toast(
+      () => (
+        <div className="relative flex flex-col w-full rounded-2xl">
+          <div className="flex flex-col flex-1 w-full" onClick={() => toast.dismiss()}>
+            <div className="flex px-7 py-5 bg-red-500 items-center justify-between max-w-full rounded-t-2xl">
+              <p className="text-base text-white font-bold">오류 발생</p>
+            </div>
+            <div className="flex flex-col px-7 py-5 bg-white rounded-b-2xl">
+              <p className="text-lg text-gray-900">{message}</p>
+            </div>
+          </div>
+        </div>
+      ),
+      {
+        duration: 5000,
+        className: "rounded-2xl",
+      },
+    )
+  }, [])
+
+  return { showNewOrderNotification, showErrorNotification }
 }
