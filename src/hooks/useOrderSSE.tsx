@@ -3,7 +3,7 @@ import { newOrderStore } from "@/store/orders"
 import { useToast } from "./useToast"
 import userStore from "@/store/user"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
-import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill"
+import { EventSourcePolyfill } from "event-source-polyfill"
 
 const EventSource = EventSourcePolyfill
 export const useOrderSSE = () => {
@@ -28,7 +28,8 @@ export const useOrderSSE = () => {
 
     newEventSource.addEventListener("ORDER_NOTIFICATION", (event) => {
       try {
-        const order = mapOrderDtoToModel(JSON.parse(event.data))
+        const messageEvent = event as MessageEvent
+        const order = mapOrderDtoToModel(JSON.parse(messageEvent.data))
         addOrder(order)
         showNewOrderNotification(order)
       } catch (error) {
