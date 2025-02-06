@@ -70,8 +70,7 @@ const OrderDetail = () => {
           </div>
         </div>
         {/* 요청사항 */}
-        {/* 
-          TODO: 중간발표 이후 주석 해제
+        {/* TODO: 중간발표 이후 주석 해제 */}
         <div className="flex flex-col">
           <div className="flex h-[60px] items-center text-lg font-bold border-b-[1px] border-b-slate-300 px-[30px]">
             요청사항
@@ -79,15 +78,17 @@ const OrderDetail = () => {
           <div className="flex flex-col gap-6 px-[30px] py-4">
             <div className="flex gap-10 items-start">
               <p className="text-lg w-[100px] font-bold">사장님께</p>
-              <p className="text-lg flex-1 font-medium text-zinc-700">맵지 않게 해주세요.</p>
+              <p className="text-lg flex-1 font-medium text-zinc-700">
+                수저, 포크 {order.excludingSpoonAndFork ? "X" : "O"}
+              </p>
             </div>
             <div className="flex gap-10 items-start">
               <p className="text-lg w-[100px] font-bold">라이더님께</p>
-              <p className="text-lg flex-1 font-medium text-zinc-700">안전하게 와주세요.</p>
+              <p className="text-lg flex-1 font-medium text-zinc-700">{order.requestToRider}</p>
             </div>
           </div>
         </div>
-        <Separator className="h-3 bg-zinc-100" /> */}
+        <Separator className="h-3 bg-zinc-100" />
         {/* 주문 정보 */}
         <div className="flex flex-col">
           <div className="flex h-[60px] items-center justify-between text-lg font-bold border-b-[1px] border-b-slate-300 px-[30px]">

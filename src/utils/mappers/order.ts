@@ -10,6 +10,8 @@ export const mapOrderDtoToModel = (dto: OrderDto): Order => ({
   time: dto.orderTime,
   totalPrice: dto.totalPrice,
   totalItems: dto.totalMenuCount,
+  excludingSpoonAndFork: dto.excludingSpoonAndFork,
+  requestToRider: dto.requestToRider,
   address: {
     road: dto.roadAddress,
     jihub: dto.jibunAddress,

@@ -4,6 +4,7 @@ import { useToast } from "./useToast"
 import userStore from "@/store/user"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
 import { EventSourcePolyfill } from "event-source-polyfill"
+import { BASE_URL } from "@/apis"
 
 const EventSource = EventSourcePolyfill
 export const useOrderSSE = () => {
@@ -12,18 +13,16 @@ export const useOrderSSE = () => {
   const { showNewOrderNotification } = useToast()
 
   const [eventSource, setEventSource] = useState<EventSource | null>(null)
-  useEffect(() => {
-    console.log(eventSource?.readyState)
-  })
+
   useEffect(() => {
     if (!accessToken || eventSource) return
 
-    const url = import.meta.env.VITE_API_BASE_URL
-    const newEventSource = new EventSource(`${url}/api/event-stream`, {
+    const newEventSource = new EventSource(`${BASE_URL}/event-stream`, {
       withCredentials: true,
       headers: {
         Authorization: accessToken,
       },
+      heartbeatTimeout: 1000 * 600,
     })
 
     newEventSource.addEventListener("ORDER_NOTIFICATION", (event) => {

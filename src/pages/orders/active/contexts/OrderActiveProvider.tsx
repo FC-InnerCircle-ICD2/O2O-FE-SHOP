@@ -27,19 +27,17 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetch = async () => {
       const { content: newOrders } = await fetchOrders({
-        page: 1,
-        storeId: 1,
         size: 999,
-        orderStatus: ["NEW"],
+        status: ["NEW"],
       })
 
       setNewOrders(newOrders)
 
       const { content: processingOrders } = await fetchOrders({
-        page: 1,
-        storeId: 1,
         size: 999,
-        orderStatus: ["ONGOING"],
+        status: ["ONGOING"],
+        startDate: "20250101",
+        endDate: "20260101",
       })
 
       setProcessingOrders(processingOrders)

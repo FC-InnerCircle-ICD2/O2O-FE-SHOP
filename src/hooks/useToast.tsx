@@ -42,20 +42,15 @@ export const useToast = () => {
   const showErrorNotification = useCallback((message: string) => {
     toast(
       () => (
-        <div className="relative flex flex-col w-full rounded-2xl">
-          <div className="flex flex-col flex-1 w-full" onClick={() => toast.dismiss()}>
-            <div className="flex px-7 py-5 bg-red-500 items-center justify-between max-w-full rounded-t-2xl">
-              <p className="text-base text-white font-bold">오류 발생</p>
-            </div>
-            <div className="flex flex-col px-7 py-5 bg-white rounded-b-2xl">
-              <p className="text-lg text-gray-900">{message}</p>
-            </div>
+        <div className="relative flex flex-col w-full rounded-md">
+          <div className="flex px-7 py-5 border-l-8 border-red-500 items-center justify-between max-w-full">
+            <p className="text-base   font-bold">{message}</p>
           </div>
         </div>
       ),
       {
         duration: 5000,
-        className: "rounded-2xl",
+        className: "rounded-md",
       },
     )
   }, [])

@@ -32,15 +32,16 @@ export function SearchResult() {
     })
   }
   useEffect(() => {
+    if (searchParams.size <= 0) return
     const fetch = async () => {
       const { content, currentPage, hasNext, totalItems, totalPages } = await fetchOrders({
-        page: 1,
-        storeId: 1,
-        size: 1,
-        ...(startDate && { OrderInquiryStartDate: startDate }),
-        ...(endDate && { OrderInquiryEndDate: endDate }),
-        ...(status && { orderStatus: status }),
+        page: 0,
+        size: 10,
+        startDate,
+        endDate,
+        status: ["DONE"],
       })
+      // TODO: 시작, 종료일 yyyyMMdd 형식으로 맞추기
 
       setOrders(content)
       setPagination({ currentPage, hasNext, totalItems, totalPages })
