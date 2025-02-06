@@ -38,7 +38,7 @@ export const useOrderSSE = () => {
 
     newEventSource.onerror = (error) => {
       console.error("SSE connection error", error)
-      newEventSource.close()
+      // newEventSource.close()
       setEventSource(null)
     }
 

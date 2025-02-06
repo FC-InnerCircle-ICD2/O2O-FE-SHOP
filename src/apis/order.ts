@@ -71,7 +71,7 @@ export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => 
 
 export const approveOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/approve`)
+    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/accept`)
     return {
       success: data.status === 200,
       ...data,
