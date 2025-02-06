@@ -203,7 +203,7 @@ export const handlers = [
       data: {},
     })
   }),
-  http.patch(`${BASE_URL}/orders/:orderId/approve`, () => {
+  http.patch(`${BASE_URL}/orders/:orderId/accept`, () => {
     return HttpResponse.json({
       status: 200,
       message: "OK",
