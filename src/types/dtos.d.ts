@@ -10,6 +10,8 @@ export interface OrderDto {
   roadAddress: string
   jibunAddress: string
   detailAddress: string
+  excludingSpoonAndFork: boolean
+  requestToRider: string
   orderMenuInquiryResponses: {
     id: number
     orderId: string

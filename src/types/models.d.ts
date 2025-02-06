@@ -8,6 +8,8 @@ export type Order = {
   time: string
   totalPrice: number
   totalItems: number
+  excludingSpoonAndFork: boolean
+  requestToRider: string
   address: {
     road: string
     jihub: string
