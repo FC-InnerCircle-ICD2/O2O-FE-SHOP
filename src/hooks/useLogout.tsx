@@ -8,13 +8,13 @@ import { useOrderSSE } from "./useOrderSSE"
 const useLogout = () => {
   const { allHideModal } = modalStore()
   const { resetUserInfo } = userStore()
-  const { closeSSE } = useOrderSSE()
+  // const { closeSSE } = useOrderSSE()
 
   const logout = useCallback(() => {
     allHideModal()
     resetUserInfo()
     toast.dismiss()
-    closeSSE()
+    // closeSSE()
   }, [])
   return logout
 }
