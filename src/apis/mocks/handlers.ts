@@ -128,6 +128,31 @@ const ORDERS = [
       },
     ],
   },
+
+  ...Array.from({ length: 20 }, (_, i) => ({
+    orderId: `done00${i + 2}-621d-4926-9811-909dc2584cf9`,
+    orderName: `완료된 주문 ${i + 2}`,
+    orderStatus: "DONE",
+    orderType: "PICKUP",
+    orderTime: `2025-01-14T${12 + i}:30:00`,
+    totalPrice: 10000 + i * 1500,
+    totalMenuCount: 1,
+    roadAddress: `서울특별시 강남구 역삼동 ${80 + i}-9`,
+    jibunAddress: `서울특별시 강남구 강남대로 ${80 + i}`,
+    detailAddress: "1층",
+    orderMenuInquiryResponses: [
+      {
+        id: 6 + i,
+        orderId: `done00${i + 2}-621d-4926-9811-909dc2584cf9`,
+        menuId: `done-menu-${i + 2}`,
+        menuName: `완료된 메뉴 ${i + 2}`,
+        menuQuantity: 1,
+        menuPrice: 10000 + i * 1500,
+        totalPrice: 10000 + i * 1500,
+        orderMenuOptionGroupInquiryResponses: [],
+      },
+    ],
+  })),
 ]
 
 export const handlers = [
