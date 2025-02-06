@@ -7,7 +7,7 @@ import userStore from "@/store/user"
 import { useState } from "react"
 
 export default function Page() {
-  const { showErrorNotification } = useToast()
+  const { showNotification } = useToast()
   const { setUserInfo } = userStore()
   const [input, setInput] = useState({
     email: "",
@@ -22,7 +22,7 @@ export default function Page() {
     if (success && data) {
       setUserInfo(data)
     } else {
-      showErrorNotification(message)
+      showNotification("error", message)
     }
   }
   return (

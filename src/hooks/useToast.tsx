@@ -39,11 +39,15 @@ export const useToast = () => {
     )
   }, [])
 
-  const showErrorNotification = useCallback((message: string) => {
+  const showNotification = useCallback((type: "success" | "error", message: string) => {
     toast(
       () => (
         <div className="relative flex flex-col w-full rounded-md">
-          <div className="flex px-7 py-5 border-l-8 border-red-500 items-center justify-between max-w-full">
+          <div
+            className={`flex px-7 py-5 border-l-8 ${
+              type === "success" ? "border-green-500" : "border-red-500"
+            } items-center justify-between max-w-full`}
+          >
             <p className="text-base   font-bold">{message}</p>
           </div>
         </div>
@@ -55,5 +59,5 @@ export const useToast = () => {
     )
   }, [])
 
-  return { showNewOrderNotification, showErrorNotification }
+  return { showNewOrderNotification, showNotification }
 }
