@@ -32,7 +32,7 @@ export function PaginationComponent({ pagination }: { pagination: TPagination })
         {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious
-            className={pagination.currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
+            className={pagination.currentPage === 0 ? "opacity-50 pointer-events-none" : ""}
             onClick={() => handlePageChange(pagination.currentPage - 1)}
           />
         </PaginationItem>

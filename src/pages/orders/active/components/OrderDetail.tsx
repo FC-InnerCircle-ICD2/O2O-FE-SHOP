@@ -4,8 +4,10 @@ import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
 import { Button } from "@/components/Button"
 import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
+import { useToast } from "@/hooks/useToast"
 
 const OrderDetail = () => {
+  const { showNotification } = useToast()
   const { order, refuse, approve, complete } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -17,18 +19,27 @@ const OrderDetail = () => {
 
   const handleClickRefuseButton = async () => {
     if (!order) return
-    const { success } = await refuseOrder(order?.id)
-    if (success) refuse(order.id)
+    const { success, message } = await refuseOrder(order?.id)
+    if (success) {
+      showNotification("success", "주문을 거부하였습니다")
+      refuse(order.id)
+    } else showNotification("error", message)
   }
   const handleClickApproveButton = async () => {
     if (!order) return
-    const { success } = await approveOrder(order.id)
-    if (success) approve(order.id)
+    const { success, message } = await approveOrder(order.id)
+    if (success) {
+      showNotification("success", "주문을 접수하였습니다")
+      approve(order.id)
+    } else showNotification("error", message)
   }
   const handleClickCompleteButton = async () => {
     if (!order) return
-    const { success } = await completeOrder(order.id)
-    if (success) complete(order.id)
+    const { success, message } = await completeOrder(order.id)
+    if (success) {
+      showNotification("success", "주문이 완료되었습니다")
+      complete(order.id)
+    } else showNotification("error", message)
   }
 
   if (!order)

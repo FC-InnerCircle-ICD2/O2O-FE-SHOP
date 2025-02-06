@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/useToast"
 
 export default function Page() {
-  const { showNewOrderNotification, showErrorNotification } = useToast()
+  const { showNotification } = useToast()
 
   const generateRandomId = () => {
     return crypto.randomUUID()
@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div>
       {/* <button onClick={() => showNewOrderNotification(generateRandomId())}>toast</button> */}
-      <button onClick={() => showErrorNotification("asdf")}>toast</button>
+      <button onClick={() => showNotification("error", "asdf")}>toast</button>
     </div>
   )
 }
