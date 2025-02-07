@@ -9,7 +9,10 @@ import "@/styles/global.css"
 async function enableMocking() {
   if (import.meta.env.VITE_MSW_ENABLED === "false") return
   const { worker } = await import("./apis/mocks/browsers")
-  return worker.start()
+  return worker.start({
+    quiet: true,
+    onUnhandledRequest: "bypass",
+  })
 }
 enableMocking().then(() => {
   createRoot(document.getElementById("root")!).render(
