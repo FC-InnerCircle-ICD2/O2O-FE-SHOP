@@ -38,3 +38,20 @@ export type Option = {
   name: string
   price: number
 }
+
+type ReviewStats = {
+  quantity: number
+  taste: number
+  delivery: number
+}
+
+export type Review = {
+  id: number
+  nickname: string
+  date: string
+  ratings: ReviewStats
+  menu: string[]
+  content: string
+  images: string[]
+  reply?: { date: string; content: string }
+}
