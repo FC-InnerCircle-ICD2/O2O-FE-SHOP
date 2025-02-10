@@ -1,6 +1,6 @@
 COMMIT_MESSAGE_FILE=$1
 COMMIT_MESSAGE=$(cat "$COMMIT_MESSAGE_FILE")
-
+echo "📝 Commit Message: $COMMIT_MESSAGE"
 # PR Merge Commit 처리 함수
 process_pr_merge() {
   PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oE "#[0-9]+")
