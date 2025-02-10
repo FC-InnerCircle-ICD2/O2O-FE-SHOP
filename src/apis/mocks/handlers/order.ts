@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { BASE_URL } from "@/apis"
 import { OrderDto } from "@/types/dtos"
-import { http, HttpResponse } from "msw"
+import { http, HttpHandler, HttpResponse } from "msw"
 const ORDERS: OrderDto[] = [
   {
     orderId: "c735a637-621d-4926-9811-909dc2584cf9",
@@ -221,7 +221,7 @@ const ORDERS: OrderDto[] = [
     ],
   })) as OrderDto[]),
 ]
-const handlers = [
+const handlers: HttpHandler[] = [
   http.get(`${BASE_URL}/event-stream`, ({ request }) => {
     return new HttpResponse(
       new ReadableStream({

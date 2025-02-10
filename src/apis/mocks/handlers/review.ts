@@ -1,24 +1,32 @@
 // src/mocks/handlers.js
+import { HttpHandler, HttpResponse, http } from "msw"
+import { Review } from "@/types/models"
 import { BASE_URL } from "@/apis"
-import { http, HttpResponse } from "msw"
 
-const handlers = [
-  http.post(`${BASE_URL}/auth/login`, () => {
-    const TOKEN =
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZWZyZXNoVG9rZW4iLCJyb2xlIjoiVVNFUiIsImlkIjo0LCJzdGF0ZSI6IkpPSU4iLCJleHAiOjE3Mzg0MjUwODV9.BUikWfdfd7A3CIBjMrw0hd8Z_ssJlIU_1aDuDHD9u_T5dUqzkSX9leOGOFW0_0O4qD0TigIPjGqiOxc40di22A"
-    return HttpResponse.json(
-      {
-        status: 200,
-        message: "OK",
-        data: {
-          accessToken: TOKEN,
-          refreshToken: TOKEN,
-          accessTokenExpiresIn: "2025-01-21T15:02:08.946Z",
-          refreshTokenExpiresIn: "2025-01-21T15:03:08.947Z",
-        },
-      },
-      { headers: { Authorization: `Bearer ${TOKEN}` } },
-    )
+const mockReviews: Review[] = [
+  {
+    id: 1,
+    nickname: "User1",
+    date: "2023-10-01",
+    ratings: { quantity: 5, taste: 4, delivery: 5 },
+    menu: ["Pizza", "Burger"],
+    content: "Great food!",
+    images: [],
+    reply: {
+      date: "2023-10-02",
+      content: "Thank you!",
+    },
+  },
+  // ...more mock reviews...
+]
+
+const handlers: HttpHandler[] = [
+  http.get(`${BASE_URL}/reviews`, ({ request }) => {
+    return HttpResponse.json({
+      status: 200,
+      data: mockReviews,
+      message: "리뷰 조회 성공",
+    })
   }),
 ]
 

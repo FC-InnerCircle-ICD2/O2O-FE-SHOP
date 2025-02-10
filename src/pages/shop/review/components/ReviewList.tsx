@@ -1,5 +1,10 @@
+import { fetchReviews } from "@/apis/review"
 import { Review } from "@/types/models"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { useQueryParams } from "../hooks/useQueryParams"
+import { DEFAULT_PAGINATION } from "@/constants"
+import { p } from "msw/lib/core/GraphQLHandler-C5CUIS_N"
 
 const RatingItem = ({ title, value }: { title: string; value: number }) => (
   <div className="flex flex-col items-center">
@@ -44,7 +49,26 @@ const ReviewItem = ({ review }: { review: Review }) => (
 )
 
 export const ReviewList = () => {
+  const [searchParams] = useSearchParams()
+
   const [reviews, setReviews] = useState<Review[]>([])
+  const [pagination, setPagination] = useState(DEFAULT_PAGINATION)
+  const { startDate, endDate, order } = useQueryParams()
+
+  useEffect(() => {
+    if (searchParams.size <= 0) return
+    const fetch = async () => {
+      const { data } = await fetchReviews({
+        page: 0,
+        size: 10,
+        startDate,
+        endDate,
+        order,
+      })
+      setReviews(data)
+    }
+    fetch()
+  }, [searchParams])
   return (
     <div className="mt-4">
       {reviews.map((review) => (

@@ -13,9 +13,25 @@ type ApiResult<T> = {
   message?: string
 }
 
-export const fetchReviews = async (): Promise<ApiResult<Review[]>> => {
+interface FetchReviewsParams {
+  page: number
+  size: number
+  startDate?: string
+  endDate?: string
+  order?: string
+}
+
+export const fetchReviews = async ({
+  page,
+  size,
+  startDate,
+  endDate,
+  order,
+}: FetchReviewsParams): Promise<ApiResult<Review[]>> => {
   try {
-    const { data } = await apiClient.get<ApiResponse<Review[]>>("/reviews")
+    const { data } = await apiClient.get<ApiResponse<Review[]>>("/reviews", {
+      params: { page, size, startDate, endDate, order },
+    })
     return {
       success: data.status === 200,
       data: data.data,

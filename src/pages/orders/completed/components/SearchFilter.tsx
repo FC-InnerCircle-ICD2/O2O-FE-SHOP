@@ -8,6 +8,7 @@ import { Button } from "@/components/Button"
 import { DatePickerWithRange } from "@/components/DatePicker"
 import { OrderStatus } from "@/types/common"
 import { useQueryParams } from "../hooks/useQueryParams"
+import { ROUTES } from "@/routes"
 
 export function SearchFilter() {
   const navigate = useNavigate()
@@ -46,7 +47,7 @@ export function SearchFilter() {
     selectedStatuses.forEach((status) => queryParams.append("status", status))
 
     const queryString = queryParams.toString()
-    navigate(`/orders/completed?${queryString}`)
+    navigate(`${ROUTES.COMPLETED_ORDER}?${queryString}`)
   }
 
   const handleResetFilter = () => {

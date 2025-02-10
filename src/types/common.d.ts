@@ -6,3 +6,5 @@ export type Pagination = {
   totalItems: number
   hasNext: boolean
 }
+
+export type SortOrder = "latest" | "rating"
