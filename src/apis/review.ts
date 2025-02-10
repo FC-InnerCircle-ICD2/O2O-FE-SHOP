@@ -1,4 +1,4 @@
-import { Review, ReviewStats } from "@/types/models"
+import { Review, ReviewRatings } from "@/types/models"
 import apiClient from "."
 
 type ApiResponse<T> = {
@@ -46,9 +46,9 @@ export const fetchReviews = async ({
   }
 }
 
-export const fetchReviewStats = async (): Promise<ApiResult<ReviewStats>> => {
+export const fetchReviewStats = async (): Promise<ApiResult<ReviewRatings>> => {
   try {
-    const { data } = await apiClient.get<ApiResponse<ReviewStats>>(`/reviews/stats`)
+    const { data } = await apiClient.get<ApiResponse<ReviewRatings>>(`/reviews/stats`)
     return {
       success: data.status === 200,
       data: data.data,
@@ -57,13 +57,13 @@ export const fetchReviewStats = async (): Promise<ApiResult<ReviewStats>> => {
   } catch (error) {
     return {
       success: false,
-      data: { quantity: 0, taste: 0, delivery: 0 },
+      data: { total: 0, quantity: 0, taste: 0, delivery: 0 },
       message: "알 수 없는 오류가 발생했습니다.",
     }
   }
 }
 
-export const createReply = async (reviewId: number, content: string): Promise<ApiResult<null>> => {
+export const createReply = async (reviewId: string, content: string): Promise<ApiResult<null>> => {
   try {
     const { data } = await apiClient.post<ApiResponse<null>>(`/reviews/${reviewId}/reply`, {
       content,
@@ -81,16 +81,11 @@ export const createReply = async (reviewId: number, content: string): Promise<Ap
   }
 }
 
-export const updateReply = async (
-  reviewId: number,
-  replyId: number,
-  content: string,
-): Promise<ApiResult<null>> => {
+export const updateReply = async (reviewId: string, content: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.put<ApiResponse<null>>(
-      `/reviews/${reviewId}/reply/${replyId}`,
-      { content },
-    )
+    const { data } = await apiClient.put<ApiResponse<null>>(`/reviews/${reviewId}/reply`, {
+      content,
+    })
     return {
       success: data.status === 200,
       ...data,
@@ -104,11 +99,9 @@ export const updateReply = async (
   }
 }
 
-export const deleteReply = async (reviewId: number, replyId: number): Promise<ApiResult<null>> => {
+export const deleteReply = async (reviewId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.delete<ApiResponse<null>>(
-      `/reviews/${reviewId}/reply/${replyId}`,
-    )
+    const { data } = await apiClient.delete<ApiResponse<null>>(`/reviews/${reviewId}/reply`)
     return {
       success: data.status === 200,
       ...data,

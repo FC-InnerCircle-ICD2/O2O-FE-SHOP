@@ -11,13 +11,12 @@ export function Layout() {
   return (
     <>
       {/* TODO: 사이드바 토글버튼 구현 */}
-      <Sidebar variant="sidebar">
+      {/* <Sidebar variant="sidebar">
         <div className="flex flex-col flex-1 border-r border-r-solid border-r-black">
           <Header />
           <Body />
-          {/* <Footer /> */}
         </div>
-      </Sidebar>
+      </Sidebar> */}
       <Main>
         <Outlet />
       </Main>

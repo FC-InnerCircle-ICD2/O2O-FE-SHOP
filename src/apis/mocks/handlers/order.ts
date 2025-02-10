@@ -222,33 +222,33 @@ const ORDERS: OrderDto[] = [
   })) as OrderDto[]),
 ]
 const handlers: HttpHandler[] = [
-  http.get(`${BASE_URL}/event-stream`, ({ request }) => {
-    return new HttpResponse(
-      new ReadableStream({
-        start(controller) {
-          const encoder = new TextEncoder()
+  // http.get(`${BASE_URL}/event-stream`, ({ request }) => {
+  //   return new HttpResponse(
+  //     new ReadableStream({
+  //       start(controller) {
+  //         const encoder = new TextEncoder()
 
-          const sendEvent = () => {
-            const eventType = "ORDER_NOTIFICATION" // 이벤트 타입 지정
-            const eventData = JSON.stringify(ORDERS[0])
+  //         const sendEvent = () => {
+  //           const eventType = "ORDER_NOTIFICATION" // 이벤트 타입 지정
+  //           const eventData = JSON.stringify(ORDERS[0])
 
-            const message = `event: ${eventType}\ndata: ${eventData}\n\n`
-            controller.enqueue(encoder.encode(message))
-          }
-          sendEvent()
+  //           const message = `event: ${eventType}\ndata: ${eventData}\n\n`
+  //           controller.enqueue(encoder.encode(message))
+  //         }
+  //         sendEvent()
 
-          // const interval = setInterval(sendEvent, 5000)
-        },
-      }),
-      {
-        headers: {
-          "Content-Type": "text/event-stream",
-          Connection: "keep-alive",
-          "Cache-Control": "no-cache",
-        },
-      },
-    )
-  }),
+  //         // const interval = setInterval(sendEvent, 5000)
+  //       },
+  //     }),
+  //     {
+  //       headers: {
+  //         "Content-Type": "text/event-stream",
+  //         Connection: "keep-alive",
+  //         "Cache-Control": "no-cache",
+  //       },
+  //     },
+  //   )
+  // }),
   http.get(`${BASE_URL}/orders`, ({ request }) => {
     const url = new URL(request.url)
     const status = url.searchParams.get("status")

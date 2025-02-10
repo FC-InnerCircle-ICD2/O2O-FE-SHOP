@@ -47,7 +47,7 @@ export const ReviewFilters = () => {
     navigate(`${ROUTES.SHOP_REVIEW}?${queryString}`)
   }
   return (
-    <div>
+    <div className="p-8">
       <div className="flex gap-4">
         <Select value={sortOrder} onValueChange={(o) => setSortOrder(o as SortOrder)}>
           <SelectTrigger className="w-[180px]">

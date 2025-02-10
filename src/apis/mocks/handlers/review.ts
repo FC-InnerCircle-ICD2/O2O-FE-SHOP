@@ -5,13 +5,60 @@ import { BASE_URL } from "@/apis"
 
 const mockReviews: Review[] = [
   {
-    id: 1,
+    id: "1",
     nickname: "User1",
     date: "2023-10-01",
-    ratings: { quantity: 5, taste: 4, delivery: 5 },
+    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
     menu: ["Pizza", "Burger"],
     content: "Great food!",
-    images: [],
+    like: 1,
+    images: [
+      "https://placehold.co/600x400",
+      "https://placehold.co/600x400",
+      "https://placehold.co/600x400",
+      "https://placehold.co/600x400",
+      "https://placehold.co/600x400",
+      "https://placehold.co/600x400",
+    ],
+    reply: {
+      date: "2023-10-02",
+      content: "Thank you!",
+    },
+  },
+  {
+    id: "1",
+    nickname: "User1",
+    date: "2023-10-01",
+    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
+    menu: ["Pizza", "Burger"],
+    content: "Great food!",
+    like: 1,
+    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    reply: null,
+  },
+  {
+    id: "1",
+    nickname: "User1",
+    date: "2023-10-01",
+    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
+    menu: ["Pizza", "Burger"],
+    content: "Great food!",
+    like: 1,
+    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    reply: {
+      date: "2023-10-02",
+      content: "Thank you!",
+    },
+  },
+  {
+    id: "1",
+    nickname: "User1",
+    date: "2023-10-01",
+    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
+    menu: ["Pizza", "Burger"],
+    content: "Great food!",
+    like: 1,
+    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
     reply: {
       date: "2023-10-02",
       content: "Thank you!",
@@ -25,7 +72,40 @@ const handlers: HttpHandler[] = [
     return HttpResponse.json({
       status: 200,
       data: mockReviews,
-      message: "리뷰 조회 성공",
+      message: "리뷰 통계 조회 성공",
+    })
+  }),
+  http.get(`${BASE_URL}/reviews/stats`, ({ request }) => {
+    return HttpResponse.json({
+      status: 200,
+      data: {
+        total: 0,
+        quantity: 0,
+        taste: 0,
+        delivery: 0,
+      },
+      message: "리뷰 통계 조회 성공",
+    })
+  }),
+  http.post(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {},
+    })
+  }),
+  http.put(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {},
+    })
+  }),
+  http.delete(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {},
     })
   }),
 ]

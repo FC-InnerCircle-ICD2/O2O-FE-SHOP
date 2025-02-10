@@ -39,19 +39,22 @@ export type Option = {
   price: number
 }
 
-type ReviewStats = {
+type ReviewRatings = {
+  total: number
   quantity: number
   taste: number
   delivery: number
 }
 
+export type Reply = { date: string; content: string }
 export type Review = {
-  id: number
+  id: string
   nickname: string
   date: string
-  ratings: ReviewStats
+  ratings: ReviewRatings
   menu: string[]
   content: string
   images: string[]
-  reply?: { date: string; content: string }
+  like: number
+  reply: Reply | null
 }
