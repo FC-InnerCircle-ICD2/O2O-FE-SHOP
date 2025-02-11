@@ -1,18 +1,18 @@
 "use client"
 
-import * as React from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
+import * as React from "react"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/shadcn/button"
 import { Calendar } from "@/components/shadcn/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/popover"
+import { cn } from "@/lib/utils"
 
 export type DatePickerProps = {
   date: DateRange | undefined
-  onSelect: React.Dispatch<React.SetStateAction<DateRange | undefined>>
+  onSelect: (date: DateRange | undefined) => void
 }
 export function DatePickerWithRange({ date, onSelect }: DatePickerProps) {
   const [tempDate, setTempDate] = React.useState<DateRange | undefined>(date)
@@ -34,13 +34,13 @@ export function DatePickerWithRange({ date, onSelect }: DatePickerProps) {
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                  {format(date.from, "yyyy-MM-dd")} ~ {format(date.to, "yyyy-MM-dd")}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                format(date.from, "yyyy-MM-dd")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>날짜 선택</span>
             )}
           </Button>
         </PopoverTrigger>

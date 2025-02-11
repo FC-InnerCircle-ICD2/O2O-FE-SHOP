@@ -1,8 +1,8 @@
+import { orderStatusLabels } from "@/constants/order"
 import { ApiResponse, PaginatedData } from "@/types/api"
 import { OrderStatus } from "@/types/common"
 import { OrderDto } from "@/types/dtos"
-import { useQueries, useQuery } from "@tanstack/react-query"
-import { orderStatusLabels } from "@/constants/order"
+import { useQuery } from "@tanstack/react-query"
 import apiClient from "."
 
 type FetchOrdersParams = Partial<{
@@ -21,7 +21,8 @@ const useGetActiveOrders = () => {
     queryFn: async () => {
       const { data } = await apiClient.get<FetchOrderResponse>("/orders", {
         params: {
-          size: 999,
+          startDate: "20250101",
+          endDate: "30000101",
           status: "NEW",
         },
       })
@@ -35,7 +36,8 @@ const useGetActiveOrders = () => {
     queryFn: async () => {
       const { data } = await apiClient.get<FetchOrderResponse>("/orders", {
         params: {
-          size: 999,
+          startDate: "20250101",
+          endDate: "30000101",
           status: "ONGOING",
         },
       })

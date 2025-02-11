@@ -6,73 +6,93 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table"
-import { Pagination as TPagination } from "@/types/common"
-import { Order } from "@/types/models"
-import { useEffect, useState } from "react"
-import { fetchOrders } from "@/apis/order"
 import { DEFAULT_PAGINATION } from "@/constants"
+import { Pagination as TPagination } from "@/types/common"
+import { useEffect, useState } from "react"
 
-import { PaginationComponent } from "./Pagination"
-import { useQueryParams } from "../hooks/useQueryParams"
-import { useSearchParams } from "react-router-dom"
+import useGetOrders, { OrdersParams } from "@/apis/useGetOrders"
 import useModal from "@/hooks/useModal"
+import { OrderDto } from "@/types/dtos"
+import { useOrdersParams } from "../hooks/useQueryParams"
 import OrderDetail from "./OrderDetail"
+import { PaginationComponent } from "./Pagination"
 
 export function SearchResult() {
-  const [searchParams] = useSearchParams()
   const { show } = useModal()
+  const {
+    page = 0,
+    size = 10,
+    startDate = "20250101",
+    endDate = "30000101",
+    status = "CANCEL,DONE",
+  } = useOrdersParams()
 
-  const [orders, setOrders] = useState<Order[]>([])
   const [pagination, setPagination] = useState<TPagination>(DEFAULT_PAGINATION)
-  const { startDate, endDate, status } = useQueryParams()
-  const handleRowClick = (order: Order) => {
+  const [params, setParams] = useState<OrdersParams | undefined>(undefined)
+
+  const { data, isLoading } = useGetOrders(params)
+
+  const handleRowClick = (order: OrderDto) => {
     show({
       content: <OrderDetail order={order} />,
       useAnimation: true,
     })
   }
-  useEffect(() => {
-    if (searchParams.size <= 0) return
-    const fetch = async () => {
-      const { content, currentPage, hasNext, totalItems, totalPages } = await fetchOrders({
-        page: 0,
-        size: 10,
-        startDate,
-        endDate,
-        status: ["DONE"],
-      })
-      // TODO: 시작, 종료일 yyyyMMdd 형식으로 맞추기
 
-      setOrders(content)
-      setPagination({ currentPage, hasNext, totalItems, totalPages })
+  useEffect(() => {
+    const params = {
+      page,
+      size,
+      startDate,
+      endDate,
+      status,
     }
-    fetch()
-  }, [searchParams])
+
+    setParams(params)
+  }, [page, size, startDate, endDate, status])
 
   return (
     <>
       <Table>
+        <colgroup>
+          <col width="20%" />
+          <col width="10%" />
+          <col width="55%" />
+          <col width="15%" />
+        </colgroup>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">주문시각</TableHead>
-            <TableHead>상태</TableHead>
-            <TableHead>메뉴</TableHead>
-            <TableHead className="text-right">주문금액</TableHead>
+            <TableHead className="w-[100px] text-center">주문시각</TableHead>
+            <TableHead className="text-center">상태</TableHead>
+            <TableHead className="text-center">메뉴</TableHead>
+            <TableHead className="text-center">주문금액</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order, key) => (
-            <TableRow key={key} onClick={() => handleRowClick(order)}>
-              <TableCell className="font-medium">{order.time}</TableCell>
-              <TableCell>{order.status}</TableCell>
-              <TableCell>{order.name}</TableCell>
-              <TableCell className="text-right">{order.totalPrice}</TableCell>
+          {data && data.content.length > 0 ? (
+            data.content.map((order, key) => (
+              <TableRow key={key} onClick={() => handleRowClick(order)}>
+                <TableCell className="font-medium text-center">{order.orderTime}</TableCell>
+                <TableCell className="text-center">{order.orderStatus}</TableCell>
+                <TableCell className="text-center">{order.orderName}</TableCell>
+                <TableCell className="text-center">{order.totalPrice}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                주문이 없습니다.
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
 
-      <PaginationComponent pagination={pagination} />
+      {data && data.content.length > 0 && (
+        <>
+          <PaginationComponent pagination={pagination} />
+        </>
+      )}
     </>
   )
 }

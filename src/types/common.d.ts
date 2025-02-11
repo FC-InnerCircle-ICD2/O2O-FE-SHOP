@@ -1,4 +1,4 @@
-export type OrderStatus = "NEW" | "ONGOING" | "DONE"
+export type OrderStatus = "NEW" | "ONGOING" | "DONE" | "CANCEL"
 export type OrderType = "DELIVERY"
 export type Pagination = {
   currentPage: number

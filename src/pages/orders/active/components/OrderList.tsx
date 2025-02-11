@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils"
-import { useActiveOrder } from "../contexts/OrderActiveProvider"
-import { useNavigate } from "react-router-dom"
-import { Order } from "@/types/models"
 import { OrderDto } from "@/types/dtos"
+import { format } from "date-fns"
+import { useNavigate } from "react-router-dom"
+import { useActiveOrder } from "../contexts/OrderActiveProvider"
 
 const OrderList = () => {
   const { newOrders, onGoingOrders } = useActiveOrder()
@@ -60,13 +60,15 @@ const OrderItem = ({
     >
       <div className="flex flex-col w-full py-4 px-5">
         {/* 주문 ID */}
-        <div className="text-lg text-white font-bold mb-2">{`배달 ${order.orderId}`}</div>
-
-        {/* 주문 시간 */}
-        <div className="text-base text-zinc-200 mb-0.5">{order.orderTime}</div>
+        <div className="text-lg text-white font-bold mb-2 truncate">{`새로운 주문 - ${order.orderId}`}</div>
 
         {/* 주문 내역 */}
-        <span className="text-lg text-zinc-200">{order.orderName}</span>
+        <span className="text-base text-zinc-100 font-medium">{order.orderName}</span>
+
+        {/* 주문 시간 */}
+        <div className="text-sm text-zinc-200 mb-0.5">
+          {format(new Date(order.orderTime), "yyyy-MM-dd HH:mm")}
+        </div>
       </div>
     </li>
   )

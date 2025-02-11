@@ -1,9 +1,9 @@
 import { Separator } from "@/components/shadcn/separator"
+import { OrderDto } from "@/types/dtos"
 import { useEffect, useRef } from "react"
 import OrderMenuItem from "./OrderMenuItem"
-import { Order } from "@/types/models"
 
-const OrderDetail = ({ order }: { order: Order }) => {
+const OrderDetail = ({ order }: { order: OrderDto }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const OrderDetail = ({ order }: { order: Order }) => {
         {/* header */}
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
-            <p className="text-2xl font-bold text-primary">배달 {order?.id}</p>
-            <p className="text-lg font-bold text-black">{order?.name}</p>
+            <p className="text-2xl font-bold text-primary">배달 {order.orderId}</p>
+            <p className="text-lg font-bold text-black">{order.orderName}</p>
           </div>
         </div>
         {/* 요청사항 */}
@@ -63,21 +63,27 @@ const OrderDetail = ({ order }: { order: Order }) => {
               menuItem={{ name: "상품", price: "금액", quantity: "수량" }}
               isMainMenu
             />
-            {order.details.map((menu, index) => (
+            {order.orderMenuInquiryResponses.map((menu, index) => (
               <div key={index}>
                 <OrderMenuItem
-                  menuItem={{ name: menu.menuName, price: menu.price, quantity: 1 }}
+                  menuItem={{
+                    name: menu.menuName,
+                    price: menu.menuPrice,
+                    quantity: menu.menuQuantity,
+                  }}
                   isMainMenu
                 />
-                {menu.optionGroups.map((options, index) => (
+                {menu.orderMenuOptionGroupInquiryResponses.map((options, index) => (
                   <OrderMenuItem
                     key={index}
                     menuItem={{
-                      name: `${options.name}(${options.options.length}) : ${options.options
-                        .map((options) => options.name)
+                      name: `${options.orderMenuOptionGroupName}(${
+                        options.orderMenuOptionInquiryResponses.length
+                      }) : ${options.orderMenuOptionInquiryResponses
+                        .map((options) => options.menuOptionName)
                         .join(", ")}`,
-                      price: options.options
-                        .map((option) => option.price)
+                      price: options.orderMenuOptionInquiryResponses
+                        .map((option) => option.menuOptionPrice)
                         .reduce((acc, cur) => acc + cur),
                       quantity: "",
                     }}
@@ -91,7 +97,7 @@ const OrderDetail = ({ order }: { order: Order }) => {
               menuItem={{
                 name: "상품합계",
                 price: order.totalPrice,
-                quantity: order.details.length,
+                quantity: order.orderMenuInquiryResponses.length,
               }}
               isMainMenu
             />
@@ -111,7 +117,7 @@ const OrderDetail = ({ order }: { order: Order }) => {
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">주소</dt>
               <dd className="text-lg font-medium text-zinc-700">
-                {order.address.road} {order.address.detail}
+                {order.roadAddress} {order.detailAddress}
               </dd>
             </dl>
             <dl className="flex gap-10">

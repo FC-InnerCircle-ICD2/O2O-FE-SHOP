@@ -250,7 +250,7 @@ const handlers: HttpHandler[] = [
   //   )
   // }),
   http.get(`${BASE_URL}/orders`, ({ request }) => {
-    // return passthrough()
+    return passthrough()
 
     const url = new URL(request.url)
     const status = url.searchParams.get("status")

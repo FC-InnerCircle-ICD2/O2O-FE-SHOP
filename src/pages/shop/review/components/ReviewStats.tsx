@@ -16,6 +16,7 @@ export const ReviewStats = () => {
     taste: 3.2,
     delivery: 5.0,
   })
+
   return (
     <div className="p-8">
       <h2 className="mb-2 text-lg">전체 별점</h2>

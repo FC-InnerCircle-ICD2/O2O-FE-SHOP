@@ -1,10 +1,10 @@
+import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
+import { Button } from "@/components/Button"
 import { Separator } from "@/components/shadcn/separator"
+import { useToast } from "@/hooks/useToast"
 import { useEffect, useRef } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
-import { Button } from "@/components/Button"
-import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
-import { useToast } from "@/hooks/useToast"
 
 const OrderDetail = () => {
   const { showNotification } = useToast()

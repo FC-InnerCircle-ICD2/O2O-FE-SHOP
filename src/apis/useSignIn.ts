@@ -1,11 +1,10 @@
-import { ApiResponse } from "@/types/api"
-import apiClient from "."
-import { useMutation } from "@tanstack/react-query"
-import userStore from "@/store/user"
 import { useToast } from "@/hooks/useToast"
-import { AxiosError } from "axios"
+import userStore from "@/store/user"
+import { ApiResponse } from "@/types/api"
+import { useMutation } from "@tanstack/react-query"
+import apiClient from "."
 
-type SignInResponse = {
+export type SignInResponse = {
   accessToken: string
   refreshToken: string
   accessTokenExpiresIn: string
