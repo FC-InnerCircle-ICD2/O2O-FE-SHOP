@@ -54,8 +54,8 @@ export function Body() {
                 isActive={pathname === ROUTES.ACTIVE_ORDER}
                 onClick={() => navigate(ROUTES.ACTIVE_ORDER)}
               >
-                <a>
-                  <span className="text-base leading-[1.6rem]">신규 • 진행중</span>
+                <a className="!h-[60px]">
+                  <span className="text-base leading-[1.6rem] pl-4">신규 • 진행중</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -66,8 +66,8 @@ export function Body() {
                 isActive={pathname === ROUTES.COMPLETED_ORDER}
                 onClick={() => navigate(ROUTES.COMPLETED_ORDER)}
               >
-                <a>
-                  <span className="text-base leading-[1.6rem]">완료</span>
+                <a className="!h-[60px]">
+                  <span className="text-base leading-[1.6rem] pl-4">완료</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>

@@ -19,26 +19,26 @@ const OrderDetail = () => {
 
   const handleClickRefuseButton = async () => {
     if (!order) return
-    const { success, message } = await refuseOrder(order?.id)
+    const { success, message } = await refuseOrder(order?.orderId)
     if (success) {
       showNotification("success", "주문을 거부하였습니다")
-      refuse(order.id)
+      refuse(order.orderId)
     } else showNotification("error", message)
   }
   const handleClickApproveButton = async () => {
     if (!order) return
-    const { success, message } = await approveOrder(order.id)
+    const { success, message } = await approveOrder(order.orderId)
     if (success) {
       showNotification("success", "주문을 접수하였습니다")
-      approve(order.id)
+      approve(order.orderId)
     } else showNotification("error", message)
   }
   const handleClickCompleteButton = async () => {
     if (!order) return
-    const { success, message } = await completeOrder(order.id)
+    const { success, message } = await completeOrder(order.orderId)
     if (success) {
       showNotification("success", "주문이 완료되었습니다")
-      complete(order.id)
+      complete(order.orderId)
     } else showNotification("error", message)
   }
 
@@ -59,13 +59,12 @@ const OrderDetail = () => {
         {/* header */}
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
-            <p className="text-2xl font-bold text-primary">배달 {order?.id}</p>
-            <p className="text-lg font-bold text-black">{order?.name}</p>
+            <p className="text-2xl font-bold text-primary">배달 {order?.orderId}</p>
+            <p className="text-lg font-bold text-black">{order?.orderName}</p>
           </div>
           <div className="flex gap-3 items-center">
-            {order.status === "NEW" ? (
+            {order.orderStatus === "NEW" ? (
               <>
-                {" "}
                 <Button variant={"outlined"} onClick={handleClickRefuseButton}>
                   거부
                 </Button>
@@ -93,10 +92,10 @@ const OrderDetail = () => {
                 수저, 포크 {order.excludingSpoonAndFork ? "X" : "O"}
               </p>
             </div>
-            <div className="flex gap-10 items-start">
+            {/* <div className="flex gap-10 items-start">
               <p className="text-lg w-[100px] font-bold">라이더님께</p>
               <p className="text-lg flex-1 font-medium text-zinc-700">{order.requestToRider}</p>
-            </div>
+            </div> */}
           </div>
         </div>
         <Separator className="h-3 bg-zinc-100" />
@@ -111,21 +110,27 @@ const OrderDetail = () => {
               menuItem={{ name: "상품", price: "금액", quantity: "수량" }}
               isMainMenu
             />
-            {order.details.map((menu, index) => (
+            {order.orderMenuInquiryResponses.map((menu, index) => (
               <div key={index}>
                 <OrderMenuItem
-                  menuItem={{ name: menu.menuName, price: menu.price, quantity: 1 }}
+                  menuItem={{
+                    name: menu.menuName,
+                    price: menu.menuPrice,
+                    quantity: menu.menuQuantity,
+                  }}
                   isMainMenu
                 />
-                {menu.optionGroups.map((options, index) => (
+                {menu.orderMenuOptionGroupInquiryResponses.map((options, index) => (
                   <OrderMenuItem
                     key={index}
                     menuItem={{
-                      name: `${options.name}(${options.options.length}) : ${options.options
-                        .map((options) => options.name)
+                      name: `${options.orderMenuOptionGroupName}(${
+                        options.orderMenuOptionInquiryResponses.length
+                      }) : ${options.orderMenuOptionInquiryResponses
+                        .map((option) => option.menuOptionName)
                         .join(", ")}`,
-                      price: options.options
-                        .map((option) => option.price)
+                      price: options.orderMenuOptionInquiryResponses
+                        .map((option) => option.menuOptionPrice)
                         .reduce((acc, cur) => acc + cur),
                       quantity: "",
                     }}
@@ -139,7 +144,7 @@ const OrderDetail = () => {
               menuItem={{
                 name: "상품합계",
                 price: order.totalPrice,
-                quantity: order.details.length,
+                quantity: order.totalMenuCount,
               }}
               isMainMenu
             />
@@ -159,7 +164,7 @@ const OrderDetail = () => {
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">주소</dt>
               <dd className="text-lg font-medium text-zinc-700">
-                {order.address.road} {order.address.detail}
+                {order.roadAddress} {order.detailAddress}
               </dd>
             </dl>
             <dl className="flex gap-10">

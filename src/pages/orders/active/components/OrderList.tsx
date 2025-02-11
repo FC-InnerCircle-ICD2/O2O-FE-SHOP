@@ -2,19 +2,20 @@ import { cn } from "@/lib/utils"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import { useNavigate } from "react-router-dom"
 import { Order } from "@/types/models"
+import { OrderDto } from "@/types/dtos"
 
 const OrderList = () => {
-  const { newOrders, processingOrders } = useActiveOrder()
+  const { newOrders, onGoingOrders } = useActiveOrder()
 
   return (
     <div className="flex flex-col h-full w-[350px] bg-sidebar overflow-y-auto dark-scrollbar">
       <OrderMenu name="신규" orders={newOrders}></OrderMenu>
-      <OrderMenu name="진행" orders={processingOrders}></OrderMenu>
+      <OrderMenu name="진행" orders={onGoingOrders}></OrderMenu>
     </div>
   )
 }
 
-const OrderMenu = ({ name, orders }: { name: string; orders: Order[] }) => {
+const OrderMenu = ({ name, orders }: { name: string; orders: OrderDto[] }) => {
   const navigate = useNavigate()
   const { order } = useActiveOrder()
   return (
@@ -29,10 +30,10 @@ const OrderMenu = ({ name, orders }: { name: string; orders: Order[] }) => {
       </li>
       {orders.map((item) => (
         <OrderItem
-          key={item.id}
+          key={item.orderId}
           order={item}
-          onClick={() => navigate(`/orders/active?orderId=${item.id}`)}
-          isActive={order?.id === item.id}
+          onClick={() => navigate(`/orders/active?orderId=${item.orderId}`)}
+          isActive={order?.orderId === item.orderId}
         />
       ))}
     </ul>
@@ -44,7 +45,7 @@ const OrderItem = ({
   onClick,
   isActive,
 }: {
-  order: Order
+  order: OrderDto
   onClick: () => void
   isActive: boolean
 }) => {
@@ -59,13 +60,13 @@ const OrderItem = ({
     >
       <div className="flex flex-col w-full py-4 px-5">
         {/* 주문 ID */}
-        <div className="text-lg text-white font-bold mb-2">{`배달 ${order.id}`}</div>
+        <div className="text-lg text-white font-bold mb-2">{`배달 ${order.orderId}`}</div>
 
         {/* 주문 시간 */}
-        <div className="text-base text-zinc-200 mb-0.5">{order.time}</div>
+        <div className="text-base text-zinc-200 mb-0.5">{order.orderTime}</div>
 
         {/* 주문 내역 */}
-        <span className="text-lg text-zinc-200">{order.name}</span>
+        <span className="text-lg text-zinc-200">{order.orderName}</span>
       </div>
     </li>
   )

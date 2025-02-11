@@ -14,15 +14,13 @@ export type DatePickerProps = {
   date: DateRange | undefined
   onSelect: React.Dispatch<React.SetStateAction<DateRange | undefined>>
 }
-export function DatePickerWithRange({ date,   onSelect }: DatePickerProps) {
-  //   const [date, setDate] = React.useState<DateRange | undefined>({
-  //     from: new Date(2022, 0, 20),
-  //     to: addDays(new Date(2022, 0, 20), 20),
-  //   })
+export function DatePickerWithRange({ date, onSelect }: DatePickerProps) {
+  const [tempDate, setTempDate] = React.useState<DateRange | undefined>(date)
+  const [open, setOpen] = React.useState(false)
 
   return (
     <div className="grid gap-2">
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id="date"
@@ -50,11 +48,30 @@ export function DatePickerWithRange({ date,   onSelect }: DatePickerProps) {
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={onSelect}
+            defaultMonth={tempDate?.from}
+            selected={tempDate}
+            onSelect={setTempDate}
             numberOfMonths={2}
           />
+          <div className="flex justify-end gap-2 p-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setTempDate(date)
+                setOpen(false)
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={() => {
+                onSelect(tempDate)
+                setOpen(false)
+              }}
+            >
+              확인
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
     </div>

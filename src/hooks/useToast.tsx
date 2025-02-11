@@ -53,7 +53,7 @@ export const useToast = () => {
         </div>
       ),
       {
-        duration: 5000,
+        duration: 3000,
         className: "rounded-md",
       },
     )

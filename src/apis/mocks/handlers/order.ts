@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { BASE_URL } from "@/apis"
 import { OrderDto } from "@/types/dtos"
-import { http, HttpHandler, HttpResponse } from "msw"
+import { http, HttpHandler, HttpResponse, passthrough } from "msw"
 const ORDERS: OrderDto[] = [
   {
     orderId: "c735a637-621d-4926-9811-909dc2584cf9",
@@ -250,6 +250,8 @@ const handlers: HttpHandler[] = [
   //   )
   // }),
   http.get(`${BASE_URL}/orders`, ({ request }) => {
+    // return passthrough()
+
     const url = new URL(request.url)
     const status = url.searchParams.get("status")
     let orders
