@@ -48,7 +48,7 @@ apiClient.interceptors.response.use(
     }
 
     // 토큰 만료 시 재발급
-    if (error.response?.status === 401) {
+    if (error.response?.status === 511) {
       if (!refreshFlag) {
         const { accessToken, refreshToken, setUserInfo, resetUserInfo } = userStore.getState()
         refreshFlag = true
