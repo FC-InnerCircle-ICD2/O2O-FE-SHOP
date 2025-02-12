@@ -28,26 +28,26 @@ import { useOrderSSE } from "./hooks/useOrderSSE"
 
 const RequireGuest = () => {
   const navigate = useNavigate()
-  const { accessToken } = userStore()
+  const { userInfo } = userStore()
 
   useEffect(() => {
-    if (accessToken) {
+    if (userInfo?.accessToken) {
       navigate(ROUTES.ACTIVE_ORDER, { replace: true })
     }
-  }, [accessToken, navigate])
+  }, [userInfo?.accessToken, navigate])
 
   return <Outlet />
 }
 const RequireAuth = () => {
   useOrderSSE()
   const navigate = useNavigate()
-  const { accessToken } = userStore()
+  const { userInfo } = userStore()
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!userInfo?.accessToken) {
       navigate(ROUTES.LOGIN, { replace: true })
     }
-  }, [accessToken, navigate])
+  }, [userInfo?.accessToken, navigate])
 
   return <Outlet />
 }

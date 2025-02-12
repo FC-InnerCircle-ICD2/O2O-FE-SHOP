@@ -25,8 +25,9 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const userIdStorage = localStorage.getItem("userIdStorage")
-    const token = userIdStorage ? JSON.parse(userIdStorage)?.state?.accessToken : null
+    const { userInfo } = userStore.getState()
+
+    const token = userInfo?.accessToken ? userInfo.accessToken : null
     if (token) {
       config.headers.Authorization = token
     }
@@ -41,38 +42,57 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    // token 만료 error를 일으킨 원래 요청
+    const { userInfo, setUserInfo, resetUserInfo } = userStore.getState()
+
+    if (error.config?.url === "/auth/refresh") {
+      console.log("refresh error")
+      resetUserInfo()
+      return Promise.reject(error)
+    }
+
     const originalRequest = error.config
     if (!originalRequest) {
       return Promise.reject(error)
     }
 
-    // 토큰 만료 시 재발급
     if (error.response?.status === 511) {
       if (!refreshFlag) {
-        const { accessToken, refreshToken, setUserInfo, resetUserInfo } = userStore.getState()
         refreshFlag = true
 
         try {
           if (!refreshPromise) {
-            refreshPromise = apiClient
-              .post<ApiResponse<SignInResponse>>("/auth/refresh", {
-                accessToken: accessToken?.replace("Bearer ", ""),
-                refreshToken: refreshToken?.replace("Bearer ", ""),
-              })
-              .then((res) => {
+            refreshPromise = (async () => {
+              try {
+                const res = await axios
+                  .create({
+                    baseURL: BASE_URL,
+                    timeout: 10000,
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                  .post<ApiResponse<SignInResponse>>("/auth/refresh", {
+                    accessToken: userInfo?.accessToken?.replace("Bearer ", ""),
+                    refreshToken: userInfo?.refreshToken?.replace("Bearer ", ""),
+                  })
+
                 setUserInfo(res.data.data)
-              })
-              .catch((err) => {
+                return res
+              } catch (err) {
                 resetUserInfo()
-              })
-              .finally(() => {
                 refreshFlag = false
                 refreshPromise = null
-              })
+                throw err
+              } finally {
+                refreshFlag = false
+                refreshPromise = null
+              }
+            })()
           }
 
-          await refreshPromise
+          const refreshResult = await refreshPromise.catch((err) => {
+            throw err
+          })
 
           // 큐에 있는 모든 요청 재시도
           const requests = [...requestQueue]
@@ -80,13 +100,12 @@ apiClient.interceptors.response.use(
 
           // 큐에 있는 모든 요청 실행
           const results = await Promise.all(requests.map((request) => request()))
-
-          // 원래 실패했던 요청 재시도
           return await apiClient(originalRequest)
         } catch (refreshError) {
-          // 토큰 재발급 실패 시 로그아웃 처리 등
           requestQueue.length = 0
-          return Promise.reject(refreshError)
+          refreshFlag = false
+          refreshPromise = null
+          throw refreshError
         }
       } else {
         // 재발급 진행 중일 때 들어온 요청들은 큐에 저장
@@ -97,7 +116,6 @@ apiClient.interceptors.response.use(
         })
       }
     }
-
     return Promise.reject(error)
   },
 )

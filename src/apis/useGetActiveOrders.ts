@@ -24,6 +24,8 @@ const useGetActiveOrders = () => {
           startDate: "20250101",
           endDate: "30000101",
           status: "NEW",
+          page: 0,
+          size: 999,
         },
       })
 
@@ -39,6 +41,8 @@ const useGetActiveOrders = () => {
           startDate: "20250101",
           endDate: "30000101",
           status: "ONGOING",
+          page: 0,
+          size: 999,
         },
       })
 
