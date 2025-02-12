@@ -1,7 +1,7 @@
 import { Progress } from "@/components/shadcn/progress"
 import { ReviewRatings } from "@/types/models"
-import { useState } from "react"
 import { Star } from "lucide-react"
+import { useState } from "react"
 
 interface StarRatingProps {
   rating: number
@@ -45,7 +45,6 @@ export const ReviewStats = () => {
     total: 4.3,
     quantity: 4.5,
     taste: 4.2,
-    delivery: 4.0,
   })
 
   return (
@@ -57,11 +56,11 @@ export const ReviewStats = () => {
         <div className="text-base font-normal text-gray-700">{"(총 리뷰 1,111개)"}</div>
       </div>
 
-      {/* <div className="flex gap-8 flex-wrap">
+      <div className="flex gap-8 flex-wrap">
         <StatItem title="양" value={stats.quantity} />
         <StatItem title="맛" value={stats.taste} />
-        <StatItem title="배달" value={stats.delivery} />
-      </div> */}
+        {/* <StatItem title="배달" value={stats.delivery} /> */}
+      </div>
     </div>
   )
 }

@@ -51,6 +51,7 @@
     "@shadcn/ui": "^0.0.4",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
+    "@types/axios": "^0.14.4",
     "@types/event-source-polyfill": "^1",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",

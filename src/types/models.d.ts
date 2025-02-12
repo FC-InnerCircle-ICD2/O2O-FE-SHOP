@@ -43,16 +43,27 @@ type ReviewRatings = {
   total: number
   quantity: number
   taste: number
-  delivery: number
+}
+
+type ReviewMenuOptions = {
+  menuOptionName: string
+  menuOptionQuantity: number
+}
+
+type ReviewMenu = {
+  menuName: string
+  menuQuantity: number
+  menuOptions: ReviewMenuOptions[]
 }
 
 export type Reply = { date: string; content: string }
+
 export type Review = {
   id: string
   nickname: string
   date: string
   ratings: ReviewRatings
-  menu: string[]
+  menu: ReviewMenu[]
   content: string
   images: string[]
   like: number

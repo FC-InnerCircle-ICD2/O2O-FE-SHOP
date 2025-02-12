@@ -1,13 +1,13 @@
 import { deleteReply, fetchReviews, updateReply } from "@/apis/review"
-import { Reply as TReply, Review } from "@/types/models"
+import { Button } from "@/components/Button"
+import Icon from "@/components/Icon"
+import { Textarea } from "@/components/shadcn/textarea"
+import { DEFAULT_PAGINATION } from "@/constants"
+import { useToast } from "@/hooks/useToast"
+import { Review, Reply as TReply } from "@/types/models"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useQueryParams } from "../hooks/useQueryParams"
-import { DEFAULT_PAGINATION } from "@/constants"
-import Icon from "@/components/Icon"
-import { Button } from "@/components/Button"
-import { useToast } from "@/hooks/useToast"
-import { Textarea } from "@/components/shadcn/textarea"
 
 const RatingItem = ({ title, value }: { title: string; value: number }) => (
   <div className="flex items-center gap-1">
@@ -111,7 +111,6 @@ const ReviewItem = ({ review }: { review: Review }) => (
         <div className="flex items-center gap-2 flex-wrap">
           <RatingItem title="양" value={review.ratings.quantity} />
           <RatingItem title="맛" value={review.ratings.quantity} />
-          <RatingItem title="배달" value={review.ratings.delivery} />
         </div>
       </div>
       <div className="text-sm text-gray-600">{review.date}</div>
@@ -123,7 +122,7 @@ const ReviewItem = ({ review }: { review: Review }) => (
           <img key={index} src={img} alt="리뷰이미지" width={150} className="rounded-sm" />
         ))}
       </div>
-      <div className="text-xs text-gray-600">{review.menu}</div>
+      {/* <div className="text-xs text-gray-600">{review.menu}</div> */}
       <div className="flex items-center gap-1">
         <Icon name="ThumbsUp" className="text-gray-600" />
         <div className="text-sm text-gray-600">{review.like}명에게 도움이 되었어요</div>

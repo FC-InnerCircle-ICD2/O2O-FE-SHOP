@@ -1,15 +1,30 @@
 // src/mocks/handlers.js
-import { HttpHandler, HttpResponse, http } from "msw"
-import { Review } from "@/types/models"
 import { BASE_URL } from "@/apis"
+import { Review } from "@/types/models"
+import { HttpHandler, HttpResponse, http } from "msw"
 
 const mockReviews: Review[] = [
   {
     id: "1",
     nickname: "User1",
     date: "2023-10-01",
-    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
-    menu: ["Pizza", "Burger"],
+    ratings: { total: 5.0, quantity: 5, taste: 4 },
+    menu: [
+      {
+        menuName: "Pizza",
+        menuQuantity: 2,
+        menuOptions: [
+          {
+            menuOptionName: "상큼한 피클",
+            menuOptionQuantity: 1,
+          },
+          {
+            menuOptionName: "시큼한 피클",
+            menuOptionQuantity: 2,
+          },
+        ],
+      },
+    ],
     content: "Great food!",
     like: 1,
     images: [
@@ -25,45 +40,7 @@ const mockReviews: Review[] = [
       content: "Thank you!",
     },
   },
-  {
-    id: "1",
-    nickname: "User1",
-    date: "2023-10-01",
-    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
-    menu: ["Pizza", "Burger"],
-    content: "Great food!",
-    like: 1,
-    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
-    reply: null,
-  },
-  {
-    id: "1",
-    nickname: "User1",
-    date: "2023-10-01",
-    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
-    menu: ["Pizza", "Burger"],
-    content: "Great food!",
-    like: 1,
-    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
-    reply: {
-      date: "2023-10-02",
-      content: "Thank you!",
-    },
-  },
-  {
-    id: "1",
-    nickname: "User1",
-    date: "2023-10-01",
-    ratings: { total: 5.0, quantity: 5, taste: 4, delivery: 5 },
-    menu: ["Pizza", "Burger"],
-    content: "Great food!",
-    like: 1,
-    images: ["https://placehold.co/600x400", "https://placehold.co/600x400"],
-    reply: {
-      date: "2023-10-02",
-      content: "Thank you!",
-    },
-  },
+
   // ...more mock reviews...
 ]
 

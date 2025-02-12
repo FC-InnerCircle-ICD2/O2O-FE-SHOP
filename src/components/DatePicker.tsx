@@ -26,7 +26,7 @@ export function DatePickerWithRange({ date, onSelect }: DatePickerProps) {
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[300px] justify-start text-left font-normal bg-white",
               !date && "text-muted-foreground",
             )}
           >
