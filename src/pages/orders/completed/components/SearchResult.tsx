@@ -52,7 +52,7 @@ export function SearchResult() {
   }, [page, size, startDate, endDate, status])
 
   return (
-    <>
+    <div className="p-6 rounded-lg bg-white w-full">
       <Table>
         <colgroup>
           <col width="20%" />
@@ -93,6 +93,6 @@ export function SearchResult() {
           <PaginationComponent pagination={pagination} />
         </>
       )}
-    </>
+    </div>
   )
 }

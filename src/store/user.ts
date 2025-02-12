@@ -17,6 +17,7 @@ const userStore = create<UserState>()(
     (set) => ({
       userInfo: null,
       setUserInfo: (info) => {
+        console.log("setUser", { info })
         set(() => ({ userInfo: info }))
       },
       resetUserInfo: () =>

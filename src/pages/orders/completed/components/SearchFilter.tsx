@@ -63,7 +63,7 @@ export function SearchFilter() {
   }
 
   return (
-    <div>
+    <div className="p-6 rounded-lg bg-white">
       <div className="flex items-center mb-4 gap-10">
         <div className="text-base">주문일시</div>
         <DatePickerWithRange date={date} onSelect={handleDateChange} />

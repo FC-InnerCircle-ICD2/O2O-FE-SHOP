@@ -10,7 +10,7 @@ export function Body() {
 
   return (
     <SidebarContent>
-      <SidebarMenu className="flex flex-col gap-0 [&_[data-sidebar='menu-button']]:h-[5.2rem]">
+      <SidebarMenu className="flex flex-col gap-0 [&_[data-sidebar='menu-button']]:h-[4rem] [&_[data-sidebar='menu-button']]:rounded-none">
         {/* TODO: 중간발표 이후 주석 해제 */}
         <SidebarMenuItem className="flex justify-center gap-0">
           <SidebarMenuButton

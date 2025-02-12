@@ -56,6 +56,7 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 511) {
+      console.log("refresh api", error)
       if (!refreshFlag) {
         refreshFlag = true
 

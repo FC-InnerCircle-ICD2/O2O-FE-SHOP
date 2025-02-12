@@ -5,15 +5,17 @@ import { ReviewStats } from "./components/ReviewStats"
 
 export default function Page() {
   return (
-    <div className="bg-white w-full">
-      <div className="text-xl font-medium py-4 px-8 border-b border-b-slate-300">주문 내역</div>
-      <div className="p-8">
+    <div className="flex flex-col bg-gray-50 w-full">
+      <div className="text-xl font-medium py-4 px-8 border-b border-b-slate-300 bg-white">
+        리뷰관리
+      </div>
+      <div className="pt-6 pb-2 px-8">
         <ReviewStats />
       </div>
-      <div className="p-8">
+      <div className="pt-2 pb-6 px-8">
         <ReviewFilters />
       </div>
-      <div className="p-8">
+      <div className="flex-1 py-4 px-8">
         <ReviewList />
       </div>
     </div>
