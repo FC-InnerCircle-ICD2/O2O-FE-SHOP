@@ -14,43 +14,59 @@ import { useNavigate } from "react-router-dom"
 import { useQueryParams } from "../hooks/useQueryParams"
 import { SortOrder } from "@/types/common"
 import { ROUTES } from "@/routes"
+import { Tabs, TabsList, TabsTrigger } from "@/components/shadcn/tabs"
 
 export const ReviewFilters = () => {
-  const { startDate, endDate, order: initialOrder } = useQueryParams()
+  const { startDate, endDate, order, answerType, setQueryParams } = useQueryParams()
 
   const navigate = useNavigate()
-  const [date, setDate] = useState<DateRange | undefined>()
-  const [sortOrder, setSortOrder] = useState<SortOrder>("latest")
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: startDate ? new Date(startDate) : undefined,
+    to: endDate ? new Date(endDate) : undefined,
+  })
+  const [sortOrder, setSortOrder] = useState<SortOrder>(order || "latest")
+  const [currentAnswerType, setCurrentAnswerType] = useState<"all" | "unAnswered">(
+    answerType || "all",
+  )
 
-  useEffect(() => {
-    const initialDate: DateRange = {
-      from: startDate ? new Date(startDate) : undefined,
-      to: endDate ? new Date(endDate) : undefined,
-    }
-    setDate(initialDate)
-  }, [startDate, endDate])
+  const handleDateChange = (value: DateRange | undefined) => {
+    setDate(value)
 
-  useEffect(() => {
-    if (initialOrder) {
-      setSortOrder(initialOrder)
-    }
-  }, [initialOrder])
-
-  const handleClickSearchButton = () => {
-    const queryParams = new URLSearchParams()
-
-    if (date?.from) queryParams.set("startDate", format(date.from, "yyyy-MM-dd"))
-    if (date?.to) queryParams.set("endDate", format(date.to, "yyyy-MM-dd"))
-    if (sortOrder) queryParams.set("order", sortOrder)
-
-    const queryString = queryParams.toString()
-    navigate(`${ROUTES.SHOP_REVIEW}?${queryString}`)
+    setQueryParams({
+      startDate: value?.from ? format(value.from, "yyyy-MM-dd") : "",
+      endDate: value?.to ? format(value.to, "yyyy-MM-dd") : "",
+      order: sortOrder,
+      answerType: currentAnswerType,
+    })
   }
+
+  const handleSortOrderChange = (value: SortOrder) => {
+    setSortOrder(value)
+
+    setQueryParams({
+      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
+      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      order: value,
+      answerType: currentAnswerType,
+    })
+  }
+
+  const handleAnswerTypeChange = (value: "all" | "unAnswered") => {
+    setCurrentAnswerType(value)
+
+    setQueryParams({
+      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
+      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      order: sortOrder,
+      answerType: value,
+    })
+  }
+
   return (
-    <div className="p-8">
-      <div className="flex gap-4">
-        <Select value={sortOrder} onValueChange={(o) => setSortOrder(o as SortOrder)}>
-          <SelectTrigger className="w-[180px]">
+    <div className="p-6 bg-white rounded-lg">
+      <div className="flex gap-4 pb-5">
+        <Select value={sortOrder} onValueChange={(o) => handleSortOrderChange(o as SortOrder)}>
+          <SelectTrigger className="w-[130px]">
             <SelectValue placeholder="정렬기준" />
           </SelectTrigger>
           <SelectContent>
@@ -58,17 +74,30 @@ export const ReviewFilters = () => {
             <SelectItem value="rating">별점순</SelectItem>
           </SelectContent>
         </Select>
-        <DatePickerWithRange date={date} onSelect={setDate} />
+        <DatePickerWithRange date={date} onSelect={handleDateChange} />
       </div>
-
-      <Button
-        variant={"contained"}
-        color={"primary"}
-        className="mt-4"
-        onClick={handleClickSearchButton}
+      <Tabs
+        defaultValue="all"
+        value={currentAnswerType}
+        onValueChange={(value: string) => {
+          handleAnswerTypeChange(value as "all" | "unAnswered")
+        }}
       >
-        리뷰 조회
-      </Button>
+        <TabsList className="flex gap-2 w-full h-[3rem]">
+          <TabsTrigger
+            value="all"
+            className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
+          >
+            전체
+          </TabsTrigger>
+          <TabsTrigger
+            value="unAnswered"
+            className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
+          >
+            미답변
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
     </div>
   )
 }

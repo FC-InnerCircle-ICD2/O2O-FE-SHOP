@@ -9,7 +9,7 @@ interface StarRatingProps {
   color?: string
 }
 
-const StarRating = ({ rating, size = 24, color = "#FFD700" }: StarRatingProps) => {
+export const StarRating = ({ rating, size = 24, color = "#FFD700" }: StarRatingProps) => {
   const stars = []
   const fullStars = Math.floor(rating)
   const decimal = rating % 1
@@ -34,9 +34,10 @@ const StarRating = ({ rating, size = 24, color = "#FFD700" }: StarRatingProps) =
 }
 
 const StatItem = ({ title, value }: { title: string; value: number }) => (
-  <div className="shrink-0 flex items-center">
-    <div className="w-20">{title}</div>
-    <Progress style={{ flexShrink: 0, width: "100px" }} value={(value / 5) * 100} />
+  <div className="shrink-0 flex items-center gap-3">
+    <div className="text-gray-500">{title}</div>
+    <div className="font-bold">{value}</div>
+    <Progress style={{ flexShrink: 0, width: "150px" }} value={(value / 5) * 100} />
   </div>
 )
 
@@ -50,7 +51,7 @@ export const ReviewStats = () => {
   return (
     <div className="p-6 bg-white rounded-lg">
       <h2 className="pb-4 text-xl">전체 별점</h2>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pb-3">
         <div className="text-3xl font-bold">4.3</div>
         <StarRating rating={4.3} size={24} />
         <div className="text-base font-normal text-gray-700">{"(총 리뷰 1,111개)"}</div>

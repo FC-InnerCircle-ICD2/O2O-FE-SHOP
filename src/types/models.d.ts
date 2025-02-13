@@ -67,5 +67,5 @@ export type Review = {
   content: string
   images: string[]
   like: number
-  reply: Reply | null
+  reply?: Reply
 }

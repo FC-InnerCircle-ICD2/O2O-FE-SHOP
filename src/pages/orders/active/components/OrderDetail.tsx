@@ -5,11 +5,14 @@ import { useToast } from "@/hooks/useToast"
 import { useEffect, useRef } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
+import { useQueryClient } from "@tanstack/react-query"
+import { maskPhoneNumber } from "@/utils/format"
 
 const OrderDetail = () => {
   const { showNotification } = useToast()
   const { order, refuse, approve, complete } = useActiveOrder()
   const containerRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (containerRef.current) {
@@ -17,26 +20,37 @@ const OrderDetail = () => {
     }
   }, [order])
 
+  const refetchOrder = () => {
+    queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
+    queryClient.invalidateQueries({ queryKey: ["orders", "onGoing"] })
+  }
+
   const handleClickRefuseButton = async () => {
     if (!order) return
     const { success, message } = await refuseOrder(order?.orderId)
     if (success) {
-      showNotification("success", "주문을 거부하였습니다")
+      refetchOrder()
+
+      showNotification("error", "주문을 거부하였습니다")
       refuse(order.orderId)
     } else showNotification("error", message)
   }
+
   const handleClickApproveButton = async () => {
     if (!order) return
     const { success, message } = await approveOrder(order.orderId)
     if (success) {
+      refetchOrder()
       showNotification("success", "주문을 접수하였습니다")
       approve(order.orderId)
     } else showNotification("error", message)
   }
+
   const handleClickCompleteButton = async () => {
     if (!order) return
     const { success, message } = await completeOrder(order.orderId)
     if (success) {
+      refetchOrder()
       showNotification("success", "주문이 완료되었습니다")
       complete(order.orderId)
     } else showNotification("error", message)
@@ -60,7 +74,7 @@ const OrderDetail = () => {
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
             <p className="text-2xl font-bold text-primary">배달 {order?.orderId}</p>
-            <p className="text-lg font-bold text-black">{order?.orderName}</p>
+            {/* <p className="text-lg font-bold text-black">{order?.orderName}</p> */}
           </div>
           <div className="flex gap-3 items-center">
             {order.orderStatus === "NEW" ? (
@@ -89,7 +103,7 @@ const OrderDetail = () => {
             <div className="flex gap-10 items-start">
               <p className="text-lg w-[100px] font-bold">사장님께</p>
               <p className="text-lg flex-1 font-medium text-zinc-700">
-                수저, 포크 {order.excludingSpoonAndFork ? "X" : "O"}
+                수저, 포크 {order.excludingSpoonAndFork ? "O" : "X"}
               </p>
             </div>
             {/* <div className="flex gap-10 items-start">
@@ -124,9 +138,9 @@ const OrderDetail = () => {
                   <OrderMenuItem
                     key={index}
                     menuItem={{
-                      name: `${options.orderMenuOptionGroupName}(${
-                        options.orderMenuOptionInquiryResponses.length
-                      }) : ${options.orderMenuOptionInquiryResponses
+                      name: `${
+                        options.orderMenuOptionGroupName
+                      } : ${options.orderMenuOptionInquiryResponses
                         .map((option) => option.menuOptionName)
                         .join(", ")}`,
                       price: options.orderMenuOptionInquiryResponses
@@ -159,7 +173,7 @@ const OrderDetail = () => {
           <div className="flex flex-col gap-6 px-[30px] py-4">
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">주문자</dt>
-              <dd className="text-lg font-medium text-zinc-700">홍길동</dd>
+              <dd className="text-lg font-medium text-zinc-700">{order.username}</dd>
             </dl>
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">주소</dt>
@@ -169,7 +183,7 @@ const OrderDetail = () => {
             </dl>
             <dl className="flex gap-10">
               <dt className="text-lg w-[100px] font-bold">휴대폰번호</dt>
-              <dd className="text-lg font-medium text-zinc-700">010-xxxx-5678</dd>
+              <dd className="text-lg font-medium text-zinc-700">{maskPhoneNumber(order.tel)}</dd>
             </dl>
           </div>
         </div>

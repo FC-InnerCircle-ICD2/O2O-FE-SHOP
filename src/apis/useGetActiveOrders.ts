@@ -21,8 +21,8 @@ const useGetActiveOrders = () => {
     queryFn: async () => {
       const { data } = await apiClient.get<FetchOrderResponse>("/orders", {
         params: {
-          startDate: "20250101",
-          endDate: "30000101",
+          startDate: "",
+          endDate: "",
           status: "NEW",
           page: 0,
           size: 999,
@@ -38,8 +38,8 @@ const useGetActiveOrders = () => {
     queryFn: async () => {
       const { data } = await apiClient.get<FetchOrderResponse>("/orders", {
         params: {
-          startDate: "20250101",
-          endDate: "30000101",
+          startDate: "",
+          endDate: "",
           status: "ONGOING",
           page: 0,
           size: 999,

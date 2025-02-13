@@ -22,8 +22,8 @@ export function SearchResult() {
   const {
     page = 0,
     size = 10,
-    startDate = "20250101",
-    endDate = "30000101",
+    startDate = "",
+    endDate = "",
     status = "CANCEL,DONE",
   } = useOrdersParams()
 

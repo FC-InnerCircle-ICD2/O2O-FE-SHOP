@@ -12,10 +12,10 @@ export default function Page() {
       <div className="pt-6 pb-2 px-8">
         <ReviewStats />
       </div>
-      <div className="pt-2 pb-6 px-8">
+      <div className="pt-2 pb-2 px-8">
         <ReviewFilters />
       </div>
-      <div className="flex-1 py-4 px-8">
+      <div className="flex-1 pt-2 pb-10 px-8">
         <ReviewList />
       </div>
     </div>
