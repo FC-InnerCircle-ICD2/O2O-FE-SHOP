@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { BASE_URL } from "@/apis"
 import { Review } from "@/types/models"
-import { HttpHandler, HttpResponse, http } from "msw"
+import { HttpHandler, HttpResponse, http, passthrough } from "msw"
 
 const mockReviews: Review[] = [
   {
@@ -254,25 +254,44 @@ const handlers: HttpHandler[] = [
       message: "리뷰 통계 조회 성공",
     })
   }),
-  http.post(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+  http.post(`/reviews/:reviewId/reply`, () => {
+    // return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
       data: {},
     })
   }),
-  http.put(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+  http.put(`/reviews/:reviewId/reply`, () => {
+    // return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
       data: {},
     })
   }),
-  http.delete(`${BASE_URL}/reviews/:reviewId/reply`, () => {
+  http.delete(`/reviews/:reviewId/reply`, () => {
+    // return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
       data: {},
+    })
+  }),
+
+  http.get(`/reviews/summary`, ({ request }) => {
+    return HttpResponse.json({
+      status: 200,
+      message: "OK",
+      data: {
+        totalRating: 4.3,
+        quantityRating: 5.0,
+        tasteRating: 4.4,
+        reviewCount: 932,
+      },
     })
   }),
 ]
