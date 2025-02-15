@@ -1,11 +1,11 @@
-import { Order } from "@/types/models"
-import apiClient from "./index"
-import { ApiResponse, PaginatedData } from "@/types/api"
-import { OrderDto } from "@/types/dtos"
-import { mapOrderDtoToModel } from "@/utils/mappers/order"
 import { DEFAULT_PAGINATION } from "@/constants"
-import { OrderStatus } from "@/types/common"
 import { orderStatusLabels } from "@/constants/order"
+import { ApiResponse, PaginatedData } from "@/types/api"
+import { OrderStatus } from "@/types/common"
+import { OrderDto } from "@/types/dtos"
+import { Order } from "@/types/models"
+import { mapOrderDtoToModel } from "@/utils/mappers/order"
+import apiClient from "./index"
 type FetchOrdersParams = Partial<{
   page: number
   size: number
@@ -55,7 +55,7 @@ type ApiResult<T> = {
 // TODO: 실패 시 에러 토스트 띄우기
 export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/refuse`)
+    const { data } = await apiClient.patch<ApiResponse<null>>(`orders/${orderId}/refuse`)
     return {
       success: data.status === 200,
       ...data,
@@ -71,7 +71,7 @@ export const refuseOrder = async (orderId: string): Promise<ApiResult<null>> => 
 
 export const approveOrder = async (orderId: string): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.patch<ApiResponse<null>>(`/orders/${orderId}/accept`)
+    const { data } = await apiClient.patch<ApiResponse<null>>(`orders/${orderId}/accept`)
     return {
       success: data.status === 200,
       ...data,

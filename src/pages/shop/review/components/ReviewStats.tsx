@@ -49,7 +49,7 @@ export const ReviewStats = () => {
   })
 
   return (
-    <div className="p-6 bg-white rounded-lg">
+    <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="pb-4 text-xl">전체 별점</h2>
       <div className="flex items-center gap-2 pb-3">
         <div className="text-3xl font-bold">4.3</div>

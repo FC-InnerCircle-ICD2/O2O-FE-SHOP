@@ -1,4 +1,3 @@
-import { Button } from "@/components/Button"
 import { DatePickerWithRange } from "@/components/DatePicker"
 import {
   Select,
@@ -7,14 +6,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/select"
+import { Tabs, TabsList, TabsTrigger } from "@/components/shadcn/tabs"
+import { SortOrder } from "@/types/common"
 import { format } from "date-fns"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { DateRange } from "react-day-picker"
 import { useNavigate } from "react-router-dom"
 import { useQueryParams } from "../hooks/useQueryParams"
-import { SortOrder } from "@/types/common"
-import { ROUTES } from "@/routes"
-import { Tabs, TabsList, TabsTrigger } from "@/components/shadcn/tabs"
 
 export const ReviewFilters = () => {
   const { startDate, endDate, order, answerType, setQueryParams } = useQueryParams()
@@ -63,7 +61,7 @@ export const ReviewFilters = () => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg">
+    <div className="p-6 bg-white rounded-lg shadow-md">
       <div className="flex gap-4 pb-5">
         <Select value={sortOrder} onValueChange={(o) => handleSortOrderChange(o as SortOrder)}>
           <SelectTrigger className="w-[130px]">
