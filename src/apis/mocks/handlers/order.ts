@@ -270,6 +270,8 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.patch(`${BASE_URL}/orders/:orderId/refuse`, () => {
+    return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
@@ -277,6 +279,8 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.patch(`${BASE_URL}/orders/:orderId/accept`, () => {
+    return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
@@ -284,6 +288,8 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.post(`${BASE_URL}/orders/:orderId/complete`, () => {
+    return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",

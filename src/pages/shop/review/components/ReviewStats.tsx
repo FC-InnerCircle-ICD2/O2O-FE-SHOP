@@ -1,3 +1,4 @@
+import useGetReviewSummary from "@/apis/useGetReviewSummary"
 import { Progress } from "@/components/shadcn/progress"
 import { ReviewRatings } from "@/types/models"
 import { Star } from "lucide-react"
@@ -42,24 +43,22 @@ const StatItem = ({ title, value }: { title: string; value: number }) => (
 )
 
 export const ReviewStats = () => {
-  const [stats, setStats] = useState<ReviewRatings>({
-    total: 4.3,
-    quantity: 4.5,
-    taste: 4.2,
-  })
+  const { data: summary } = useGetReviewSummary()
+
+  if (!summary) return <></>
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="pb-4 text-xl">전체 별점</h2>
       <div className="flex items-center gap-2 pb-3">
-        <div className="text-3xl font-bold">4.3</div>
-        <StarRating rating={4.3} size={24} />
-        <div className="text-base font-normal text-gray-700">{"(총 리뷰 1,111개)"}</div>
+        <div className="text-3xl font-bold">{summary.totalRating}</div>
+        <StarRating rating={summary.totalRating} size={24} />
+        <div className="text-base font-normal text-gray-700">{`(총 리뷰 ${summary.reviewCount.toLocaleString()}개)`}</div>
       </div>
 
       <div className="flex gap-8 flex-wrap">
-        <StatItem title="양" value={stats.quantity} />
-        <StatItem title="맛" value={stats.taste} />
+        <StatItem title="양" value={summary.quantityRating} />
+        <StatItem title="맛" value={summary.tasteRating} />
         {/* <StatItem title="배달" value={stats.delivery} /> */}
       </div>
     </div>
