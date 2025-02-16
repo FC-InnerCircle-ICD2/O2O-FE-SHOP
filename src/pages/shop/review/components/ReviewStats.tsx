@@ -1,8 +1,7 @@
 import useGetReviewSummary from "@/apis/useGetReviewSummary"
+import { Card } from "@/components/shadcn/card"
 import { Progress } from "@/components/shadcn/progress"
-import { ReviewRatings } from "@/types/models"
 import { Star } from "lucide-react"
-import { useState } from "react"
 
 interface StarRatingProps {
   rating: number
@@ -48,7 +47,7 @@ export const ReviewStats = () => {
   if (!summary) return <></>
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <Card className="p-6 bg-white rounded-lg">
       <h2 className="pb-4 text-xl">전체 별점</h2>
       <div className="flex items-center gap-2 pb-3">
         <div className="text-3xl font-bold">{summary.totalRating}</div>
@@ -61,6 +60,6 @@ export const ReviewStats = () => {
         <StatItem title="맛" value={summary.tasteRating} />
         {/* <StatItem title="배달" value={stats.delivery} /> */}
       </div>
-    </div>
+    </Card>
   )
 }

@@ -1,4 +1,5 @@
 import { DatePickerWithRange } from "@/components/DatePicker"
+import { Card } from "@/components/shadcn/card"
 import {
   Select,
   SelectContent,
@@ -7,17 +8,18 @@ import {
   SelectValue,
 } from "@/components/shadcn/select"
 import { Tabs, TabsList, TabsTrigger } from "@/components/shadcn/tabs"
+import { cn } from "@/lib/utils"
 import { SortOrder } from "@/types/common"
 import { format } from "date-fns"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { DateRange } from "react-day-picker"
-import { useNavigate } from "react-router-dom"
 import { useQueryParams } from "../hooks/useQueryParams"
 
 export const ReviewFilters = () => {
   const { startDate, endDate, order, answerType, setQueryParams } = useQueryParams()
 
-  const navigate = useNavigate()
+  const stickyRef = useRef<HTMLDivElement>(null)
+  const [isSticky, setIsSticky] = useState(false)
   const [date, setDate] = useState<DateRange | undefined>({
     from: startDate ? new Date(startDate) : undefined,
     to: endDate ? new Date(endDate) : undefined,
@@ -60,9 +62,52 @@ export const ReviewFilters = () => {
     })
   }
 
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    if (stickyRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (timeoutId) return
+
+            if (entry.isIntersecting) {
+              setIsSticky(false)
+            } else {
+              setIsSticky(true)
+            }
+
+            timeoutId = setTimeout(() => {
+              timeoutId = null
+            }, 100)
+          })
+        },
+        {
+          rootMargin: "0px",
+          threshold: 1,
+        },
+      )
+
+      observer.observe(stickyRef.current)
+
+      return () => {
+        observer.disconnect()
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+        }
+      }
+    }
+  }, [])
+
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <div className="flex gap-4 pb-5">
+    <Card
+      ref={stickyRef}
+      className={cn(
+        "flex flex-col gap-4 sticky -top-7 z-10 p-6 bg-white rounded-lg transition-all duration-200 ease-in-out",
+        isSticky && "shadow-lg rounded-none p-4 flex-row items-center -ml-8 -mr-8",
+      )}
+    >
+      <div className="flex gap-4">
         <Select value={sortOrder} onValueChange={(o) => handleSortOrderChange(o as SortOrder)}>
           <SelectTrigger className="w-[130px]">
             <SelectValue placeholder="정렬기준" />
@@ -74,14 +119,16 @@ export const ReviewFilters = () => {
         </Select>
         <DatePickerWithRange date={date} onSelect={handleDateChange} />
       </div>
+
       <Tabs
         defaultValue="all"
+        className="w-full"
         value={currentAnswerType}
         onValueChange={(value: string) => {
           handleAnswerTypeChange(value as "all" | "unAnswered")
         }}
       >
-        <TabsList className="flex gap-2 w-full h-[3rem]">
+        <TabsList className={cn("flex gap-2 w-full h-[3rem]", isSticky && "h-[2rem]")}>
           <TabsTrigger
             value="all"
             className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
@@ -96,6 +143,6 @@ export const ReviewFilters = () => {
           </TabsTrigger>
         </TabsList>
       </Tabs>
-    </div>
+    </Card>
   )
 }

@@ -21,9 +21,9 @@ export const ROUTES = {
   SHOP_MENU: "/shop/menu",
 }
 
-import { useNavigate, Outlet } from "react-router-dom"
 import userStore from "@/store/user"
 import { useEffect } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
 import { useOrderSSE } from "./hooks/useOrderSSE"
 
 const RequireGuest = () => {
@@ -32,7 +32,7 @@ const RequireGuest = () => {
 
   useEffect(() => {
     if (userInfo?.accessToken) {
-      navigate(ROUTES.ACTIVE_ORDER, { replace: true })
+      navigate(ROUTES.DASHBOARD, { replace: true })
     }
   }, [userInfo?.accessToken, navigate])
 

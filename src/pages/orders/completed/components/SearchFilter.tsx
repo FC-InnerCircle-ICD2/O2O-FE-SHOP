@@ -4,6 +4,7 @@ import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
 import { DatePickerWithRange } from "@/components/DatePicker"
+import { Card } from "@/components/shadcn/card"
 import { Tabs, TabsList } from "@/components/shadcn/tabs"
 import { orderStatusLabels } from "@/constants/order"
 import { OrderStatus } from "@/types/common"
@@ -63,7 +64,7 @@ export function SearchFilter() {
   }
 
   return (
-    <div className="p-6 rounded-lg bg-white">
+    <Card className="p-6 rounded-lg bg-white">
       <div className="flex items-center mb-4 gap-10">
         <div className="text-base">주문일시</div>
         <DatePickerWithRange date={date} onSelect={handleDateChange} />
@@ -112,6 +113,6 @@ export function SearchFilter() {
           <RotateCcw className="w-5 h-5 text-gray-600" />
         </div>
       </div>
-    </div>
+    </Card>
   )
 }

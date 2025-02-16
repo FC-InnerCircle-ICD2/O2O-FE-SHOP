@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button"
 import Icon from "@/components/Icon"
+import { Card } from "@/components/shadcn/card"
 import { Separator } from "@/components/shadcn/separator"
 import { Textarea } from "@/components/shadcn/textarea"
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
@@ -42,7 +43,7 @@ const Reply = ({ reviewId, reply }: { reviewId: string; reply?: TReply }) => {
   // }
 
   return (
-    <div className="bg-gray-100 rounded-md shadow-md">
+    <div className="bg-gray-100 rounded-md">
       {reply ? (
         <div className="flex flex-col gap-2 p-4">
           <div className="flex items-center justify-between">
@@ -131,13 +132,13 @@ export const ReviewList = () => {
   })
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
+    <Card className="bg-white rounded-lg">
       <div className="divide-y-2 divide-zinc-200">
         {data?.map((review) => (
           <ReviewItem key={review.id} review={review} />
         ))}
       </div>
       <div ref={targetRef} />
-    </div>
+    </Card>
   )
 }

@@ -11,6 +11,7 @@ import { Pagination as TPagination } from "@/types/common"
 import { useEffect, useState } from "react"
 
 import useGetOrders, { OrdersParams } from "@/apis/useGetOrders"
+import { Card } from "@/components/shadcn/card"
 import useModal from "@/hooks/useModal"
 import { OrderDto } from "@/types/dtos"
 import { useOrdersParams } from "../hooks/useQueryParams"
@@ -52,7 +53,7 @@ export function SearchResult() {
   }, [page, size, startDate, endDate, status])
 
   return (
-    <div className="p-6 rounded-lg bg-white w-full">
+    <Card className="p-6 rounded-lg bg-white w-full">
       <Table>
         <colgroup>
           <col width="20%" />
@@ -80,8 +81,8 @@ export function SearchResult() {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
-                주문이 없습니다.
+              <TableCell colSpan={4} className="p-6 text-center">
+                검색 결과가 없습니다.
               </TableCell>
             </TableRow>
           )}
@@ -93,6 +94,6 @@ export function SearchResult() {
           <PaginationComponent pagination={pagination} />
         </>
       )}
-    </div>
+    </Card>
   )
 }
