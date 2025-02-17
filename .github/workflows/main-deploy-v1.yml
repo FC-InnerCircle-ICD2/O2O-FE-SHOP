@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'yarn'
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -23,12 +23,29 @@ jobs:
       - name: Build project
         run: yarn build
 
-      - name: Copy Build files to EC2
-        uses: appleboy/scp-action@v0.1.5
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          source: "dist/"
-          target: ${{ secrets.EC2_SHOP_DIR }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload specific file to S3
+        run: |
+          aws s3 cp ./dist s3://${{ secrets.O2O_FE_BUCKET }}/shop/ --recursive
+
+      - name: Run Commands using SSM
+        run: |
+          ASG_NAME="ProdAdminAutoScalingGroup"
+
+          APP_INSTANCE_IDS=$(aws autoscaling describe-auto-scaling-groups \
+            --auto-scaling-group-names $ASG_NAME  \
+            --query "AutoScalingGroups[].Instances[].InstanceId"  \
+            --output text)
+
+          aws ssm send-command \
+            --instance-ids $APP_INSTANCE_IDS \
+            --document-name "AWS-RunShellScript" \
+            --parameters '{"commands":[
+                "aws s3 cp s3://${{ secrets.O2O_FE_BUCKET }}/shop/dist /home/ec2-user/frontend/shop --recursive"
+              ]}'
