@@ -1,0 +1,13 @@
+name: Deploy Main Admin to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  admin-build:
+    uses: ./.github/workflows/main-deploy-v1.yml
+    name: "Build and Deploy for Main Admin"
+    secrets: inherit
