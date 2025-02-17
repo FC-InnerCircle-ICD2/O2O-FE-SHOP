@@ -1,0 +1,51 @@
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Set .env file
+        run: echo "${{ secrets.ENV_PROPERTIES }}" > .env
+
+      - name: Build project
+        run: yarn build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload specific file to S3
+        run: |
+          aws s3 cp ./dist s3://${{ secrets.O2O_FE_BUCKET }}/shop/ --recursive
+
+      - name: Run Commands using SSM
+        run: |
+          ASG_NAME="ProdAdminAutoScalingGroup"
+
+          APP_INSTANCE_IDS=$(aws autoscaling describe-auto-scaling-groups \
+            --auto-scaling-group-names $ASG_NAME  \
+            --query "AutoScalingGroups[].Instances[].InstanceId"  \
+            --output text)
+
+          aws ssm send-command \
+            --instance-ids $APP_INSTANCE_IDS \
+            --document-name "AWS-RunShellScript" \
+            --parameters '{"commands":[
+                "aws s3 cp s3://${{ secrets.O2O_FE_BUCKET }}/shop/dist /home/ec2-user/frontend/shop --recursive"
+              ]}'
