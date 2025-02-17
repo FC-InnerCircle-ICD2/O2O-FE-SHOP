@@ -32,7 +32,7 @@ jobs:
 
       - name: Upload specific file to S3
         run: |
-          aws s3 cp ./dist s3://${{ secrets.O2O_FE_BUCKET }}/shop/ --recursive
+          aws s3 cp ./dist s3://${{ secrets.O2O_FE_BUCKET }}/shop/dist/ --recursive
 
       - name: Run Commands using SSM
         run: |
