@@ -47,5 +47,5 @@ jobs:
             --instance-ids $APP_INSTANCE_IDS \
             --document-name "AWS-RunShellScript" \
             --parameters '{"commands":[
-                "aws s3 cp s3://${{ secrets.O2O_FE_BUCKET }}/shop/dist /home/ec2-user/frontend/shop --recursive"
+                "aws s3 cp s3://${{ secrets.O2O_FE_BUCKET }}/shop/dist /home/ec2-user/frontend/shop/dist --recursive"
               ]}'
