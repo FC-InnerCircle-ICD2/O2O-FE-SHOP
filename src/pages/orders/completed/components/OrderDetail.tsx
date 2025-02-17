@@ -1,3 +1,4 @@
+import { Card } from "@/components/shadcn/card"
 import { Separator } from "@/components/shadcn/separator"
 import { OrderDto } from "@/types/dtos"
 import { useEffect, useRef } from "react"
@@ -20,16 +21,15 @@ const OrderDetail = ({ order }: { order: OrderDto }) => {
     )
 
   return (
-    <div
+    <Card
       ref={containerRef}
-      className="flex flex-col flex-1 w-full bg-white overflow-x-auto overflow-y-auto light-scrollbar pb-8"
+      className="flex flex-col flex-1 w-full bg-white overflow-x-auto overflow-y-auto light-scrollbar pb-8 rounded-2xl"
     >
       <div className="min-w-[650px]">
-        <Separator orientation="horizontal" className="bg-primary h-1" />
         {/* header */}
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
-            <p className="text-2xl font-bold text-primary">배달 {order.orderId}</p>
+            <p className="text-2xl font-bold text-primary">주문번호 - {order.orderId}</p>
             <p className="text-lg font-bold text-black">{order.orderName}</p>
           </div>
         </div>
@@ -127,7 +127,7 @@ const OrderDetail = ({ order }: { order: OrderDto }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

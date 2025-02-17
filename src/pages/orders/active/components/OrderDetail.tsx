@@ -2,11 +2,11 @@ import { approveOrder, completeOrder, refuseOrder } from "@/apis/order"
 import { Button } from "@/components/Button"
 import { Separator } from "@/components/shadcn/separator"
 import { useToast } from "@/hooks/useToast"
+import { maskPhoneNumber } from "@/utils/format"
+import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 import { useActiveOrder } from "../contexts/OrderActiveProvider"
 import OrderMenuItem from "./OrderMenuItem"
-import { useQueryClient } from "@tanstack/react-query"
-import { maskPhoneNumber } from "@/utils/format"
 
 const OrderDetail = () => {
   const { showNotification } = useToast()
@@ -73,7 +73,7 @@ const OrderDetail = () => {
         {/* header */}
         <div className="flex w-full px-[30px] py-[20px] justify-between border-b border-b-slate-500">
           <div className="flex flex-col gap-2">
-            <p className="text-2xl font-bold text-primary">배달 {order?.orderId}</p>
+            <p className="text-2xl font-bold text-primary">주문번호 - {order?.orderId}</p>
             {/* <p className="text-lg font-bold text-black">{order?.orderName}</p> */}
           </div>
           <div className="flex gap-3 items-center">

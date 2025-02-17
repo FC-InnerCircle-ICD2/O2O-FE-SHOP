@@ -1,12 +1,12 @@
-import { OrderStatus, SortOrder } from "@/types/common"
+import { SortOrder } from "@/types/common"
 import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 
 export interface QueryParams {
   startDate?: string
   endDate?: string
-  order?: SortOrder
-  answerType?: "all" | "unAnswered"
+  sort?: SortOrder
+  answerType?: "ALL" | "OWNER_NOT_ANSWERED"
 }
 
 export interface UseQueryParamsReturn extends QueryParams {
@@ -21,10 +21,10 @@ export function useQueryParams(): UseQueryParamsReturn {
     // 리뷰목록 조회 필터
     const startDate = searchParams.get("startDate") || undefined
     const endDate = searchParams.get("endDate") || undefined
-    const order = (searchParams.get("order") as SortOrder) || "latest"
-    const answerType = (searchParams.get("answerType") as "all" | "unAnswered") || "all"
+    const sort = (searchParams.get("sort") as SortOrder) || "LATEST"
+    const answerType = (searchParams.get("answerType") as "ALL" | "OWNER_NOT_ANSWERED") || "ALL"
 
-    return { startDate, endDate, order, answerType }
+    return { startDate, endDate, sort, answerType }
   }, [searchParams])
 
   const setQueryParams = useMemo(() => {

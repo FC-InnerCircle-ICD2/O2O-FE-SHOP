@@ -10,8 +10,8 @@ type ApiResult<T> = {
 }
 
 let refreshFlag = false
-let refreshPromise: Promise<any> | null = null
-const requestQueue: (() => Promise<any>)[] = []
+export let refreshPromise: Promise<ApiResponse<any>> | null = null
+const requestQueue: (() => Promise<ApiResponse<any>>)[] = []
 
 export const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`
 
@@ -85,7 +85,7 @@ apiClient.interceptors.response.use(
                   })
 
                 setUserInfo(res.data.data)
-                return res
+                return res.data
               } catch (err) {
                 resetUserInfo()
                 refreshFlag = false
@@ -119,7 +119,8 @@ apiClient.interceptors.response.use(
         // 재발급 진행 중일 때 들어온 요청들은 큐에 저장
         return new Promise((resolve) => {
           requestQueue.push(async () => {
-            return resolve(await apiClient(originalRequest))
+            const result = await apiClient(originalRequest)
+            return result.data
           })
         })
       }

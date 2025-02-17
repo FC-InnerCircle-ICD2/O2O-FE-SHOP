@@ -1,12 +1,12 @@
-import { useEffect, useState, useCallback, useRef } from "react"
+import { BASE_URL, refreshPromise } from "@/apis"
 import { newOrderStore } from "@/store/orders"
-import { useToast } from "./useToast"
 import userStore, { UserInfo } from "@/store/user"
 import { mapOrderDtoToModel } from "@/utils/mappers/order"
-import { Event, EventSourcePolyfill, NativeEventSource } from "event-source-polyfill"
-import { BASE_URL } from "@/apis"
-import axios from "axios"
 import { useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
+import { Event, EventSourcePolyfill, NativeEventSource } from "event-source-polyfill"
+import { useEffect, useRef } from "react"
+import { useToast } from "./useToast"
 
 const EventSource = EventSourcePolyfill || NativeEventSource
 const MAX_RETRIES = 3
@@ -20,17 +20,28 @@ export const useOrderSSE = () => {
   const eventSource = useRef<EventSource | null>(null)
 
   const refreshSSEToken = async (retryCount = 0) => {
+    closeSSE()
+
     const { userInfo: userToken, setUserInfo, resetUserInfo } = userStore.getState()
 
     try {
-      const res = await axios.post(`${BASE_URL}/auth/refresh`, {
-        accessToken: userToken?.accessToken.replace("Bearer ", ""),
-        refreshToken: userToken?.refreshToken.replace("Bearer ", ""),
-      })
+      let newToken
 
-      setUserInfo(res.data.data)
+      if (refreshPromise) {
+        // 이미 진행 중인 refresh 요청이 있다면 그 결과를 기다립니다
+        newToken = await refreshPromise
+      } else {
+        // 진행 중인 refresh 요청이 없다면 새로 요청합니다
+        const res = await axios.post(`${BASE_URL}/auth/refresh`, {
+          accessToken: userToken?.accessToken.replace("Bearer ", ""),
+          refreshToken: userToken?.refreshToken.replace("Bearer ", ""),
+        })
+        newToken = res.data
+      }
+
+      setUserInfo(newToken.data)
       // 새로운 토큰으로 SSE 연결 재설정
-      reconnectSSE(res.data.data)
+      reconnectSSE(newToken.data)
     } catch (err) {
       if (retryCount < MAX_RETRIES - 1) {
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -59,9 +70,7 @@ export const useOrderSSE = () => {
     })
 
     // 이벤트 리스너 설정
-    eventSource.current.onmessage = (event) => {
-      // console.log("event", event)
-    }
+    eventSource.current.onmessage = (event) => {}
 
     eventSource.current.addEventListener("ORDER_NOTIFICATION", (event) => {
       try {
@@ -99,7 +108,7 @@ export const useOrderSSE = () => {
     return () => {
       closeSSE()
     }
-  })
+  }, [])
 
   return { closeSSE }
 }

@@ -12,7 +12,7 @@ import { TabsTrigger } from "@radix-ui/react-tabs"
 import { RotateCcw } from "lucide-react"
 import { useOrdersParams } from "../hooks/useQueryParams"
 
-const ALL_STATUS = "CANCEL,DONE"
+const ALL_STATUS = "REFUSE,DONE"
 
 export function SearchFilter() {
   const { startDate, endDate, status: initialStatus, setQueryParams } = useOrdersParams()
@@ -100,10 +100,10 @@ export function SearchFilter() {
                   {orderStatusLabels["DONE"]}
                 </TabsTrigger>
                 <TabsTrigger
-                  value={"CANCEL"}
+                  value={"REFUSE"}
                   className="h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
                 >
-                  {orderStatusLabels["CANCEL"]}
+                  {orderStatusLabels["REFUSE"]}
                 </TabsTrigger>
               </TabsList>
             </Tabs>

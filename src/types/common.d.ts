@@ -1,4 +1,4 @@
-export type OrderStatus = "NEW" | "ONGOING" | "DONE" | "CANCEL"
+export type OrderStatus = "NEW" | "ONGOING" | "DONE" | "REFUSE"
 export type OrderType = "DELIVERY"
 export type Pagination = {
   currentPage: number
@@ -7,4 +7,4 @@ export type Pagination = {
   hasNext: boolean
 }
 
-export type SortOrder = "latest" | "rating"
+export type SortOrder = "LATEST" | "SCORE"

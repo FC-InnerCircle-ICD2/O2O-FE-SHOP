@@ -60,7 +60,7 @@ const OrderItem = ({
     >
       <div className="flex flex-col w-full py-4 px-5">
         {/* 주문 ID */}
-        <div className="text-lg text-white font-bold mb-2 truncate">{`새로운 주문 - ${order.orderId}`}</div>
+        <div className="text-lg text-white font-bold mb-2 truncate">{`주문번호 - ${order.orderId}`}</div>
 
         {/* 주문 내역 */}
         <span className="text-base text-zinc-100 font-medium">{order.orderName}</span>

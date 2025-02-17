@@ -31,7 +31,6 @@ export const useSignIn = () => {
       })
     },
     onError: (error) => {
-      console.log({ error })
       showNotification("error", "이메일 또는 비밀번호가 일치하지 않습니다.")
     },
   })

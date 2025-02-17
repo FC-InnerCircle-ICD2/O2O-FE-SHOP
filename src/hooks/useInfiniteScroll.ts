@@ -1,12 +1,12 @@
 "use client"
 
-import apiClient, { mockClient } from "@/apis"
+import apiClient from "@/apis"
 import { ApiResponse } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useCallback, useEffect, useRef } from "react"
 
 interface PaginatedResponse<T> {
-  data: T[]
+  content: T[]
   nextCursor?: number
 }
 
@@ -61,7 +61,7 @@ export const useInfiniteScroll = <TData, TFilter = void>({
           )),
       }
 
-      const res = await mockClient.get<ApiResponse<PaginatedResponse<TData>>>(endpoint, {
+      const res = await apiClient.get<ApiResponse<PaginatedResponse<TData>>>(endpoint, {
         headers: {
           "X-User-Lat": location?.lat.toString() ?? "",
           "X-User-Lng": location?.lng.toString() ?? "",
@@ -108,7 +108,7 @@ export const useInfiniteScroll = <TData, TFilter = void>({
   }, [handleObserver, root, rootMargin, threshold])
 
   return {
-    data: data?.pages.flatMap((page) => page.data) ?? [],
+    data: data?.pages.flatMap((page) => page.content) ?? [],
     isLoading,
     isFetching,
     isError,

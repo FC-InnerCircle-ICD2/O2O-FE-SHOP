@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { DateRange } from "react-day-picker"
 import OrderDashboard from "./OrderDashboard"
 import SalesDashboard from "./SalesDashboard"
@@ -19,17 +19,11 @@ const Dashboard = () => {
     setFilter((prev) => ({ ...prev, [key]: value }))
   }
 
-  useEffect(() => {
-    console.log({ filter })
-  }, [filter])
-
   return (
-    <div className="overflow-auto bg-gray-50 light-scrollbar py-6 px-8">
-      <div className="flex flex-col gap-4 min-w-[900px]">
-        <SearchFilter filter={filter} onFilterChange={handleFilterChange} />
-        {filter.type === "SALES" && <SalesDashboard />}
-        {filter.type === "ORDERS" && <OrderDashboard />}
-      </div>
+    <div className="flex flex-col gap-4 min-w-[900px] py-6 px-8">
+      <SearchFilter filter={filter} onFilterChange={handleFilterChange} />
+      {filter.type === "SALES" && <SalesDashboard />}
+      {filter.type === "ORDERS" && <OrderDashboard />}
     </div>
   )
 }

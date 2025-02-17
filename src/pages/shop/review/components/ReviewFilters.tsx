@@ -16,7 +16,7 @@ import { DateRange } from "react-day-picker"
 import { useQueryParams } from "../hooks/useQueryParams"
 
 export const ReviewFilters = () => {
-  const { startDate, endDate, order, answerType, setQueryParams } = useQueryParams()
+  const { startDate, endDate, sort, answerType, setQueryParams } = useQueryParams()
 
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isSticky, setIsSticky] = useState(false)
@@ -24,9 +24,9 @@ export const ReviewFilters = () => {
     from: startDate ? new Date(startDate) : undefined,
     to: endDate ? new Date(endDate) : undefined,
   })
-  const [sortOrder, setSortOrder] = useState<SortOrder>(order || "latest")
-  const [currentAnswerType, setCurrentAnswerType] = useState<"all" | "unAnswered">(
-    answerType || "all",
+  const [sortOrder, setSortOrder] = useState<SortOrder>(sort || "LATEST")
+  const [currentAnswerType, setCurrentAnswerType] = useState<"ALL" | "OWNER_NOT_ANSWERED">(
+    answerType || "ALL",
   )
 
   const handleDateChange = (value: DateRange | undefined) => {
@@ -35,7 +35,7 @@ export const ReviewFilters = () => {
     setQueryParams({
       startDate: value?.from ? format(value.from, "yyyy-MM-dd") : "",
       endDate: value?.to ? format(value.to, "yyyy-MM-dd") : "",
-      order: sortOrder,
+      sort: sortOrder,
       answerType: currentAnswerType,
     })
   }
@@ -46,18 +46,18 @@ export const ReviewFilters = () => {
     setQueryParams({
       startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
       endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
-      order: value,
+      sort: value,
       answerType: currentAnswerType,
     })
   }
 
-  const handleAnswerTypeChange = (value: "all" | "unAnswered") => {
+  const handleAnswerTypeChange = (value: "ALL" | "OWNER_NOT_ANSWERED") => {
     setCurrentAnswerType(value)
 
     setQueryParams({
       startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
       endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
-      order: sortOrder,
+      sort: sortOrder,
       answerType: value,
     })
   }
@@ -113,30 +113,30 @@ export const ReviewFilters = () => {
             <SelectValue placeholder="정렬기준" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="latest">최신순</SelectItem>
-            <SelectItem value="rating">별점순</SelectItem>
+            <SelectItem value="LATEST">최신순</SelectItem>
+            <SelectItem value="SCORE">별점순</SelectItem>
           </SelectContent>
         </Select>
         <DatePickerWithRange date={date} onSelect={handleDateChange} />
       </div>
 
       <Tabs
-        defaultValue="all"
+        defaultValue="ALL"
         className="w-full"
         value={currentAnswerType}
         onValueChange={(value: string) => {
-          handleAnswerTypeChange(value as "all" | "unAnswered")
+          handleAnswerTypeChange(value as "ALL" | "OWNER_NOT_ANSWERED")
         }}
       >
         <TabsList className={cn("flex gap-2 w-full h-[3rem]", isSticky && "h-[2rem]")}>
           <TabsTrigger
-            value="all"
+            value="ALL"
             className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
           >
             전체
           </TabsTrigger>
           <TabsTrigger
-            value="unAnswered"
+            value="OWNER_NOT_ANSWERED"
             className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
           >
             미답변

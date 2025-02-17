@@ -122,13 +122,13 @@ const ReviewItem = ({ review }: { review: Review }) => (
 )
 
 export const ReviewList = () => {
-  const { startDate, endDate, order, answerType } = useQueryParams()
+  const { startDate, endDate, sort, answerType } = useQueryParams()
 
   const { data, targetRef } = useInfiniteScroll<Review, QueryParams>({
     queryKey: "reviews",
     endpoint: "reviews",
-    filter: { startDate, endDate, order, answerType },
-    size: 1,
+    filter: { startDate, endDate, sort, answerType },
+    size: 10,
   })
 
   return (
