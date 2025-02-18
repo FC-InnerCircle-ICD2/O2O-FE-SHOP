@@ -9,7 +9,7 @@ interface SalesDashboardProps {
 const SalesDashboard = ({ data }: SalesDashboardProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <SalesSummary />
+      <SalesSummary data={data} />
       <SalesChart data={data} />
     </div>
   )

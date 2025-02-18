@@ -59,3 +59,29 @@ export const formatDateTime = (dateString: string): string => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`
 }
+
+/**
+ * 숫자를 한국어 화폐 단위로 포맷팅하는 함수
+ * @param amount - 포맷팅할 금액
+ * @returns 포맷팅된 금액 문자열 (예: "1억 2,345만원", "1,234원")
+ */
+export const formatCurrency = (amount: number): string => {
+  if (!amount) return "0원"
+
+  const units = ["", "만", "억", "조"]
+  let result = ""
+  let remaining = Math.round(amount)
+  let unitIndex = 0
+
+  while (remaining > 0) {
+    const chunk = remaining % 10000
+    if (chunk > 0) {
+      const formattedChunk = chunk.toLocaleString()
+      result = `${formattedChunk}${units[unitIndex]}${result ? " " : ""}${result}`
+    }
+    remaining = Math.floor(remaining / 10000)
+    unitIndex++
+  }
+
+  return `${result}`
+}

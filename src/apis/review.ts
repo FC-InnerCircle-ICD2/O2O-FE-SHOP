@@ -81,9 +81,12 @@ export const createReply = async (reviewId: string, content: string): Promise<Ap
   }
 }
 
-export const updateReply = async (reviewId: string, content: string): Promise<ApiResult<null>> => {
+export const registerReply = async (
+  reviewId: string,
+  content: string,
+): Promise<ApiResult<null>> => {
   try {
-    const { data } = await apiClient.put<ApiResponse<null>>(`/reviews/${reviewId}/reply`, {
+    const { data } = await apiClient.post<ApiResponse<null>>(`/reviews/${reviewId}/reply`, {
       content,
     })
     return {

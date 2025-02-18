@@ -33,8 +33,8 @@ export const ReviewFilters = () => {
     setDate(value)
 
     setQueryParams({
-      startDate: value?.from ? format(value.from, "yyyy-MM-dd") : "",
-      endDate: value?.to ? format(value.to, "yyyy-MM-dd") : "",
+      startDate: value?.from ? format(value.from, "yyyyMMdd") : "",
+      endDate: value?.to ? format(value.to, "yyyyMMdd") : "",
       sort: sortOrder,
       answerType: currentAnswerType,
     })
@@ -44,8 +44,8 @@ export const ReviewFilters = () => {
     setSortOrder(value)
 
     setQueryParams({
-      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
-      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      startDate: date?.from ? format(date.from, "yyyyMMdd") : "",
+      endDate: date?.to ? format(date.to, "yyyyMMdd") : "",
       sort: value,
       answerType: currentAnswerType,
     })
@@ -55,8 +55,8 @@ export const ReviewFilters = () => {
     setCurrentAnswerType(value)
 
     setQueryParams({
-      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
-      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      startDate: date?.from ? format(date.from, "yyyyMMdd") : "",
+      endDate: date?.to ? format(date.to, "yyyyMMdd") : "",
       sort: sortOrder,
       answerType: value,
     })
@@ -79,7 +79,7 @@ export const ReviewFilters = () => {
 
             timeoutId = setTimeout(() => {
               timeoutId = null
-            }, 100)
+            }, 50)
           })
         },
         {
@@ -104,7 +104,7 @@ export const ReviewFilters = () => {
       ref={stickyRef}
       className={cn(
         "flex flex-col gap-4 sticky -top-7 z-10 p-6 bg-white rounded-lg transition-all duration-200 ease-in-out",
-        isSticky && "shadow-lg rounded-none p-4 flex-row items-center -ml-8 -mr-8",
+        isSticky && "shadow-lg rounded-none p-4 flex-row items-center",
       )}
     >
       <div className="flex gap-4">
@@ -128,7 +128,7 @@ export const ReviewFilters = () => {
           handleAnswerTypeChange(value as "ALL" | "OWNER_NOT_ANSWERED")
         }}
       >
-        <TabsList className={cn("flex gap-2 w-full h-[3rem]", isSticky && "h-[2rem]")}>
+        <TabsList className={cn("flex gap-2 w-full h-[3rem]", isSticky && "h-[2.5rem]")}>
           <TabsTrigger
             value="ALL"
             className="w-1/2 h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"

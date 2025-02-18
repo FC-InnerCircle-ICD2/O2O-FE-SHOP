@@ -50,10 +50,15 @@ type ReviewMenuOptions = {
   menuOptionQuantity: number
 }
 
+type ReviewMenuOptionGroup = {
+  orderMenuOptionGroupName: string
+  orderMenuOptionInquiryResponses: ReviewMenuOptions[]
+}
+
 type ReviewMenu = {
   menuName: string
   menuQuantity: number
-  menuOptions: ReviewMenuOptions[]
+  menuOptionGroups: ReviewMenuOptions[]
 }
 
 export type Reply = { date: string; content: string }
@@ -62,7 +67,7 @@ export type Review = {
   id: string
   nickname: string
   date: string
-  ratings: ReviewRatings
+  rating: ReviewRatings
   menu: ReviewMenu[]
   content: string
   images: string[]
