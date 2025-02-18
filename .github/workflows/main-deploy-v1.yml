@@ -18,7 +18,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Set .env file
-        run: echo "${{ secrets.ENV_PROPERTIES }}" > .env
+        run: echo "${{ secrets.ENV_PROD_PROPERTIES }}" > .env
 
       - name: Build project
         run: yarn build
