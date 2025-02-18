@@ -72,8 +72,8 @@ export const routes: RouteObject[] = [
           <SidebarProvider
             style={
               {
-                "--sidebar-width": "20rem",
-                "--sidebar-width-mobile": "20rem",
+                "--sidebar-width": "16rem",
+                "--sidebar-width-mobile": "16rem",
                 "--sidebar-width-icon": "8rem",
               } as React.CSSProperties
             }
