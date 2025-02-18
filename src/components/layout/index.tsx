@@ -15,7 +15,6 @@ export function Layout() {
         <div className="flex flex-col flex-1 border-r border-r-solid border-r-black">
           <Header />
           <Body />
-          {/* <Footer /> */}
         </div>
       </Sidebar>
       <Main>

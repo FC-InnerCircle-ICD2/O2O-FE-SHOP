@@ -15,7 +15,7 @@ const Header = () => {
   const logout = useLogout()
 
   return (
-    <header className="h-header min-h-header w-full px-6 bg-sidebar">
+    <header className="h-header min-h-header w-full px-6 bg-sidebar flex-shrink-0">
       <div className="flex h-full items-center justify-end">
         {/* 
          TODO: 중간발표 이후 주석 해제

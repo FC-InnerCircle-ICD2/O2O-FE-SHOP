@@ -38,6 +38,10 @@ const config: Config = {
           DEFAULT: "#FF69B4",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        yellow: {
+          DEFAULT: "hsl(var(--yellow))",
+          foreground: "hsl(var(--yellow-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

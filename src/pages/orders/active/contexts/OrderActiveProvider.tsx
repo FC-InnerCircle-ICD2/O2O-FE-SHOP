@@ -1,4 +1,6 @@
 import { fetchOrders } from "@/apis/order"
+import useGetActiveOrders from "@/apis/useGetActiveOrders"
+import { OrderDto } from "@/types/dtos"
 import { Order } from "@/types/models"
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
@@ -10,9 +12,9 @@ import { useSearchParams } from "react-router-dom"
 // }
 
 interface OrderActiveContextType {
-  order: Order | undefined
-  newOrders: Order[]
-  processingOrders: Order[]
+  order: OrderDto | undefined
+  newOrders: OrderDto[]
+  onGoingOrders: OrderDto[]
   approve: (id: string) => void
   refuse: (id: string) => void
   complete: (id: string) => void
@@ -22,55 +24,35 @@ const OrderActiveContext = createContext<OrderActiveContextType | null>(null)
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [searchParams] = useSearchParams()
-  const [newOrders, setNewOrders] = useState<Order[]>([])
-  const [processingOrders, setProcessingOrders] = useState<Order[]>([])
-  useEffect(() => {
-    const fetch = async () => {
-      const { content: newOrders } = await fetchOrders({
-        size: 999,
-        status: ["NEW"],
-      })
+  const { newOrders = [], onGoingOrders = [] } = useGetActiveOrders()
 
-      setNewOrders(newOrders)
+  const getOrderById = (id: string): OrderDto | undefined => {
+    if (!newOrders || !onGoingOrders) return undefined
 
-      const { content: processingOrders } = await fetchOrders({
-        size: 999,
-        status: ["ONGOING"],
-        startDate: "20250101",
-        endDate: "20260101",
-      })
-
-      setProcessingOrders(processingOrders)
-    }
-    fetch()
-  }, [])
-
-  const getOrderById = (id: string) => {
-    return [...newOrders, ...processingOrders].find((order) => order.id === id)
+    return [...newOrders, ...onGoingOrders].find((order) => order.orderId === id)
   }
 
   const orderId = searchParams.get("orderId")
   const order = orderId ? getOrderById(orderId) : undefined
 
   const approve = (orderId: string) => {
-    const targetOrder = newOrders.find(({ id }) => id === orderId)
-    if (!targetOrder) return
-
-    setNewOrders((prev) => prev.filter(({ id }) => id !== orderId))
-    setProcessingOrders((prev) => [{ ...targetOrder, status: "ONGOING" }, ...prev])
+    // const targetOrder = newOrders.find(({ id }) => id === orderId)
+    // if (!targetOrder) return
+    // setNewOrders((prev) => prev.filter(({ id }) => id !== orderId))
+    // setProcessingOrders((prev) => [{ ...targetOrder, status: "ONGOING" }, ...prev])
   }
 
   const refuse = (orderId: string) => {
-    setNewOrders((prev) => prev.filter((order, _) => order.id !== orderId))
+    // setNewOrders((prev) => prev.filter((order, _) => order.id !== orderId))
   }
 
   const complete = (orderId: string) => {
-    setProcessingOrders((prev) => prev.filter((order, _) => order.id !== orderId))
+    // setProcessingOrders((prev) => prev.filter((order, _) => order.id !== orderId))
   }
   const value = {
     order,
     newOrders,
-    processingOrders,
+    onGoingOrders,
     approve,
     refuse,
     complete,

@@ -1,10 +1,10 @@
-import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
   {
     variants: {
       variant: {
@@ -18,8 +18,8 @@ const buttonVariants = cva(
       },
       size: {
         large: "h-14 rounded-[8px] text-2xl px-6",
-        medium: "h-10 rounded-[6px] text-xl px-4",
-        small: "h-8 rounded-[4px] text-sm px-2",
+        medium: "h-10 rounded-[6px] text-lg px-4",
+        small: "h-8 rounded-[4px] text-sm px-3",
       },
       fullWidth: {
         true: "w-full",
