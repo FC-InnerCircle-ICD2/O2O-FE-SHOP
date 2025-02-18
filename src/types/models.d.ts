@@ -38,3 +38,39 @@ export type Option = {
   name: string
   price: number
 }
+
+type ReviewRatings = {
+  total: number
+  quantity: number
+  taste: number
+}
+
+type ReviewMenuOptions = {
+  menuOptionName: string
+  menuOptionQuantity: number
+}
+
+type ReviewMenuOptionGroup = {
+  orderMenuOptionGroupName: string
+  orderMenuOptionInquiryResponses: ReviewMenuOptions[]
+}
+
+type ReviewMenu = {
+  menuName: string
+  menuQuantity: number
+  menuOptionGroups: ReviewMenuOptions[]
+}
+
+export type Reply = { date: string; content: string }
+
+export type Review = {
+  id: string
+  nickname: string
+  date: string
+  rating: ReviewRatings
+  menu: ReviewMenu[]
+  content: string
+  images: string[]
+  like: number
+  reply?: Reply
+}

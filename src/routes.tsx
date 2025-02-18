@@ -21,33 +21,33 @@ export const ROUTES = {
   SHOP_MENU: "/shop/menu",
 }
 
-import { useNavigate, Outlet } from "react-router-dom"
 import userStore from "@/store/user"
 import { useEffect } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
 import { useOrderSSE } from "./hooks/useOrderSSE"
 
 const RequireGuest = () => {
   const navigate = useNavigate()
-  const { accessToken } = userStore()
+  const { userInfo } = userStore()
 
   useEffect(() => {
-    if (accessToken) {
-      navigate(ROUTES.ACTIVE_ORDER, { replace: true })
+    if (userInfo?.accessToken) {
+      navigate(ROUTES.DASHBOARD, { replace: true })
     }
-  }, [accessToken, navigate])
+  }, [userInfo?.accessToken, navigate])
 
   return <Outlet />
 }
 const RequireAuth = () => {
   useOrderSSE()
   const navigate = useNavigate()
-  const { accessToken } = userStore()
+  const { userInfo } = userStore()
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!userInfo?.accessToken) {
       navigate(ROUTES.LOGIN, { replace: true })
     }
-  }, [accessToken, navigate])
+  }, [userInfo?.accessToken, navigate])
 
   return <Outlet />
 }
@@ -72,8 +72,8 @@ export const routes: RouteObject[] = [
           <SidebarProvider
             style={
               {
-                "--sidebar-width": "26rem",
-                "--sidebar-width-mobile": "26rem",
+                "--sidebar-width": "16rem",
+                "--sidebar-width-mobile": "16rem",
                 "--sidebar-width-icon": "8rem",
               } as React.CSSProperties
             }

@@ -12,6 +12,8 @@ export interface OrderDto {
   detailAddress: string
   excludingSpoonAndFork: boolean
   requestToRider: string
+  username: string
+  tel: string
   orderMenuInquiryResponses: {
     id: number
     orderId: string

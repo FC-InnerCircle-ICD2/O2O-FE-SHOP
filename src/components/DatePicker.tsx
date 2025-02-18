@@ -1,34 +1,32 @@
 "use client"
 
-import * as React from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
+import * as React from "react"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/shadcn/button"
 import { Calendar } from "@/components/shadcn/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/popover"
+import { cn } from "@/lib/utils"
 
 export type DatePickerProps = {
   date: DateRange | undefined
-  onSelect: React.Dispatch<React.SetStateAction<DateRange | undefined>>
+  onSelect: (date: DateRange | undefined) => void
 }
-export function DatePickerWithRange({ date,   onSelect }: DatePickerProps) {
-  //   const [date, setDate] = React.useState<DateRange | undefined>({
-  //     from: new Date(2022, 0, 20),
-  //     to: addDays(new Date(2022, 0, 20), 20),
-  //   })
+export function DatePickerWithRange({ date, onSelect }: DatePickerProps) {
+  const [tempDate, setTempDate] = React.useState<DateRange | undefined>(date)
+  const [open, setOpen] = React.useState(false)
 
   return (
     <div className="grid gap-2">
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[300px] justify-start text-left font-normal bg-white",
               !date && "text-muted-foreground",
             )}
           >
@@ -36,13 +34,13 @@ export function DatePickerWithRange({ date,   onSelect }: DatePickerProps) {
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                  {format(date.from, "yyyy-MM-dd")} ~ {format(date.to, "yyyy-MM-dd")}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                format(date.from, "yyyy-MM-dd")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>날짜 선택</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -50,11 +48,30 @@ export function DatePickerWithRange({ date,   onSelect }: DatePickerProps) {
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={onSelect}
+            defaultMonth={tempDate?.from}
+            selected={tempDate}
+            onSelect={setTempDate}
             numberOfMonths={2}
           />
+          <div className="flex justify-end gap-2 p-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setTempDate(date)
+                setOpen(false)
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={() => {
+                onSelect(tempDate)
+                setOpen(false)
+              }}
+            >
+              확인
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
     </div>

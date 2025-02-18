@@ -1,91 +1,118 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { Button } from "@/components/Button"
 import { DatePickerWithRange } from "@/components/DatePicker"
+import { Card } from "@/components/shadcn/card"
+import { Tabs, TabsList } from "@/components/shadcn/tabs"
+import { orderStatusLabels } from "@/constants/order"
 import { OrderStatus } from "@/types/common"
-import { useQueryParams } from "../hooks/useQueryParams"
+import { TabsTrigger } from "@radix-ui/react-tabs"
+import { RotateCcw } from "lucide-react"
+import { useOrdersParams } from "../hooks/useQueryParams"
+
+const ALL_STATUS = "REFUSE,DONE"
 
 export function SearchFilter() {
-  const navigate = useNavigate()
-  const { startDate, endDate, status: initialStatus } = useQueryParams()
+  const { startDate, endDate, status: initialStatus, setQueryParams } = useOrdersParams()
 
-  const [date, setDate] = useState<DateRange | undefined>()
-  const [selectedStatuses, setSelectedStatuses] = useState<OrderStatus[]>([])
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: startDate ? new Date(startDate) : undefined,
+    to: endDate ? new Date(endDate) : undefined,
+  })
+  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | string>(
+    initialStatus || ALL_STATUS,
+  )
 
-  useEffect(() => {
-    const initialDate: DateRange = {
-      from: startDate ? new Date(startDate) : undefined,
-      to: endDate ? new Date(endDate) : undefined,
-    }
-    setDate(initialDate)
-  }, [startDate, endDate])
+  const handleStatusChange = (value: OrderStatus | string) => {
+    setSelectedStatus(value)
 
-  useEffect(() => {
-    if (initialStatus) {
-      setSelectedStatuses(initialStatus)
-    }
-  }, [initialStatus])
-
-  const handleStatusChange = (value: OrderStatus) => {
-    setSelectedStatuses((prevStatuses) =>
-      prevStatuses.includes(value)
-        ? prevStatuses.filter((status) => status !== value)
-        : [...prevStatuses, value],
-    )
+    setQueryParams({
+      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
+      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      status: value,
+      page: 0,
+      size: 10,
+    })
   }
 
-  const handleClickSearchButton = () => {
-    const queryParams = new URLSearchParams()
+  const handleDateChange = (date: DateRange | undefined) => {
+    setDate(date)
 
-    if (date?.from) queryParams.set("startDate", format(date.from, "yyyy-MM-dd"))
-    if (date?.to) queryParams.set("endDate", format(date.to, "yyyy-MM-dd"))
-    selectedStatuses.forEach((status) => queryParams.append("status", status))
-
-    const queryString = queryParams.toString()
-    navigate(`/orders/completed?${queryString}`)
+    setQueryParams({
+      startDate: date?.from ? format(date.from, "yyyy-MM-dd") : "",
+      endDate: date?.to ? format(date.to, "yyyy-MM-dd") : "",
+      status: selectedStatus,
+      page: 0,
+      size: 10,
+    })
   }
 
   const handleResetFilter = () => {
     // 필터 초기화: 날짜와 상태를 초기 상태로 설정
     setDate(undefined)
-    setSelectedStatuses([])
+    setSelectedStatus(ALL_STATUS)
+
+    setQueryParams({
+      startDate: "",
+      endDate: "",
+      status: ALL_STATUS,
+      page: 0,
+      size: 10,
+    })
   }
 
   return (
-    <div>
-      <div className="flex items-center mb-4">
-        <div className="text-base mr-4">주문일시</div>
-        <DatePickerWithRange date={date} onSelect={setDate} />
+    <Card className="p-6 rounded-lg bg-white">
+      <div className="flex items-center mb-4 gap-10">
+        <div className="text-base">주문일시</div>
+        <DatePickerWithRange date={date} onSelect={handleDateChange} />
       </div>
 
-      <div className="flex items-center mb-4">
-        {/* <div className="text-base mr-4">주문상태</div>
-        <div className="flex flex-wrap">
-          {Object.entries(orderStatusLabels).map(([key, label]) => (
-            <div key={key} className="mr-4 flex items-center gap-1">
-              <Checkbox
-                id={key}
-                checked={selectedStatuses.includes(key as OrderStatus)}
-                onCheckedChange={() => handleStatusChange(key as OrderStatus)}
-              />
-              <label htmlFor={key}>{label}</label>
-            </div>
-          ))}
-        </div> */}
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-10">
+          <div className="text-base">주문상태</div>
+          <div className="flex flex-wrap">
+            <Tabs
+              defaultValue={ALL_STATUS}
+              className="w-[400px]"
+              onValueChange={(value) => {
+                if (value === "all") {
+                  handleStatusChange(ALL_STATUS)
+                } else {
+                  handleStatusChange(value as OrderStatus)
+                }
+              }}
+              value={selectedStatus || ALL_STATUS}
+            >
+              <TabsList className="grid w-full grid-cols-3 bg-muted p-1 rounded-lg h-10">
+                <TabsTrigger
+                  value={ALL_STATUS}
+                  className="h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
+                >
+                  전체
+                </TabsTrigger>
+                <TabsTrigger
+                  value={"DONE"}
+                  className="h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
+                >
+                  {orderStatusLabels["DONE"]}
+                </TabsTrigger>
+                <TabsTrigger
+                  value={"REFUSE"}
+                  className="h-full data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md text-sm font-medium transition-all"
+                >
+                  {orderStatusLabels["REFUSE"]}
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        </div>
+        <div className="cursor-pointer" onClick={handleResetFilter}>
+          <RotateCcw className="w-5 h-5 text-gray-600" />
+        </div>
       </div>
-
-      <div className="mt-8 flex items-center gap-4">
-        <Button onClick={handleResetFilter} variant={"outlined"} color={"primary"} fullWidth>
-          초기화
-        </Button>
-        <Button onClick={handleClickSearchButton} variant={"contained"} color={"primary"} fullWidth>
-          조회
-        </Button>
-      </div>
-    </div>
+    </Card>
   )
 }

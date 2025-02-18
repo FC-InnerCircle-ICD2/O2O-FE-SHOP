@@ -1,32 +1,27 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-type User = {
-  accessToken: string | null
-  refreshToken: string | null
-  accessTokenExpiresIn: string | null
-  refreshTokenExpiresIn: string | null
+export type UserInfo = {
+  accessToken: string
+  refreshToken: string
 }
 
-interface UserState extends User {
-  setUserInfo: (data: User) => void
+interface UserState {
+  userInfo: UserInfo | null
+  setUserInfo: (info: UserInfo) => void
   resetUserInfo: () => void
 }
 
 const userStore = create<UserState>()(
   persist(
     (set) => ({
-      accessToken: null,
-      refreshToken: null,
-      accessTokenExpiresIn: null,
-      refreshTokenExpiresIn: null,
-      setUserInfo: (data) => set(() => data),
+      userInfo: null,
+      setUserInfo: (info) => {
+        set(() => ({ userInfo: info }))
+      },
       resetUserInfo: () =>
         set({
-          accessToken: null,
-          refreshToken: null,
-          accessTokenExpiresIn: null,
-          refreshTokenExpiresIn: null,
+          userInfo: null,
         }),
     }),
     {
