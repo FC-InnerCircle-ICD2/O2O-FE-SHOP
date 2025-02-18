@@ -57,7 +57,7 @@ export const fetchReviewStats = async (): Promise<ApiResult<ReviewRatings>> => {
   } catch (error) {
     return {
       success: false,
-      data: { total: 0, quantity: 0, taste: 0, delivery: 0 },
+      data: { total: 0, quantity: 0, taste: 0 },
       message: "알 수 없는 오류가 발생했습니다.",
     }
   }
