@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout"
 import { SidebarProvider } from "@/components/shadcn/sidebar"
-import { RouteObject } from "react-router-dom"
+import { createBrowserRouter } from "react-router-dom"
 
 import DashboardPage from "@/pages/dashboard/page"
 import LoginPage from "@/pages/login/page"
@@ -9,52 +9,11 @@ import OrdersCompletedPage from "@/pages/orders/completed/page"
 import ShopInfoPage from "@/pages/shop/info/page"
 import ShopMenuPage from "@/pages/shop/menu/page"
 import ShopReviewPage from "@/pages/shop/review/page"
+import dashboardLoader from "./pages/dashboard/loader/dashboardLoader"
+import { RequireAuth, RequireGuest } from "./utils/auth"
+import { ROUTES } from "./utils/routes"
 
-export const ROUTES = {
-  LOGIN: "/login",
-  DASHBOARD: "/",
-  ORDER: "/orders",
-  COMPLETED_ORDER: "/orders/completed",
-  ACTIVE_ORDER: "/orders/active",
-  SHOP_INFO: "/shop/info",
-  SHOP_REVIEW: "/shop/review",
-  SHOP_MENU: "/shop/menu",
-}
-
-import userStore from "@/store/user"
-import { useEffect } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
-import { useOrderSSE } from "./hooks/useOrderSSE"
-
-const RequireGuest = () => {
-  const navigate = useNavigate()
-  const { userInfo } = userStore()
-
-  useEffect(() => {
-    if (userInfo?.accessToken) {
-      navigate(ROUTES.DASHBOARD, { replace: true })
-    }
-  }, [userInfo?.accessToken, navigate])
-
-  return <Outlet />
-}
-const RequireAuth = () => {
-  useOrderSSE()
-  const navigate = useNavigate()
-  const { userInfo } = userStore()
-
-  useEffect(() => {
-    if (!userInfo?.accessToken) {
-      navigate(ROUTES.LOGIN, { replace: true })
-    }
-  }, [userInfo?.accessToken, navigate])
-
-  return <Outlet />
-}
-
-export default RequireAuth
-
-export const routes: RouteObject[] = [
+export const router = createBrowserRouter([
   {
     element: <RequireGuest />,
     children: [
@@ -85,6 +44,7 @@ export const routes: RouteObject[] = [
           {
             path: ROUTES.DASHBOARD,
             element: <DashboardPage />,
+            loader: dashboardLoader,
           },
           {
             path: ROUTES.COMPLETED_ORDER,
@@ -93,6 +53,9 @@ export const routes: RouteObject[] = [
           {
             path: ROUTES.ACTIVE_ORDER,
             element: <OrdersActivePage />,
+            // loader: orderActiveLoader,
+            // errorElement: <div>Error</div>,
+            // hydrateFallbackElement: <div></div>,
           },
           {
             path: ROUTES.SHOP_INFO,
@@ -110,4 +73,4 @@ export const routes: RouteObject[] = [
       },
     ],
   },
-]
+])

@@ -1,4 +1,4 @@
-import { ROUTES } from "@/routes"
+import { ROUTES } from "@/utils/routes"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible"
 import { useLocation, useNavigate } from "react-router-dom"
 import Icon from "../Icon"

@@ -103,7 +103,7 @@ export const ReviewFilters = () => {
     <Card
       ref={stickyRef}
       className={cn(
-        "flex flex-col gap-4 sticky -top-7 z-10 p-6 bg-white rounded-lg transition-all duration-200 ease-in-out",
+        "flex flex-col gap-4 sticky -top-[1px] z-10 px-6 py-4 bg-white rounded-lg transition-all duration-200 ease-in-out",
         isSticky && "shadow-lg rounded-none p-4 flex-row items-center",
       )}
     >

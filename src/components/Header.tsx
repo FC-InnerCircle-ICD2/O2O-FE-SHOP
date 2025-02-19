@@ -1,3 +1,4 @@
+import useLogout from "@/hooks/useLogout"
 import { operationStore } from "@/store/operation"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import {
@@ -7,15 +8,13 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu"
 import Icon from "./Icon"
-import userStore from "@/store/user"
-import useLogout from "@/hooks/useLogout"
 
 const Header = () => {
   const { isOperational, setIsOperational } = operationStore()
   const logout = useLogout()
 
   return (
-    <header className="h-header min-h-header w-full px-6 bg-sidebar flex-shrink-0">
+    <header className="h-header min-h-header w-full px-8 bg-sidebar flex-shrink-0">
       <div className="flex h-full items-center justify-end">
         {/* 
          TODO: 중간발표 이후 주석 해제
@@ -43,8 +42,10 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
               <Avatar className="block rounded-full size-10 overflow-hidden">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage className="object-cover scale-[2]" src="/images/store-logo.jpg" />
+                <AvatarFallback>
+                  <Icon name="Store" size={24} />
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="py-2 px-3 mt-[10px] bg-netural rounded-xl shadow-lg shadow-black/20">
@@ -63,7 +64,7 @@ const Header = () => {
               >
                 <div className="flex items-center gap-3">
                   <Icon name="LogOut" size={18} />
-                  <span>Logout</span>
+                  <span>로그아웃</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

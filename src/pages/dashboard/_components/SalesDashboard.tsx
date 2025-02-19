@@ -1,16 +1,18 @@
-import { DashboardData } from "@/constants/dashboard"
+import { DashboardData, DashboardParams, SalesDashboardSummary } from "@/apis/useGetDashboard"
 import SalesChart from "./SalesChart"
 import SalesSummary from "./SalesSummary"
 
 interface SalesDashboardProps {
+  filter: DashboardParams
+  summary: SalesDashboardSummary
   data: DashboardData[]
 }
 
-const SalesDashboard = ({ data }: SalesDashboardProps) => {
+const SalesDashboard = ({ filter, summary, data }: SalesDashboardProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <SalesSummary data={data} />
-      <SalesChart data={data} />
+      <SalesSummary summary={summary} />
+      <SalesChart filter={filter} data={data} />
     </div>
   )
 }

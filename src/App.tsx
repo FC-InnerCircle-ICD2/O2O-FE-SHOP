@@ -1,12 +1,7 @@
-import { BrowserRouter, useRoutes } from "react-router-dom"
-import { routes } from "@/routes"
 import "@styles/fonts.css"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
-function AppRoutes() {
-  const element = useRoutes(routes)
-  return element
-}
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { RouterProvider } from "react-router-dom"
+import { router } from "./routes"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,9 +14,9 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <HydrationBoundary>
+        <RouterProvider router={router} />
+      </HydrationBoundary>
     </QueryClientProvider>
   )
 }
