@@ -15,22 +15,28 @@ type FetchOrdersParams = Partial<{
 type FetchOrderResponse = ApiResponse<PaginatedData<OrderDto[]>>
 const ALL_STATUS = Object.keys(orderStatusLabels) as OrderStatus[]
 
+export const getActiveOrders = async () => {
+  try {
+    const response = await apiClient.get<FetchOrderResponse>("/orders", {
+      params: {
+        startDate: "",
+        endDate: "",
+        status: "NEW",
+        page: 0,
+        size: 999,
+      },
+    })
+
+    return response.data.data.content
+  } catch (error) {
+    throw new Error("Failed to fetch orders")
+  }
+}
+
 const useGetActiveOrders = () => {
   const { data: newOrders } = useQuery({
     queryKey: ["orders", "new"],
-    queryFn: async () => {
-      const { data } = await apiClient.get<FetchOrderResponse>("/orders", {
-        params: {
-          startDate: "",
-          endDate: "",
-          status: "NEW",
-          page: 0,
-          size: 999,
-        },
-      })
-
-      return data.data.content
-    },
+    queryFn: getActiveOrders,
   })
 
   const { data: onGoingOrders } = useQuery({
