@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
-import React from "react"
-import apiClient, { mockClient } from "."
 import { ApiResponse } from "@/types/api"
+import { useQuery } from "@tanstack/react-query"
+import apiClient from "."
 
 interface ReviewsSummary {
   totalRating: number
@@ -14,7 +13,7 @@ const useGetReviewSummary = () => {
   return useQuery({
     queryKey: ["reviewSummary"],
     queryFn: async () => {
-      const res = await mockClient.get<ApiResponse<ReviewsSummary>>("reviews/summary")
+      const res = await apiClient.get<ApiResponse<ReviewsSummary>>("reviews/summary")
 
       return res.data.data
     },

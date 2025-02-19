@@ -9,7 +9,7 @@ export default function Page() {
         <div className="w-full text-xl font-medium py-4 px-8 border-b border-b-slate-300 bg-white">
           리뷰 관리
         </div>
-        <div id="review-list-root" className="flex flex-col gap-4 w-[900px] gap-4 py-6 px-8 m-auto">
+        <div id="review-list-root" className="flex flex-col gap-4 w-[900px] py-6 px-8 m-auto">
           <ReviewStats />
           <ReviewFilters />
           <ReviewList />

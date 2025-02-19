@@ -68,6 +68,8 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.get(`${BASE_URL}/reviews/stats`, ({ request }) => {
+    return passthrough()
+
     return HttpResponse.json({
       status: 200,
       data: {
@@ -80,7 +82,7 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.post(`/reviews/:reviewId/reply`, () => {
-    // return passthrough()
+    return passthrough()
 
     return HttpResponse.json({
       status: 200,
@@ -89,7 +91,7 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.put(`/reviews/:reviewId/reply`, () => {
-    // return passthrough()
+    return passthrough()
 
     return HttpResponse.json({
       status: 200,
@@ -98,7 +100,7 @@ const handlers: HttpHandler[] = [
     })
   }),
   http.delete(`/reviews/:reviewId/reply`, () => {
-    // return passthrough()
+    return passthrough()
 
     return HttpResponse.json({
       status: 200,
@@ -108,6 +110,8 @@ const handlers: HttpHandler[] = [
   }),
 
   http.get(`/reviews/summary`, ({ request }) => {
+    return passthrough()
+
     return HttpResponse.json({
       status: 200,
       message: "OK",
