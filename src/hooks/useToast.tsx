@@ -1,5 +1,5 @@
-import { ROUTES } from "@/routes"
 import { Order } from "@/types/models"
+import { ROUTES } from "@/utils/routes"
 import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"

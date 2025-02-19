@@ -85,3 +85,7 @@ export const formatCurrency = (amount: number): string => {
 
   return `${result}`
 }
+
+export const formatDateToString = (date: Date): string => {
+  return date.toISOString().split("T")[0].replace(/-/g, "")
+}

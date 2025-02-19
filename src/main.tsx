@@ -1,10 +1,9 @@
-import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
 import Modal from "@/components/Modal"
-import App from "./App"
 import { Toaster } from "@/components/shadcn/sonner"
 import "@/styles/global.css"
+import App from "./App"
 
 async function enableMocking() {
   if (import.meta.env.VITE_MSW_ENABLED === "false") return
@@ -14,6 +13,7 @@ async function enableMocking() {
     onUnhandledRequest: "bypass",
   })
 }
+
 enableMocking().then(() => {
   createRoot(document.getElementById("root")!).render(
     // <StrictMode>
