@@ -17,7 +17,10 @@ const dashboardLoader = async () => {
   try {
     await queryClient.prefetchQuery({
       queryKey: ["dashboard"],
-      queryFn: getDashboard,
+      queryFn: async () => {
+        const response = await getDashboard()
+        return response
+      },
       staleTime: 5 * 60 * 1000, // 5분 동안 데이터를 fresh하게 유지
     })
 
