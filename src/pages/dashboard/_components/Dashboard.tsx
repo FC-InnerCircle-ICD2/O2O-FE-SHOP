@@ -1,6 +1,11 @@
 "use client"
 
-import generateDashboardData, { DashboardData } from "@/constants/dashboard"
+import useGetDashboard, {
+  DashboardParams,
+  OrderDashboardSummary,
+  SalesDashboardSummary,
+} from "@/apis/useGetDashboard"
+import { DashboardData } from "@/constants/dashboard"
 import { useEffect, useState } from "react"
 import { DateRange } from "react-day-picker"
 import OrderDashboard from "./OrderDashboard"
@@ -8,29 +13,54 @@ import SalesDashboard from "./SalesDashboard"
 import SearchFilter from "./SearchFilter"
 
 const Dashboard = () => {
-  const [filter, setFilter] = useState<{ date: DateRange | undefined; type: "SALES" | "ORDERS" }>({
+  const today = new Date()
+  const weekAgo = new Date(today)
+  weekAgo.setDate(today.getDate() - 6)
+
+  const [filter, setFilter] = useState<DashboardParams>({
     date: {
-      from: new Date(new Date().setDate(new Date().getDate() - 6)),
-      to: new Date(),
+      from: weekAgo,
+      to: today,
     },
     type: "SALES",
   })
   const [data, setData] = useState<DashboardData[]>([])
 
+  const { data: dashboardData } = useGetDashboard(filter)
+
   const handleFilterChange = (key: string, value: DateRange | "SALES" | "ORDERS") => {
-    setFilter((prev) => ({ ...prev, [key]: value }))
+    if (typeof value === "object" && value !== null) {
+      setFilter((prev) => ({
+        ...prev,
+        startDate: value.from?.toISOString().replace(/-/g, ""),
+        endDate: value.to?.toISOString().replace(/-/g, ""),
+      }))
+    } else {
+      setFilter((prev) => ({ ...prev, type: value }))
+    }
   }
 
   useEffect(() => {
-    const data = generateDashboardData(filter.date?.from, filter.date?.to)
-    setData(data)
-  }, [filter.date])
+    console.log("data", dashboardData)
+  }, [dashboardData])
 
   return (
     <div className="flex flex-col gap-4 min-w-[900px] py-6 px-8">
       <SearchFilter filter={filter} onFilterChange={handleFilterChange} />
-      {filter.type === "SALES" && <SalesDashboard data={data} />}
-      {filter.type === "ORDERS" && <OrderDashboard />}
+      {dashboardData && filter.type === "SALES" && (
+        <SalesDashboard
+          filter={filter}
+          summary={dashboardData.summary as SalesDashboardSummary}
+          data={dashboardData.data}
+        />
+      )}
+      {dashboardData && filter.type === "ORDERS" && (
+        <OrderDashboard
+          filter={filter}
+          summary={dashboardData.summary as OrderDashboardSummary}
+          data={dashboardData.data}
+        />
+      )}
     </div>
   )
 }

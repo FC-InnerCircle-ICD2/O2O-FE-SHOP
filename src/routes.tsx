@@ -9,7 +9,7 @@ import OrdersCompletedPage from "@/pages/orders/completed/page"
 import ShopInfoPage from "@/pages/shop/info/page"
 import ShopMenuPage from "@/pages/shop/menu/page"
 import ShopReviewPage from "@/pages/shop/review/page"
-import orderActiveLoader from "./pages/orders/active/loader/orderActiveLoader"
+import dashboardLoader from "./pages/dashboard/loader/dashboardLoader"
 import { RequireAuth, RequireGuest } from "./utils/auth"
 import { ROUTES } from "./utils/routes"
 
@@ -44,6 +44,7 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.DASHBOARD,
             element: <DashboardPage />,
+            loader: dashboardLoader,
           },
           {
             path: ROUTES.COMPLETED_ORDER,
@@ -52,9 +53,9 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.ACTIVE_ORDER,
             element: <OrdersActivePage />,
-            loader: orderActiveLoader,
-            errorElement: <div>Error</div>,
-            hydrateFallbackElement: <div></div>,
+            // loader: orderActiveLoader,
+            // errorElement: <div>Error</div>,
+            // hydrateFallbackElement: <div></div>,
           },
           {
             path: ROUTES.SHOP_INFO,
