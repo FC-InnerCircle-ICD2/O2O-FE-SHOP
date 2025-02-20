@@ -17,7 +17,7 @@ const OrderSummary = ({ summary }: { summary: OrderDashboardSummary }) => {
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-center">
           <p className="text-2xl font-semibold">
-            {Math.round(summary.avgOrderPerDay).toLocaleString()}
+            {summary.avgOrderPerDay.toFixed(1).toLocaleString()}
             <span className="text-base ml-[0.1rem]">건</span>
           </p>
           <p className="text-sm text-gray-500">일 평균 주문수</p>
