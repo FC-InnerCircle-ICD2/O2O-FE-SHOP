@@ -14,7 +14,7 @@ const MAX_RETRIES = 3
 export const useOrderSSE = () => {
   const { userInfo, setUserInfo, resetUserInfo } = userStore()
   const { addOrder } = newOrderStore()
-  const { showNewOrderNotification } = useToast()
+  const { showNewOrderNotification, showNotification } = useToast()
   const queryClient = useQueryClient()
 
   const eventSource = useRef<EventSource | null>(null)
@@ -80,6 +80,19 @@ export const useOrderSSE = () => {
         const order = mapOrderDtoToModel(JSON.parse(messageEvent.data))
         addOrder(order)
         showNewOrderNotification(order)
+      } catch (error) {
+        console.error("Error parsing SSE message", error)
+      }
+    })
+
+    eventSource.current.addEventListener("ORDER_CANCELLATION", (event) => {
+      try {
+        queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
+
+        const messageEvent = event as MessageEvent
+        const order = JSON.parse(messageEvent.data)
+
+        showNotification("error", `주문번호-[${order.orderId}]\n주문이 취소되었습니다.`)
       } catch (error) {
         console.error("Error parsing SSE message", error)
       }

@@ -48,7 +48,7 @@ export const useToast = () => {
               type === "success" ? "border-green-500" : "border-red-500"
             } items-center justify-between max-w-full`}
           >
-            <p className="text-base   font-bold">{message}</p>
+            <p className="text-base font-bold whitespace-pre-line">{message}</p>
           </div>
         </div>
       ),
