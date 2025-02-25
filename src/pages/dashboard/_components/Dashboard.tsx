@@ -6,7 +6,7 @@ import useGetDashboard, {
   SalesDashboardSummary,
 } from "@/apis/useGetDashboard"
 import { DashboardData } from "@/constants/dashboard"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { DateRange } from "react-day-picker"
 import OrderDashboard from "./OrderDashboard"
 import SalesDashboard from "./SalesDashboard"
@@ -39,10 +39,6 @@ const Dashboard = () => {
       setFilter((prev) => ({ ...prev, type: value }))
     }
   }
-
-  useEffect(() => {
-    console.log("data", dashboardData)
-  }, [dashboardData])
 
   return (
     <div className="flex flex-col gap-4 min-w-[900px] py-6 px-8">
