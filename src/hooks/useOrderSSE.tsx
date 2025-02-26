@@ -5,7 +5,7 @@ import { mapOrderDtoToModel } from "@/utils/mappers/order"
 import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { Event, EventSourcePolyfill, NativeEventSource } from "event-source-polyfill"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { useToast } from "./useToast"
 
 const EventSource = EventSourcePolyfill || NativeEventSource
@@ -54,55 +54,90 @@ export const useOrderSSE = () => {
   }
 
   const reconnectSSE = (userToken: UserInfo) => {
-    // 기존 연결 종료
-    if (eventSource.current) {
-      eventSource.current.close()
-      eventSource.current = null
-    }
+    console.log("reconnectSSE 시도")
 
-    // 새로운 연결 생성
-    eventSource.current = new EventSource(`${BASE_URL}/event-stream`, {
-      withCredentials: true,
-      headers: {
-        Authorization: userToken.accessToken || "",
-      },
-      heartbeatTimeout: 1000 * 600,
-    })
-
-    // 이벤트 리스너 설정
-    eventSource.current.onmessage = (event) => {}
-
-    eventSource.current.addEventListener("ORDER_NOTIFICATION", (event) => {
-      try {
-        queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
-
-        const messageEvent = event as MessageEvent
-        const order = mapOrderDtoToModel(JSON.parse(messageEvent.data))
-        addOrder(order)
-        showNewOrderNotification(order)
-      } catch (error) {
-        console.error("Error parsing SSE message", error)
+    try {
+      // 기존 연결 종료
+      if (eventSource.current) {
+        eventSource.current.close()
+        eventSource.current = null
       }
-    })
 
-    eventSource.current.addEventListener("ORDER_CANCELLATION", (event) => {
-      try {
-        queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
+      // 새로운 연결 생성
+      eventSource.current = new EventSource(`${BASE_URL}/event-stream`, {
+        withCredentials: true,
+        headers: {
+          Authorization: userToken.accessToken || "",
+        },
+        heartbeatTimeout: 1000 * 120, // 타임아웃을 2분으로 늘림
+      })
 
-        const messageEvent = event as MessageEvent
-        const order = JSON.parse(messageEvent.data)
-
-        showNotification("error", `주문번호-[${order.orderId}]\n주문이 취소되었습니다.`)
-      } catch (error) {
-        console.error("Error parsing SSE message", error)
+      // 연결 성공 시 로그
+      eventSource.current.onopen = () => {
+        console.log("SSE 연결 성공")
       }
-    })
 
-    eventSource.current.onerror = function (event: Event) {
-      const ev = event as Event & { status: number }
-      if (ev.status === 511) {
-        refreshSSEToken()
+      // 이벤트 리스너 설정
+      eventSource.current.onmessage = (event) => {
+        console.log("SSE 메시지 수신:", event)
       }
+
+      eventSource.current.addEventListener("ORDER_NOTIFICATION", (event) => {
+        try {
+          queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
+
+          const messageEvent = event as MessageEvent
+          const order = mapOrderDtoToModel(JSON.parse(messageEvent.data))
+          addOrder(order)
+          showNewOrderNotification(order)
+        } catch (error) {
+          console.error("Error parsing SSE message", error)
+        }
+      })
+
+      eventSource.current.addEventListener("ORDER_CANCELLATION", (event) => {
+        try {
+          queryClient.invalidateQueries({ queryKey: ["orders", "new"] })
+
+          const messageEvent = event as MessageEvent
+          const order = JSON.parse(messageEvent.data)
+
+          showNotification("error", `주문번호-[${order.orderId}]\n주문이 취소되었습니다.`)
+        } catch (error) {
+          console.error("Error parsing SSE message", error)
+        }
+      })
+
+      let retryCount = 0
+      const maxRetries = 5
+      const baseDelay = 3000 // 3초
+
+      eventSource.current.onerror = function (event: Event) {
+        const ev = event as Event & { status: number }
+        console.error("SSE 연결 에러:", ev)
+
+        if (ev.status === 511) {
+          refreshSSEToken()
+        } else {
+          retryCount++
+          if (retryCount <= maxRetries) {
+            // 지수 백오프로 재시도 간격을 늘림
+            const delay = Math.min(baseDelay * Math.pow(2, retryCount - 1), 30000) // 최대 30초
+            console.log(`SSE 재연결 시도 ${retryCount}번째, ${delay}ms 후 시도`)
+
+            setTimeout(() => {
+              console.log("SSE 재연결 시도")
+              reconnectSSE(userToken)
+            }, delay)
+          } else {
+            console.error("SSE 최대 재시도 횟수 초과")
+            closeSSE()
+          }
+        }
+      }
+    } catch (error) {
+      console.error("SSE 연결 중 예외 발생:", error)
+      closeSSE()
     }
   }
 
@@ -113,15 +148,15 @@ export const useOrderSSE = () => {
     }
   }
 
-  useEffect(() => {
-    if (!userInfo) return
+  // useEffect(() => {
+  //   if (!userInfo) return
 
-    reconnectSSE(userInfo)
+  //   reconnectSSE(userInfo)
 
-    return () => {
-      closeSSE()
-    }
-  }, [])
+  //   return () => {
+  //     closeSSE()
+  //   }
+  // }, [])
 
-  return { closeSSE }
+  return { reconnectSSE, closeSSE }
 }

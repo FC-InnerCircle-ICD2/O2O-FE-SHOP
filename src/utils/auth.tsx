@@ -17,15 +17,18 @@ export const RequireGuest = () => {
   return <Outlet />
 }
 export const RequireAuth = () => {
-  useOrderSSE()
+  const { reconnectSSE } = useOrderSSE()
   const navigate = useNavigate()
   const { userInfo } = userStore()
 
   useEffect(() => {
-    if (!userInfo?.accessToken) {
+    if (!userInfo || !userInfo?.accessToken) {
       navigate(ROUTES.LOGIN, { replace: true })
+      return
     }
-  }, [userInfo?.accessToken, navigate])
+
+    reconnectSSE(userInfo)
+  }, [userInfo, navigate])
 
   return <Outlet />
 }
