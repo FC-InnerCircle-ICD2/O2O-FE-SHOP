@@ -23,14 +23,20 @@ const ImageModal = ({ images, onClose }: { images: string; onClose?: () => void 
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
       onClick={onClose}
     >
-      <div className="relative max-w-[90vw] max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
-        <button className="absolute top-4 right-4 text-white hover:text-gray-300" onClick={onClose}>
+      <div
+        className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+          onClick={onClose}
+        >
           <X size={24} />
         </button>
         <img
           src={currentImage}
           alt="image"
-          className="w-full h-full object-contain object-center"
+          className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
         />
       </div>
     </div>,
